@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "types": ["vite/client"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react",
+    "baseUrl": ".",
+    "paths": {
+      "@/backend/main": [".dfx/local/canisters/backend"],
+      "@/backend/main/types": [".dfx/local/canisters/backend/backend.did"],
+      "@/views": ["src/frontend/views/index.tsx"],
+      "@/features": ["src/frontend/features/index.ts"],
+      "@/layouts": ["src/frontend/layouts/index.ts"],
+      "@/components": ["src/frontend/components/index.ts"],
+      "@/utils": ["src/frontend/utils/index.ts"],
+      "@/types": ["src/frontend/types/index.ts"],
+      "@/hooks": ["src/frontend/hooks/index.ts"],
+      "@/assets/*": ["src/frontend/assets/*"],
+      "@/store/*": ["src/frontend/store/*"],
+      "@/data/*": ["src/frontend/data/*"]
+    },
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
+  },
+  "include": ["src/frontend"]
+}

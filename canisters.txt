@@ -1,0 +1,19 @@
+Production
+{
+  "frontend": {
+    "ic": ""
+  },
+  "backend": {
+    "ic": ""
+  }
+}
+
+Testing
+{
+  "frontend": {
+    "ic": ""
+  },
+  "backend": {
+    "ic": ""
+  }
+}
