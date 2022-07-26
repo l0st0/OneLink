@@ -1,3 +1,2 @@
-export * from './containers'
-export * from './headings'
+export * from './ui'
 export * from './icons'

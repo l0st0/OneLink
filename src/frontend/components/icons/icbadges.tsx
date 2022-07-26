@@ -171,8 +171,8 @@ export const IcBadgeIconVertical = ({ width = 75 }: IconProps) => {
           y2="40.9823"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.21" stop-color="#F15A24" />
-          <stop offset="0.6841" stop-color="#FBB03B" />
+          <stop offset="0.21" stopColor="#F15A24" />
+          <stop offset="0.6841" stopColor="#FBB03B" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_1724_209"
@@ -182,8 +182,8 @@ export const IcBadgeIconVertical = ({ width = 75 }: IconProps) => {
           y2="20.4343"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.21" stop-color="#ED1E79" />
-          <stop offset="0.8929" stop-color="#522785" />
+          <stop offset="0.21" stopColor="#ED1E79" />
+          <stop offset="0.8929" stopColor="#522785" />
         </linearGradient>
       </defs>
     </svg>
