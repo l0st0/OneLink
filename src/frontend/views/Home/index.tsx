@@ -1,3 +1,10 @@
+import { Flex } from '@/components'
+
 export const Home = () => {
-  return <div>Welcome</div>
+  return (
+    <Flex>
+      <div>Helloooo</div>
+      <div>Lolooo</div>
+    </Flex>
+  )
 }
