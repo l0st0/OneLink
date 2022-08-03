@@ -3,7 +3,10 @@ Production
   "frontend": {
     "ic": ""
   },
-  "backend": {
+  "names": {
+    "ic": ""
+  },
+  "analytics": {
     "ic": ""
   }
 }
@@ -13,7 +16,10 @@ Testing
   "frontend": {
     "ic": ""
   },
-  "backend": {
+  "names": {
+    "ic": ""
+  },
+  "analytics": {
     "ic": ""
   }
 }

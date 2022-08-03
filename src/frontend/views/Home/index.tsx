@@ -1,3 +1,3 @@
 export const Home = () => {
-  return <div>Nothing</div>
+  return <div>Welcome</div>
 }

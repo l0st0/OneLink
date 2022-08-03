@@ -49,6 +49,11 @@ export default defineConfig({
       },
     }),
   ],
+  esbuild: {
+    define: {
+      this: 'window',
+    },
+  },
   server: {
     fs: {
       allow: ['.'],

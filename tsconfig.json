@@ -18,8 +18,10 @@
     "jsxImportSource": "@emotion/react",
     "baseUrl": ".",
     "paths": {
-      "@/backend/main": [".dfx/local/canisters/backend"],
-      "@/backend/main/types": [".dfx/local/canisters/backend/backend.did"],
+      "@/names/main": [".dfx/local/canisters/names"],
+      "@/names/main/types": [".dfx/local/canisters/names/names.did"],
+      "@/analytics/main": [".dfx/local/canisters/analytics"],
+      "@/analytics/main/types": [".dfx/local/canisters/analytics/analytics.did"],
       "@/views": ["src/frontend/views/index.tsx"],
       "@/features": ["src/frontend/features/index.ts"],
       "@/layouts": ["src/frontend/layouts/index.ts"],

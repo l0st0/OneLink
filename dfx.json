@@ -1,11 +1,15 @@
 {
   "canisters": {
-    "backend": {
-      "main": "src/backend/main.mo",
+    "names": {
+      "main": "src/backend/Names.mo",
+      "type": "motoko"
+    },
+    "analytics": {
+      "main": "src/backend/Analytics.mo",
       "type": "motoko"
     },
     "frontend": {
-      "dependencies": ["backend"],
+      "dependencies": ["names", "analytics"],
       "frontend": {
         "entrypoint": "dist/index.html"
       },

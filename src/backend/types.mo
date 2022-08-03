@@ -1,16 +1,6 @@
 import Principal "mo:base/Principal";
 
 module BaseTypes {
-  public type View = {
-    date: Text;
-    address: Text;
-  };
-
-  public type Click = {
-    date: Text;
-    address: Text;
-  };
-
   public type Link = {
     id: Text;
     title: Text;
@@ -57,4 +47,20 @@ public type Name = {
   public type Stats = {
     names: Nat;
   };
+
+  public type View = {
+    date: Text;
+    address: Text;
+  };
+
+  public type Click = {
+    id: Text;
+    date: Text;
+    address: Text;
+  };
+
+  public type Analytics = {
+    views: [View];
+    clicks: [Click];
+  }
 }
