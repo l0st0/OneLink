@@ -28,6 +28,7 @@
       "@/components": ["src/frontend/components/index.ts"],
       "@/utils": ["src/frontend/utils/index.ts"],
       "@/types": ["src/frontend/types/index.ts"],
+      "@/styles": ["src/frontend/styles/index.ts"],
       "@/hooks": ["src/frontend/hooks/index.ts"],
       "@/assets/*": ["src/frontend/assets/*"],
       "@/store/*": ["src/frontend/store/*"],

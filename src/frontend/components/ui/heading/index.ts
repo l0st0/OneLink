@@ -16,11 +16,6 @@ export const Heading = styled.h1<TextProps>`
     `}
 `
 
-export const HeadingOutlined = styled.h1`
-  color: ${(p) => p.theme.palette.background.default};
-  -webkit-text-stroke: 2px white;
-`
-
 export const Paragraph = styled.p<TextProps>`
   color: ${(p) => p.color || 'white'};
 

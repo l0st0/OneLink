@@ -16,11 +16,7 @@ export const Container = styled.div<ContainerProps>`
   margin: 0 auto;
   padding: 16px 24px;
 
-  max-width: ${(p) => p.maxWidth || p.theme.container.max}px;
-`
-
-export const ParagraphContainer = styled.div<ContainerProps>`
-  max-width: ${(p) => p.maxWidth || p.theme.container.max}px;
+  max-width: ${(p) => p.maxWidth || p.theme.width.normal}px;
 `
 
 export const Flex = styled.div<FlexProps>`
