@@ -1,8 +1,17 @@
 import _ from 'lodash'
 import { css } from '@emotion/react'
-import { BreakPointNames, MapMqProps } from '@/types'
+import { BreakPointTypes, MapMqProps, SpacePropTypes } from '@/types'
 
-export const breakpointsArr: BreakPointNames[] = ['_', 'sm', 'md', 'lg', 'xl']
+export const spaceProps: { name: string; value: SpacePropTypes }[] = [
+  { name: 'gap', value: 'gap' },
+  { name: 'marginTop', value: 'mt' },
+  { name: 'marginBottom', value: 'mb' },
+  { name: 'marginLeft', value: 'ml' },
+  { name: 'marginRight', value: 'mr' },
+  { name: 'margin', value: 'm' },
+]
+
+export const breakpointsArr: BreakPointTypes[] = ['_', 'sm', 'md', 'lg', 'xl']
 
 const breakpointsObj = {
   _: '0px',
@@ -12,17 +21,24 @@ const breakpointsObj = {
   xl: '1280px',
 }
 
-export const mq = (bp: BreakPointNames) => {
+export const mq = (bp: BreakPointTypes) => {
   return `@media (min-width: ${breakpointsObj[bp]})`
 }
 
 export const mapMq = <T extends {}>({ name, value, theme = undefined }: MapMqProps<T>) => {
   if (!value) return css``
   if (_.isString(value)) {
-    if (theme)
+    if (theme) {
+      if (value.includes('px') || value.includes('rem')) {
+        return css({
+          [name]: `${value}`,
+        })
+      }
+
       return css({
         [name]: `${theme[value]}`,
       })
+    }
 
     return css({
       [name]: `${value}`,

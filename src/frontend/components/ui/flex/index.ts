@@ -1,20 +1,28 @@
 import styled from '@emotion/styled'
-import { mapMq } from '@/styles'
-import { AlignItems, CustomGap, FlexDirection, Gap } from '@/types'
+import { mapMq, spaceProps } from '@/styles'
+import { AlignItems, FlexDirection, LiteralUnion, SpacePropTypes, SpaceUnits } from '@/types'
+import { css } from '@emotion/react'
 
-interface FlexProps {
+type FlexProps = {
   flexDirection?: FlexDirection
-  gap?: Gap
-  customGap?: CustomGap
   alignItems?: AlignItems
   textAlign?: 'center' | 'left' | 'right'
+} & {
+  [Property in SpacePropTypes]?: LiteralUnion<SpaceUnits>
 }
 
-export const Flex = styled.div<FlexProps>`
-  display: flex;
+export const Flex = styled.div<FlexProps>(
+  ({ theme, flexDirection = 'row', alignItems = 'flex-start', ...rest }) => css`
+    display: flex;
 
-  ${({ flexDirection = 'row' }) => mapMq({ name: 'flexDirection', value: flexDirection })}
-  ${({ alignItems = 'flex-start' }) => mapMq({ name: 'alignItems', value: alignItems })}
-  ${({ theme, gap }) => mapMq<Gap>({ name: 'gap', value: gap, theme: theme.sizes })}
-  ${({ customGap }) => mapMq({ name: 'gap', value: customGap })}
-`
+    ${mapMq({ name: 'flexDirection', value: flexDirection })}
+    ${mapMq({ name: 'alignItems', value: alignItems })}
+
+    ${spaceProps.map(
+      ({ name, value }) =>
+        css`
+          ${mapMq({ name, value: rest[value], theme: theme.spaces })}
+        `
+    )}
+  `
+)
