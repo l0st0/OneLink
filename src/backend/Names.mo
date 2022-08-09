@@ -2,7 +2,7 @@ import Array "mo:base/Array";
 import Buffer "mo:base/Buffer";
 import Debug "mo:base/Debug";
 import Iter "mo:base/Iter";
-import Map "mo:base/HashMap";
+import Map "mo:base/TrieMap";
 import Option "mo:base/Option";
 import Principal "mo:base/Principal";
 import Result "mo:base/Result";
@@ -11,6 +11,38 @@ import Text "mo:base/Text";
 import Types "Types";
 
 actor {
+    stable var user_stable_0: [(Principal, Types.User)] = [];
+    stable var name_stable_0: [(Text, Types.Name)] = [];
+
+    var users = Map.fromEntries<Principal, Types.User>(user_stable_0.vals(), Principal.equal, Principal.hash);
+    var names = Map.fromEntries<Text, Types.Name>(name_stable_0.vals(), Text.equal, Text.hash);
+
+    system func preupgrade() {
+        name_stable_0 := Iter.toArray(names.entries());
+        user_stable_0 := Iter.toArray(users.entries());
+    };
+
+    system func postupgrade() {
+        name_stable_0 := [];
+        user_stable_0 := [];
+    };
+
+    var defaultProfile: Types.Profile = {
+        title = "";
+        bio = "";
+        image = "";
+    };
+
+    var defaultLook: Types.Look = {
+        theme =  "0";
+        background = #color("000000");
+        gradient = {
+            show = true;
+            position = #top(true);
+            color = "FFFFFF";
+        };
+    };
+
     private func verifyPermission(controllers: [Types.Controller], caller: Principal, pType: { #links; #settings; #appearance; #analytics }): async Bool {
         let isEqual = func(c: Types.Controller): Bool { Principal.equal(c.principal, caller) };
         let controller = Array.find(controllers, isEqual);
@@ -28,28 +60,6 @@ actor {
                 };
             }
         }
-    };
-
-    stable var userEntries: [(Principal, Types.User)] = [];
-    stable var nameEntries: [(Text, Types.Name)] = [];
-
-    var users = Map.fromIter<Principal, Types.User>(userEntries.vals(), 0, Principal.equal, Principal.hash);
-    var names = Map.fromIter<Text, Types.Name>(nameEntries.vals(), 0, Text.equal, Text.hash);
-
-    var defaultProfile: Types.Profile = {
-        title = "";
-        bio = "";
-        image = "";
-    };
-
-    var defaultLook: Types.Look = {
-        theme =  "0";
-        background = #color("000000");
-        gradient = {
-            show = true;
-            position = #top(true);
-            color = "FFFFFF";
-        };
     };
 
     public query func getStats(): async Types.Stats {
@@ -195,16 +205,6 @@ actor {
                 return #ok(updatedName);
             }
         };
-    };
-
-    system func preupgrade() {
-        nameEntries := Iter.toArray(names.entries());
-        userEntries := Iter.toArray(users.entries());
-    };
-
-    system func postupgrade() {
-        nameEntries := [];
-        userEntries := [];
     };
 
     /*** Analytics functions ***/

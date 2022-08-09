@@ -3,7 +3,7 @@ import Bool "mo:base/Bool";
 import Buffer "mo:base/Buffer";
 import Debug "mo:base/Debug";
 import Iter "mo:base/Iter";
-import Map "mo:base/HashMap";
+import Map "mo:base/TrieMap";
 import Nat "mo:base/Nat";
 import Option "mo:base/Option";
 import Principal "mo:base/Principal";
@@ -14,13 +14,21 @@ import Env "env";
 import Types "Types";
 
 actor {
+    stable var analytics_stable_0: [(Text, Types.Analytics)] = [];
+    var analytics = Map.fromEntries<Text, Types.Analytics>(analytics_stable_0.vals(), Text.equal, Text.hash);
+
+    system func preupgrade() {
+        analytics_stable_0 := Iter.toArray(analytics.entries());
+    };
+
+    system func postupgrade() {
+        analytics_stable_0 := [];
+    };
+
     let nameActor = actor(Env.NAME_CANISTER): actor {
         verifyNameAndCaller: (name: Text, caller: Principal) -> async Bool;
         getLinks: (name: Text) -> async [Types.Link]
     };
-
-    stable var analyticsEntries: [(Text, Types.Analytics)] = [];
-    var analytics = Map.fromIter<Text, Types.Analytics>(analyticsEntries.vals(), 0, Text.equal, Text.hash);
 
     public shared({ caller }) func getAnalytics(name: Text): async Result.Result<Types.Analytics, Text> {
         let hasPermission = await nameActor.verifyNameAndCaller(name, caller);
@@ -109,13 +117,5 @@ actor {
                 return #ok("Click was recorded.");
             } 
         }
-    };
-
-    system func preupgrade() {
-        analyticsEntries := Iter.toArray(analytics.entries());
-    };
-
-    system func postupgrade() {
-        analyticsEntries := [];
     };
 };
