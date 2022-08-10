@@ -7,12 +7,14 @@ interface ButtonProps {
 
 export const Button = styled.button<ButtonProps>(
   ({ theme }) => css`
-    text-transform: uppercase;
-    padding: ${theme.spaces[4]} ${theme.spaces[8]};
-    border-radius: ${theme.radius.normal};
-    border: 2px solid ${theme.colors.primary};
-    font-size: ${theme.text.fontSize.base};
     cursor: pointer;
+    text-transform: uppercase;
+    padding: ${theme.spaces[4]} ${theme.spaces[6]};
+    border-radius: ${theme.radius.normal};
+    border: ${theme.spaces['0.5']} solid ${theme.colors.primary};
+    font-size: ${theme.text.fontSize.base};
+    font-weight: ${theme.text.fontWeight[500]};
+    letter-spacing: ${theme.spaces.px};
   `
 )
 

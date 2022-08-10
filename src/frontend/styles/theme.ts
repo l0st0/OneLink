@@ -54,6 +54,7 @@ export const theme: Theme = {
       '7xl': '4.5rem',
       '8xl': '6rem',
       '9xl': '8rem',
+      '10xl': '10rem',
     },
     fontWeight: {
       '100': 100,

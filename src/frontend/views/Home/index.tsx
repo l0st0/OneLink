@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, Heading, IcBadgeIconFlat, OutlineButton, Paragraph, SubHeading } from '@/components'
+import { Flex, H1, IcBadgeIconFlat, OutlineButton, Paragraph, SubHeading } from '@/components'
 import { NameTextInput } from '@/features'
 import { useDebounce } from '@/hooks'
 import { names } from '@/names/main'
@@ -25,8 +25,8 @@ export const Home = () => {
     try {
       const { ok, err }: Response<Name> = await names.getName(name)
 
-      if (ok) setResult({ color: 'error', msg: `Sorry, ${name} already exists.` })
-      if (err) setResult({ color: 'success', msg: `Congratulation, ${name} is available.` })
+      if (ok) setResult({ color: 'error', msg: `Sorry, "${name}" already exists.` })
+      if (err) setResult({ color: 'success', msg: `Congratulations, "${name}" is available.` })
     } catch (error) {
       setResult({ color: 'error', msg: 'Sorry, something went wrong.' })
     }
@@ -39,18 +39,18 @@ export const Home = () => {
 
   return (
     <>
-      <Flex gap="6" mt="12">
-        <Heading>You in one</Heading>
-        <Heading color="black" strokeColor="primary">
+      <Flex gap="6" mt="20">
+        <H1>You in one</H1>
+        <H1 color="black" strokeColor="primary">
           link.
-        </Heading>
+        </H1>
       </Flex>
 
       <Flex gap="6" mt="2">
         <SubHeading>Created on Web3</SubHeading> <IcBadgeIconFlat width={256} />
       </Flex>
 
-      <Flex gap="4" mt="6">
+      <Flex gap="4" mt="6" alignItems="center">
         <NameTextInput
           onChange={(e) => setInput(e.target.value)}
           value={input}
@@ -61,9 +61,11 @@ export const Home = () => {
         <OutlineButton>Claim</OutlineButton>
       </Flex>
 
-      <Flex mt="3">
-        <Paragraph color="primary">{result.msg}</Paragraph>
-      </Flex>
+      {result.msg && (
+        <Flex mt="3">
+          <Paragraph color={result.color}>{result.msg}</Paragraph>
+        </Flex>
+      )}
     </>
   )
 }

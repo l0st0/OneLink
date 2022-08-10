@@ -43,5 +43,6 @@ export type FontSizeTypes =
   | '7xl'
   | '8xl'
   | '9xl'
+  | '10xl'
 
 export type FontWeightTypes = '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900'

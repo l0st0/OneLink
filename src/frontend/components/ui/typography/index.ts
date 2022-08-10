@@ -9,8 +9,8 @@ interface TextProps {
   strokeWidth?: string
 }
 
-export const Heading = styled.h1<TextProps>(
-  ({ theme, color = 'white', fontSize = '9xl', strokeColor, strokeWidth = '1px' }) => css`
+export const H1 = styled.h1<TextProps>(
+  ({ theme, color = 'white', fontSize = '10xl', strokeColor, strokeWidth = '1px' }) => css`
     color: ${theme.colors[color]};
     font-size: ${theme.text.fontSize[fontSize]};
 
@@ -29,8 +29,9 @@ export const SubHeading = styled.p<TextProps>(
 )
 
 export const Paragraph = styled.p<TextProps>(
-  ({ theme, color = 'white' }) =>
+  ({ theme, color = 'white', fontSize = 'base' }) =>
     css`
       color: ${theme.colors[color]};
+      font-size: ${theme.text.fontSize[fontSize]};
     `
 )

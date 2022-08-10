@@ -14,10 +14,10 @@ export const PageContainer = styled.div(
 export const TopBarContainer = styled.div(
   ({ theme }) => css`
     position: sticky;
-    top: ${theme.spaces[5]};
+    top: ${theme.spaces[8]};
     right: 0;
     z-index: 100;
 
-    margin: ${theme.spaces[5]} 0;
+    margin-bottom: ${theme.spaces[8]};
   `
 )

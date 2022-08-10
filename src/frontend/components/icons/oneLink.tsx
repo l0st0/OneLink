@@ -1,25 +1,25 @@
 import { IconProps } from '@/types'
 
-export const OneLinkIcon = ({ width = 36 }: IconProps) => {
+export const OneLinkIcon = ({ width = 32 }: IconProps) => {
   return (
     <svg width={width} viewBox="0 0 46 30" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M27 15C27 21.6274 21.6274 27 15 27C8.37258 27 3 21.6274 3 15C3 8.37258 8.37258 3 15 3"
         stroke="#0E1C40"
-        stroke-width="5"
-        stroke-linecap="round"
+        strokeWidth="5"
+        strokeLinecap="round"
       />
       <path
         d="M31 27C37.6274 27 43 21.6274 43 15C43 8.37258 37.6274 3 31 3C24.3726 3 19 8.37258 19 15"
         stroke="#64A0FA"
-        stroke-width="5"
-        stroke-linecap="round"
+        strokeWidth="5"
+        strokeLinecap="round"
       />
     </svg>
   )
 }
 
-export const OneLinkTextIcon = ({ width = 112 }: IconProps) => {
+export const OneLinkTextIcon = ({ width = 104 }: IconProps) => {
   return (
     <svg width={width} viewBox="0 0 393 74" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path

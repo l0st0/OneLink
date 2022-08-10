@@ -13,13 +13,22 @@ export const NameTextInputContainer = styled.div<NameTextInputContainerProps>(
     background: ${theme.colors.white};
     border-radius: ${theme.radius.normal};
     padding: ${theme.spaces[4]};
+    border: ${theme.spaces['0.5']} solid ${theme.colors.white};
 
     max-width: 250px;
 
-    transition: all step-end 0.2s;
+    transition: all cubic-bezier(0, 0, 0.2, 1) 0.15s;
 
-    border: 2px solid ${theme.colors[borderColor]};
-    box-shadow: 0 0 0 2px ${theme.colors.white};
+    :focus-within {
+      outline: 2px solid ${theme.colors[borderColor]};
+      outline-offset: 4px;
+    }
+
+    ${(borderColor === 'success' || borderColor === 'error') &&
+    css`
+      outline: 2px solid ${theme.colors[borderColor]};
+      outline-offset: 4px;
+    `}
   `
 )
 
@@ -31,7 +40,7 @@ export const StartText = styled.p(
 )
 
 export const InputText = styled(TextInput)(
-  () => css`
+  ({ theme }) => css`
     border: none;
 
     :focus {
