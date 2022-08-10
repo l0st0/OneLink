@@ -44,7 +44,7 @@ actor {
     };
 
     private func verifyPermission(controllers: [Types.Controller], caller: Principal, pType: { #links; #settings; #appearance; #analytics }): async Bool {
-        let isEqual = func(c: Types.Controller): Bool { Principal.equal(c.principal, caller) };
+        let isEqual = func(c: Types.Controller): Bool { Principal.equal(Principal.fromText(c.principal), caller) };
         let controller = Array.find(controllers, isEqual);
 
         switch(controller) {
@@ -69,12 +69,12 @@ actor {
     };
 
     public shared({ caller }) func getUser(): async Result.Result<Types.User, Text> {
-        // if(Principal.isAnonymous(caller)) return #err("You can't continue as anonymous user.");
+        if(Principal.isAnonymous(caller)) return #err("You can't continue as anonymous user.");
 
         switch(users.get(caller)) {
             case(?user) return #ok(user);
             case(null) {
-                let userObj = { names = [] };
+                let userObj = { names = []; hasName = false };
                 users.put(caller, userObj);
                 return #ok(userObj);
             };
@@ -99,7 +99,7 @@ actor {
         }
     };
 
-    public shared({ caller }) func createName(name: Text): async Result.Result<Types.User, Text> {
+    public shared({ caller }) func createName(name: Text): async Result.Result<{ user: Types.User; name: Types.Name }, Text> {
         if(Text.size(name) < 3) return #err("Sorry, name needs to have at least 3 characters.");
 
         switch(users.get(caller)) {
@@ -112,10 +112,9 @@ actor {
         switch(names.get(name)) {
             case(?n) return #err("Sorry, '" #name# "' already exists.");
             case(null) {                
-                let user = { names = [name] };
                 let controllers: [Types.Controller] = [
                     {
-                        principal = caller;
+                        principal = Principal.toText(caller);
                         appearance = true;
                         links = true;
                         settings = true;
@@ -129,14 +128,16 @@ actor {
                     title = "";
                     url = "";
                     show = false;
-                    clicks = [];
                     icon = "";
                 }];
 
+                let newName = { profile; look; links; controllers };
+                let user = { names = [{ primary = true; name }]; hasName = true };
+
                 users.put(caller, user);
-                names.put(name, { profile; look; links; controllers });
+                names.put(name, newName);
                 
-                return #ok(user);
+                return #ok({ user; name = newName });
             };
         }
     };

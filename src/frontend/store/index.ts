@@ -1,4 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
+import userSlice from './user/userSlice'
+import nameSlice from './name/nameSlice'
 // import {
 // persistReducer,
 // persistStore,
@@ -12,7 +14,10 @@ import { configureStore } from '@reduxjs/toolkit'
 // import storage from 'redux-persist/lib/storage'
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    user: userSlice,
+    name: nameSlice,
+  },
 
   // middleware: (getDefaultMiddleware) =>
   //   getDefaultMiddleware({

@@ -2,7 +2,7 @@ import React from 'react'
 import { TopBar } from '../TopBar'
 import { PageContainer, TopBarContainer } from './styles'
 
-const PageLayout = ({ children }: React.PropsWithChildren) => {
+export const PageLayout = ({ children }: React.PropsWithChildren) => {
   return (
     <PageContainer>
       <TopBarContainer>
@@ -12,5 +12,3 @@ const PageLayout = ({ children }: React.PropsWithChildren) => {
     </PageContainer>
   )
 }
-
-export default PageLayout

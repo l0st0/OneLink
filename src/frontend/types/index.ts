@@ -1,4 +1,4 @@
-import { Name as ICName } from '@/names/main/types'
+import { Name as ICName, User as ICUser } from '@/names/main/types'
 
 export * from './styles'
 export * from './style.types'
@@ -16,3 +16,4 @@ export interface IconProps {
 }
 
 export interface Name extends ICName {}
+export interface User extends ICUser {}

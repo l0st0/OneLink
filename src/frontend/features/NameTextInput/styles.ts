@@ -12,7 +12,7 @@ export const NameTextInputContainer = styled.div<NameTextInputContainerProps>(
     display: flex;
     background: ${theme.colors.white};
     border-radius: ${theme.radius.normal};
-    padding: ${theme.spaces[4]};
+    padding: ${theme.spaces[3.5]};
     border: ${theme.spaces['0.5']} solid ${theme.colors.white};
 
     max-width: 250px;
@@ -39,12 +39,10 @@ export const StartText = styled.p(
   `
 )
 
-export const InputText = styled(TextInput)(
-  ({ theme }) => css`
-    border: none;
+export const InputText = styled(TextInput)`
+  border: none;
 
-    :focus {
-      outline: none;
-    }
-  `
-)
+  :focus {
+    outline: none;
+  }
+`

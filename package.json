@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@dfinity/agent": "^0.12.2",
+    "@dfinity/auth-client": "^0.12.2",
     "@emotion/babel-plugin": "^11.9.2",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",

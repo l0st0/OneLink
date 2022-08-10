@@ -1,5 +1,3 @@
-import Principal "mo:base/Principal";
-
 module BaseTypes {
   public type Link = {
     id: Text;
@@ -26,7 +24,7 @@ module BaseTypes {
   };
 
   public type Controller = {
-    principal: Principal;
+    principal: Text;
     appearance: Bool;
     links: Bool;
     settings: Bool;
@@ -41,7 +39,13 @@ public type Name = {
   };
 
   public type User = {
-    names: [Text];
+    names: [
+      {
+        primary: Bool;
+        name: Text;
+      }
+    ];
+    hasName: Bool;
   };
 
   public type Stats = {
