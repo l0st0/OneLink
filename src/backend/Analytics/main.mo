@@ -10,8 +10,8 @@ import Principal "mo:base/Principal";
 import Result "mo:base/Result";
 import Text "mo:base/Text";
 
-import Env "env";
-import Types "Types";
+import Env "../env";
+import Types "../Types";
 
 actor {
     stable var analytics_stable_0: [(Text, Types.Analytics)] = [];

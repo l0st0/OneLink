@@ -12,7 +12,7 @@ export const NameTextInput = ({ onChange, value, placeholder, borderColor }: Nam
   return (
     <NameTextInputContainer borderColor={borderColor}>
       <StartText>onelink.ooo/</StartText>
-      <InputText type="text" onChange={onChange} value={value} placeholder={placeholder} />
+      <InputText autoFocus type="text" onChange={onChange} value={value} placeholder={placeholder} />
     </NameTextInputContainer>
   )
 }

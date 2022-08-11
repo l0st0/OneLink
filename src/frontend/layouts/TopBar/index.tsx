@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { FillButton, Flex, OneLinkIcon, OneLinkTextIcon, OutlineButton } from '@/components'
+import { FilledButton, Flex, OneLinkIcon, OneLinkTextIcon, OutlineButton } from '@/components'
 import { useAppDispatch, useAppSelector, useIdentity } from '@/hooks'
 import { TopBarContent } from './styles'
 import { getUser } from '@/store/user/userSlice'
@@ -31,15 +31,15 @@ export const TopBar = () => {
       </Flex>
 
       {!isAuth ? (
-        <FillButton variant="secondary" onClick={onLogin}>
+        <FilledButton variant="secondary" onClick={onLogin}>
           Login
-        </FillButton>
+        </FilledButton>
       ) : (
         <Flex gap="2">
           {user?.hasName && <OutlineButton onClick={onAdminClick}>Admin</OutlineButton>}
-          <FillButton variant="secondary" onClick={onLogout}>
+          <FilledButton variant="secondary" onClick={onLogout}>
             Logout
-          </FillButton>
+          </FilledButton>
         </Flex>
       )}
     </TopBarContent>

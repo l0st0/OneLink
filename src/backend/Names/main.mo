@@ -8,7 +8,8 @@ import Principal "mo:base/Principal";
 import Result "mo:base/Result";
 import Text "mo:base/Text";
 
-import Types "Types";
+import Name "./Name";
+import Types "../Types";
 
 actor {
     stable var user_stable_0: [(Principal, Types.User)] = [];
@@ -25,22 +26,6 @@ actor {
     system func postupgrade() {
         name_stable_0 := [];
         user_stable_0 := [];
-    };
-
-    var defaultProfile: Types.Profile = {
-        title = "";
-        bio = "";
-        image = "";
-    };
-
-    var defaultLook: Types.Look = {
-        theme =  "0";
-        background = #color("000000");
-        gradient = {
-            show = true;
-            position = #top(true);
-            color = "FFFFFF";
-        };
     };
 
     private func verifyPermission(controllers: [Types.Controller], caller: Principal, pType: { #links; #settings; #appearance; #analytics }): async Bool {
@@ -74,7 +59,7 @@ actor {
         switch(users.get(caller)) {
             case(?user) return #ok(user);
             case(null) {
-                let userObj = { names = []; hasName = false };
+                let userObj = Name.createUser();
                 users.put(caller, userObj);
                 return #ok(userObj);
             };
@@ -104,38 +89,17 @@ actor {
 
         switch(users.get(caller)) {
             case(null) return #err("You need to log in.");
-            case(?u) {
-                if(u.names.size() > 0) return #err("You already have one name.");
-            }
+            case(?u) if(u.names.size() > 0) return #err("You already have one name.");
         };
 
         switch(names.get(name)) {
             case(?n) return #err("Sorry, '" #name# "' already exists.");
-            case(null) {                
-                let controllers: [Types.Controller] = [
-                    {
-                        principal = Principal.toText(caller);
-                        appearance = true;
-                        links = true;
-                        settings = true;
-                        owner = true;
-                    }
-                ];
-                let profile: Types.Profile = defaultProfile;
-                let look: Types.Look = defaultLook;
-                let links: [Types.Link] = [{
-                    id = "1";
-                    title = "";
-                    url = "";
-                    show = false;
-                    icon = "";
-                }];
-
-                let newName = { profile; look; links; controllers };
-                let user = { names = [{ primary = true; name }]; hasName = true };
-
-                users.put(caller, user);
+            case(null) {
+                let newName = Name.createName(caller);
                 names.put(name, newName);
+
+                let user = { names = [{ primary = true; name }]; hasName = true };
+                users.put(caller, user);
                 
                 return #ok({ user; name = newName });
             };
@@ -144,6 +108,7 @@ actor {
 
     public shared({ caller }) func updatePermissions(name: Text, controllers: [Types.Controller]): async Result.Result<Types.Name, Text> {
         if(Option.isNull(users.get(caller))) return #err("Sorry, you need to log in.");
+        if(controllers.size() == 0) return #err("Select controllers");
 
         switch(names.get(name)) {
             case(null) return #err("Name does not exists.");

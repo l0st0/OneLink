@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Flex, H1, IcBadgeIconFlat, OutlineButton, Paragraph, SubHeading } from '@/components'
+import { Flex, H1, IcBadgeIconFlat, Paragraph, SubHeading, LoadingButton } from '@/components'
 import { NameTextInput } from '@/features'
 import { useAppDispatch, useDebounce, useIdentity } from '@/hooks'
 import { names } from '@/names/main'
@@ -49,7 +49,9 @@ export const Home = () => {
     fetchName(debouncedSearchTerm)
   }, [debouncedSearchTerm])
 
-  const onClaimClick = async () => {
+  const onClaimClick = async (e: React.FormEvent<HTMLDivElement>) => {
+    e.preventDefault()
+
     if (!result.claim) return
     setLoading(true)
 
@@ -88,7 +90,7 @@ export const Home = () => {
         <SubHeading>Created on Web3</SubHeading> <IcBadgeIconFlat width={256} />
       </Flex>
 
-      <Flex gap="4" mt="6" alignItems="center">
+      <Flex as="form" gap="4" mt="6" alignItems="center" onSubmit={onClaimClick}>
         <NameTextInput
           onChange={(e) => setInput(e.target.value)}
           value={input}
@@ -96,7 +98,9 @@ export const Home = () => {
           borderColor={result.color}
         />
 
-        <OutlineButton onClick={onClaimClick}>{loading ? 'Loading...' : 'Claim'}</OutlineButton>
+        <LoadingButton button="outline" loading={loading} type="submit">
+          Claim
+        </LoadingButton>
       </Flex>
 
       {result.msg && (

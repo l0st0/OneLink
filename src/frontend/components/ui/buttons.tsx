@@ -1,9 +1,18 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
+import React from 'react'
+import { Flex } from './flex'
+import { Spinner } from './spinner'
 
 interface ButtonProps {
   variant?: 'primary' | 'secondary'
 }
+
+type LoadingButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
+  ButtonProps & {
+    button?: 'outline' | 'filled'
+    loading: boolean
+  }
 
 export const Button = styled.button<ButtonProps>(
   ({ theme }) => css`
@@ -17,8 +26,9 @@ export const Button = styled.button<ButtonProps>(
     letter-spacing: ${theme.spaces.px};
 
     :disabled {
-      color: ${theme.colors.disable};
-      border-color: ${theme.colors.disable};
+      /* color: ${theme.colors.disable}; */
+      /* border-color: ${theme.colors.disable}; */
+      cursor: default;
     }
   `
 )
@@ -40,7 +50,7 @@ export const OutlineButton = styled(Button)(
   `
 )
 
-export const FillButton = styled(Button)(
+export const FilledButton = styled(Button)(
   ({ theme, variant = 'primary' }) => css`
     color: ${theme.colors.white};
 
@@ -55,3 +65,30 @@ export const FillButton = styled(Button)(
         `}
   `
 )
+
+export const LoadingButton = ({
+  button = 'filled',
+  variant = 'primary',
+  loading,
+  children,
+  ...rest
+}: LoadingButtonProps) => {
+  const getElement = () => {
+    if (button === 'filled') return FilledButton
+    return OutlineButton
+  }
+
+  const ButtonEl = getElement()
+
+  return (
+    <ButtonEl variant={variant} disabled={loading} {...rest}>
+      {loading ? (
+        <Flex gap="2">
+          <Spinner /> {children}
+        </Flex>
+      ) : (
+        children
+      )}
+    </ButtonEl>
+  )
+}
