@@ -2,13 +2,15 @@ import _ from 'lodash'
 import { css } from '@emotion/react'
 import { BreakPointTypes, MapMqProps, SpacePropTypes } from '@/types'
 
-export const spaceProps: { name: string; value: SpacePropTypes }[] = [
-  { name: 'gap', value: 'gap' },
-  { name: 'marginTop', value: 'mt' },
-  { name: 'marginBottom', value: 'mb' },
-  { name: 'marginLeft', value: 'ml' },
-  { name: 'marginRight', value: 'mr' },
-  { name: 'margin', value: 'm' },
+export const spaceProps: { name: string[]; value: SpacePropTypes }[] = [
+  { name: ['gap'], value: 'gap' },
+  { name: ['marginTop'], value: 'mt' },
+  { name: ['marginBottom'], value: 'mb' },
+  { name: ['marginLeft'], value: 'ml' },
+  { name: ['marginRight'], value: 'mr' },
+  { name: ['margin'], value: 'm' },
+  { name: ['marginTop', 'marginBottom'], value: 'my' },
+  { name: ['marginLeft', 'marginRight'], value: 'mx' },
 ]
 
 export const breakpointsArr: BreakPointTypes[] = ['_', 'sm', 'md', 'lg', 'xl']
@@ -25,39 +27,42 @@ export const mq = (bp: BreakPointTypes) => {
   return `@media (min-width: ${breakpointsObj[bp]})`
 }
 
+type getCssType = { [key: string]: string }
+type mediaType = { [key: string]: {} }
+
 export const mapMq = <T extends {}>({ name, value, theme = undefined }: MapMqProps<T>) => {
   if (!value) return css``
-  if (_.isString(value)) {
-    if (theme) {
-      if (value.includes('px') || value.includes('rem')) {
-        return css({
-          [name]: `${value}`,
-        })
-      }
 
-      return css({
-        [name]: `${theme[value]}`,
-      })
+  const media: mediaType = {}
+
+  if (_.isString(value)) {
+    let getCss: getCssType = {}
+    name.map((n) => (getCss[n] = `${value}`))
+
+    if (value.includes('px') || value.includes('rem')) return css(getCss)
+
+    if (theme) {
+      getCss = {}
+      name.map((n) => (getCss[n] = `${theme[value]}`))
+      return css(getCss)
     }
 
-    return css({
-      [name]: `${value}`,
-    })
+    return css(getCss)
   }
 
-  const media: { [key: string]: {} } = {}
-
   breakpointsArr.map((bpName) => {
-    if (value[bpName]) {
-      let val = value[bpName]
-      if (theme) val = theme[value[bpName]]
-      if (bpName === '_') return (media[name] = `${val}`)
+    let val = value[bpName]
 
-      return (media[mq(bpName)] = { [name]: `${val}` })
+    if (val) {
+      if (theme) val = theme[value[bpName]]
+      if (String(value[bpName]).includes('px') || String(value[bpName]).includes('rem')) val = value[bpName]
+
+      if (bpName === '_') return name.map((n) => (media[n] = `${val}`))
+      return name.map((n) => (media[mq(bpName)] = { ...media[mq(bpName)], [n]: `${val}` }))
     }
   })
 
-  return css({
-    ...media,
-  })
+  console.log('media', media)
+
+  return css(media)
 }

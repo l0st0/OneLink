@@ -90,7 +90,7 @@ export const Home = () => {
         <SubHeading>Created on Web3</SubHeading> <IcBadgeIconFlat width={256} />
       </Flex>
 
-      <Flex as="form" gap="4" mt="6" alignItems="center" onSubmit={onClaimClick}>
+      <Flex as="form" gap="4" mt="6" align="center" onSubmit={onClaimClick}>
         <NameTextInput
           onChange={(e) => setInput(e.target.value)}
           value={input}

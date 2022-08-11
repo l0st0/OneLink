@@ -1,12 +1,12 @@
 import React from 'react'
-import { TopBar } from '../TopBar'
+import { TopNavigation } from './components'
 import { PageContainer, TopBarContainer } from './styles'
 
 export const PageLayout = ({ children }: React.PropsWithChildren) => {
   return (
     <PageContainer>
       <TopBarContainer>
-        <TopBar />
+        <TopNavigation />
       </TopBarContainer>
       {children}
     </PageContainer>

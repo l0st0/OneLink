@@ -1,4 +1,11 @@
-import { BreakPointTypes, ColorTypes, FontSizeTypes, FontWeightTypes, SpaceTypes } from './style.types'
+import {
+  BreakPointTypes,
+  ColorTypes,
+  FontSizeTypes,
+  FontWeightTypes,
+  SpaceTypes,
+  WidthTypes,
+} from './style.types'
 
 export type Colors = {
   [Property in ColorTypes]: string
@@ -16,6 +23,10 @@ export type FontWeights = {
   [Property in FontWeightTypes]: number
 }
 
+export type Width = {
+  [Property in WidthTypes]: string
+}
+
 // Theme
 export interface CustomTheme {
   colors: Colors
@@ -24,10 +35,7 @@ export interface CustomTheme {
     fontSize: FontSizes
     fontWeight: FontWeights
   }
-  width: {
-    max: string
-    full: string
-  }
+  width: Width
   radius: {
     low: string
     normal: string
@@ -39,7 +47,7 @@ export interface CustomTheme {
 export type MapMqValueTypes<T> = string | { [Property in BreakPointTypes]?: T }
 
 export interface MapMqProps<T> {
-  name: string
+  name: string[]
   value?: MapMqValueTypes<T>
   unit?: string
   theme?: any
@@ -48,6 +56,7 @@ export interface MapMqProps<T> {
 // CSS
 type FlexDirectionTypes = 'row' | 'column' | 'column-reverse' | 'row-reverse'
 type AlignItemsTypes = 'center' | 'flex-end' | 'flex-start'
+type JustifyContentTypes = 'center' | 'flex-end' | 'flex-start' | 'space-between' | 'space-around'
 
 type SpaceMqTypes = {
   [Property in BreakPointTypes]?: SpaceTypes
@@ -64,3 +73,8 @@ type AlignItemsMqTypes = {
   [Property in BreakPointTypes]?: AlignItemsTypes
 }
 export type AlignItems = AlignItemsTypes | AlignItemsMqTypes
+
+type JustifyContentMqTypes = {
+  [Property in BreakPointTypes]?: JustifyContentTypes
+}
+export type JustifyContent = JustifyContentTypes | JustifyContentMqTypes
