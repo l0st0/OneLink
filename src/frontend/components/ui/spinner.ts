@@ -8,7 +8,11 @@ interface SpinnerProps {
   borderSize?: SpaceTypes
 }
 
-const spin = keyframes`
+interface SpinnerSvgProps {
+  spin?: boolean
+}
+
+const spinAnimation = keyframes`
     0% {
         transform: rotate(0deg);
     }
@@ -27,6 +31,15 @@ export const Spinner = styled.div<SpinnerProps>(
     width: ${theme.spaces[size]};
     height: ${theme.spaces[size]};
 
-    animation: ${spin} 1s linear infinite;
+    animation: ${spinAnimation} 1s linear infinite;
+  `
+)
+
+export const SpinnerSvg = styled.svg<SpinnerSvgProps>(
+  ({ spin }) => css`
+    ${spin &&
+    css`
+      animation: ${spinAnimation} 1s linear infinite;
+    `}
   `
 )

@@ -20,6 +20,7 @@ export interface Response<T> {
 export interface IconProps {
   width?: number | string
   height?: number | string
+  spin?: boolean
 }
 
 export interface Name extends ICName {}
