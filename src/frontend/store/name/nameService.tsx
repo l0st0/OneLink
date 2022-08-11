@@ -1,15 +1,15 @@
 import { useNameClient } from '@/hooks'
 
-export const getName = async (name: string) => {
+export const fetchName = async (name: string) => {
   const client = await useNameClient()
   return await client.getName(name)
 }
 
-export const createName = async (name: string) => {
+export const fetchCreateName = async (name: string) => {
   const client = await useNameClient()
   return await client.createName(name)
 }
 
-const nameService = { getName, createName }
+const nameService = { fetchName, fetchCreateName }
 
 export default nameService

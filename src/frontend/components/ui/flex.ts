@@ -8,14 +8,15 @@ type FlexProps = {
   align?: AlignItems
   justify?: JustifyContent
   textAlign?: 'center' | 'left' | 'right'
+  height?: string
 } & {
   [Property in SpacePropTypes]?: LiteralUnion<SpaceUnits>
 }
 
 export const Flex = styled.div<FlexProps>(
-  ({ theme, direction = 'row', align = 'flex-start', justify = 'flex-start', ...rest }) => css`
+  ({ theme, direction = 'row', align = 'flex-start', justify = 'flex-start', height, ...rest }) => css`
     display: flex;
-    height: 100%;
+    height: ${height || '100%'};
 
     ${mapMq({ name: ['flexDirection'], value: direction })}
     ${mapMq({ name: ['alignItems'], value: align })}

@@ -27,7 +27,7 @@ export const getUser = createAsyncThunk<
   }
 >('user/getUser', async (_, { rejectWithValue }) => {
   try {
-    return await userService.getUser()
+    return await userService.fetchUser()
   } catch (err) {
     const message = 'Something happend.'
     return rejectWithValue(message)
@@ -42,7 +42,7 @@ export const getIsAuth = createAsyncThunk<
   }
 >('user/getIsAuth', async (_, { rejectWithValue }) => {
   try {
-    return await userService.getIsAuth()
+    return await userService.fetchIsAuth()
   } catch (err) {
     const message = 'Something happend.'
     return rejectWithValue(message)

@@ -3,18 +3,13 @@ import { useAppDispatch, useScrollToTop } from '@/hooks'
 import Pages from './routes'
 import { theme, globalStyles } from '@/styles'
 import React from 'react'
-import { getIsAuth, getUser } from './store/user/userSlice'
+import { getIsAuth } from './store/user/userSlice'
 
 const App = () => {
   const dispatch = useAppDispatch()
 
-  const initLoad = async () => {
-    const isAuth = await dispatch(getIsAuth()).unwrap()
-    if (isAuth) dispatch(getUser())
-  }
-
   React.useEffect(() => {
-    initLoad()
+    dispatch(getIsAuth())
   }, [])
 
   useScrollToTop()

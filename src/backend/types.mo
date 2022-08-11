@@ -31,7 +31,13 @@ module BaseTypes {
     owner: Bool;
   };
 
+  public type UName = {
+    primary: Bool;
+    name: Text;
+  };
+
 public type Name = {
+    name: Text;
     profile: Profile;
     look: Look;
     links: [Link];
@@ -39,13 +45,7 @@ public type Name = {
   };
 
   public type User = {
-    names: [
-      {
-        primary: Bool;
-        name: Text;
-      }
-    ];
-    hasName: Bool;
+    names: [UName];
   };
 
   public type Stats = {

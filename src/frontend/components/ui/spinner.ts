@@ -5,6 +5,7 @@ import styled from '@emotion/styled'
 interface SpinnerProps {
   color?: ColorTypes
   size?: SpaceTypes
+  borderSize?: SpaceTypes
 }
 
 const spin = keyframes`
@@ -17,10 +18,10 @@ const spin = keyframes`
 `
 
 export const Spinner = styled.div<SpinnerProps>(
-  ({ theme, color = 'primary', size = '4' }) => css`
-    border: 0.1em solid transparent;
-    border-top: 0.1em solid ${theme.colors[color]};
-    border-right: 0.1em solid ${theme.colors[color]};
+  ({ theme, color = 'primary', size = '4', borderSize = 'px' }) => css`
+    border: ${theme.spaces[borderSize]} solid transparent;
+    border-top: ${theme.spaces[borderSize]} solid ${theme.colors[color]};
+    border-right: ${theme.spaces[borderSize]} solid ${theme.colors[color]};
     border-radius: 50%;
 
     width: ${theme.spaces[size]};

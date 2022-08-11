@@ -20,10 +20,10 @@ module {
     };
 
     public func createUser(): Types.User {
-        return { names = []; hasName = false };
+        return { names = [] };
     };
 
-    public func createName(caller: Principal): Types.Name {
+    public func createName(name: Text, caller: Principal): Types.Name {
         let controllers: [Types.Controller] = [
             {
                 principal = Principal.toText(caller);
@@ -44,6 +44,6 @@ module {
             icon = "";
         }];
 
-        return { profile; look; links; controllers };
+        return { name; profile; look; links; controllers };
     };
 }

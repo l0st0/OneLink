@@ -95,10 +95,10 @@ actor {
         switch(names.get(name)) {
             case(?n) return #err("Sorry, '" #name# "' already exists.");
             case(null) {
-                let newName = Name.createName(caller);
+                let newName = Name.createName(name, caller);
                 names.put(name, newName);
 
-                let user = { names = [{ primary = true; name }]; hasName = true };
+                let user = { names = [{ primary = true; name }] };
                 users.put(caller, user);
                 
                 return #ok({ user; name = newName });
@@ -118,6 +118,7 @@ actor {
 
                 let updatedName = { 
                     controllers;
+                    name = n.name;
                     links = n.links;
                     profile = n.profile; 
                     look = n.look
@@ -140,6 +141,7 @@ actor {
                 
                 let updatedName = { 
                     links;
+                    name = n.name;
                     controllers = n.controllers; 
                     profile = n.profile; 
                     look = n.look
@@ -163,6 +165,7 @@ actor {
                 let updatedName = {
                     profile = appearance.profile;
                     look = appearance.look;
+                    name = n.name;
                     links = n.links;
                     controllers = n.controllers;
                 };

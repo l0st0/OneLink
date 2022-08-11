@@ -21,7 +21,7 @@ export const getName = createAsyncThunk<
   }
 >('name/getName', async (name, { rejectWithValue }) => {
   try {
-    return await nameService.getName(name)
+    return await nameService.fetchName(name)
   } catch (err) {
     const message = 'Something happend.'
     return rejectWithValue(message)
@@ -36,7 +36,7 @@ export const createName = createAsyncThunk<
   }
 >('name/createName', async (name, { rejectWithValue, dispatch }) => {
   try {
-    const response: Response<{ user: User; name: Name }> = await nameService.createName(name)
+    const response: Response<{ user: User; name: Name }> = await nameService.fetchCreateName(name)
 
     if (response.ok) dispatch(updateUser(response.ok.user))
 
@@ -53,7 +53,7 @@ export const nameSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // getUser
+      // getName
       .addCase(getName.pending, () => {})
       .addCase(getName.fulfilled, (state, action) => {
         const { ok, err } = action.payload
@@ -64,6 +64,7 @@ export const nameSlice = createSlice({
         state.name = undefined
         state.nameError = action.payload
       })
+      // createName
       .addCase(createName.pending, () => {})
       .addCase(createName.fulfilled, (state, action) => {
         const { ok, err } = action.payload

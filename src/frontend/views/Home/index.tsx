@@ -7,11 +7,13 @@ import { names } from '@/names/main'
 import { Name, Response } from '@/types'
 import { createName } from '@/store/name/nameSlice'
 import { getUser } from '@/store/user/userSlice'
+import { userHasPrimaryName } from '@/utils'
 
 interface ResultInterface {
   color: 'success' | 'error' | 'primary'
   msg: string
   claim: boolean
+  hasName?: boolean
 }
 
 const defaultResult: ResultInterface = { color: 'primary', msg: '', claim: false }
@@ -27,6 +29,8 @@ export const Home = () => {
   const navigate = useNavigate()
 
   const fetchName = async (name: string) => {
+    if (result.hasName) return
+
     if (name.length < 3)
       return setResult({
         color: 'error',
@@ -52,23 +56,28 @@ export const Home = () => {
   const onClaimClick = async (e: React.FormEvent<HTMLDivElement>) => {
     e.preventDefault()
 
+    if (result.hasName) return navigate('/admin')
     if (!result.claim) return
+
     setLoading(true)
 
     const { ok: actualUser } = await dispatch(getUser()).unwrap()
 
     if (actualUser) {
-      if (!actualUser.hasName) await dispatch(createName(input))
+      if (!userHasPrimaryName(actualUser)) {
+        await dispatch(createName(input))
+        return navigate('/admin')
+      }
 
       setLoading(false)
-      return navigate('/admin')
+      return setResult({ color: 'error', msg: 'You already have name.', claim: false, hasName: true })
     }
 
     const identity = await useIdentity(dispatch)
 
     const claimName = async () => {
       const { ok: user } = await dispatch(getUser()).unwrap()
-      if (!user?.hasName) await dispatch(createName(input))
+      if (!userHasPrimaryName(user)) await dispatch(createName(input))
 
       setLoading(false)
       return navigate('/admin')
@@ -99,7 +108,7 @@ export const Home = () => {
         />
 
         <LoadingButton button="outline" loading={loading} type="submit">
-          Claim
+          {result.hasName ? 'Admin' : 'Claim'}
         </LoadingButton>
       </Flex>
 
