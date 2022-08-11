@@ -1,16 +1,42 @@
-import { Name, Response, User } from '@/types'
+import { Controller, Link, Look, Name, Profile, Response, User } from '@/types'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { RootState } from '..'
 import { updateUser } from '../user/userSlice'
 import nameService from './nameService'
 
 interface NameState {
-  name?: Name
+  name: string
+  links: Link[]
+  profile: Profile
+  look: Look
+  controllers: Controller[]
   nameError?: string
 }
 
+const defaultProfile = {
+  bio: '',
+  image: '',
+  title: '',
+}
+
+const defaultLook = {
+  background: {
+    color: '',
+  },
+  gradient: {
+    color: '',
+    position: { top: true },
+    show: false,
+  },
+  theme: '',
+}
+
 const initialState: NameState = {
-  name: undefined,
+  name: '',
+  links: [],
+  profile: defaultProfile,
+  look: defaultLook,
+  controllers: [],
 }
 
 export const getName = createAsyncThunk<
@@ -57,22 +83,47 @@ export const nameSlice = createSlice({
       .addCase(getName.pending, () => {})
       .addCase(getName.fulfilled, (state, action) => {
         const { ok, err } = action.payload
-        state.name = ok
+        if (ok) {
+          const { controllers, links, look, name, profile } = ok
+
+          state.name = name
+          state.links = links
+          state.look = look
+          state.profile = profile
+          state.controllers = controllers
+        }
+
         state.nameError = err
       })
       .addCase(getName.rejected, (state, action) => {
-        state.name = undefined
+        state.name = ''
+        state.links = []
+        state.look = defaultLook
+        state.profile = defaultProfile
+        state.controllers = []
         state.nameError = action.payload
       })
       // createName
       .addCase(createName.pending, () => {})
       .addCase(createName.fulfilled, (state, action) => {
         const { ok, err } = action.payload
-        state.name = ok?.name
+        if (ok?.name) {
+          const { controllers, links, look, name, profile } = ok.name
+
+          state.name = name
+          state.links = links
+          state.look = look
+          state.profile = profile
+          state.controllers = controllers
+        }
         state.nameError = err
       })
       .addCase(createName.rejected, (state, action) => {
-        state.name = undefined
+        state.name = ''
+        state.links = []
+        state.look = defaultLook
+        state.profile = defaultProfile
+        state.controllers = []
         state.nameError = action.payload
       })
   },

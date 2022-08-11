@@ -5,17 +5,18 @@ import styled from '@emotion/styled'
 
 interface NameTextInputContainerProps {
   borderColor: ColorTypes
+  maxWidth: string
 }
 
 export const NameTextInputContainer = styled.div<NameTextInputContainerProps>(
-  ({ theme, borderColor }) => css`
+  ({ theme, borderColor, maxWidth }) => css`
     display: flex;
     background: ${theme.colors.white};
     border-radius: ${theme.radius.normal};
     padding: ${theme.spaces[3.5]};
     border: ${theme.spaces['0.5']} solid ${theme.colors.white};
 
-    max-width: 250px;
+    max-width: ${maxWidth};
 
     transition: all cubic-bezier(0, 0, 0.2, 1) 0.15s;
 

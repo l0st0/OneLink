@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
-import { Admin, Home } from '@/views'
+import { Links, Home } from '@/views'
 import { BasicRoutes, AdminRoutes } from '@/features'
+import { Appearance } from './views/Admin/Appearance'
 
 export const Pages = () => {
   return (
@@ -9,7 +10,8 @@ export const Pages = () => {
         <Route path="/" element={<Home />} />
       </Route>
       <Route element={<AdminRoutes />}>
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/links" element={<Links />} />
+        <Route path="/admin/appearance" element={<Appearance />} />
       </Route>
     </Routes>
   )

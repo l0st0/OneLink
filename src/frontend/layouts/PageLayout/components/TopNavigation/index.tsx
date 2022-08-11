@@ -10,7 +10,9 @@ export const TopNavigation = () => {
 
   const onLogin = async () => {
     const identity = await useIdentity(dispatch)
-    return await identity.login()
+    const onScc = async () => navigate('/admin/links')
+
+    return await identity.login(onScc)
   }
 
   const onLogout = async () => {
@@ -18,7 +20,7 @@ export const TopNavigation = () => {
     return await identity.logout()
   }
 
-  const onAdminClick = () => navigate('/admin')
+  const onAdminClick = () => navigate('/admin/links')
 
   return (
     <TopBar>

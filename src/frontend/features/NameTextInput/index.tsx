@@ -6,11 +6,18 @@ interface NameTextInputProps {
   value: string
   placeholder?: string
   borderColor: ColorTypes
+  maxWidth: string
 }
 
-export const NameTextInput = ({ onChange, value, placeholder, borderColor }: NameTextInputProps) => {
+export const NameTextInput = ({
+  onChange,
+  value,
+  placeholder,
+  borderColor,
+  maxWidth,
+}: NameTextInputProps) => {
   return (
-    <NameTextInputContainer borderColor={borderColor}>
+    <NameTextInputContainer borderColor={borderColor} maxWidth={maxWidth}>
       <StartText>onelink.ooo/</StartText>
       <InputText autoFocus type="text" onChange={onChange} value={value} placeholder={placeholder} />
     </NameTextInputContainer>

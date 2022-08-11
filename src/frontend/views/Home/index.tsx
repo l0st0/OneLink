@@ -1,62 +1,24 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Flex, H1, IcBadgeIconFlat, Paragraph, SubHeading, LoadingButton } from '@/components'
-import { NameTextInput } from '@/features'
-import { useAppDispatch, useDebounce, useIdentity } from '@/hooks'
-import { names } from '@/names/main'
-import { Name, Response } from '@/types'
+import { Flex, H1, IcBadgeIconFlat, SubH1 } from '@/components'
+import { ClaimForm, onClaimClickParameters } from '@/features'
+import { useAppDispatch, useIdentity } from '@/hooks'
 import { createName } from '@/store/name/nameSlice'
 import { getUser } from '@/store/user/userSlice'
 import { userHasPrimaryName } from '@/utils'
 
-interface ResultInterface {
-  color: 'success' | 'error' | 'primary'
-  msg: string
-  claim: boolean
-  hasName?: boolean
-}
-
-const defaultResult: ResultInterface = { color: 'primary', msg: '', claim: false }
-
 export const Home = () => {
-  const [input, setInput] = React.useState('')
   const [loading, setLoading] = React.useState(false)
-  const [result, setResult] = React.useState<ResultInterface>(defaultResult)
 
   const dispatch = useAppDispatch()
-
-  const debouncedSearchTerm = useDebounce(input, 500)
   const navigate = useNavigate()
 
-  const fetchName = async (name: string) => {
-    if (result.hasName) return
+  const onClaimClick = async ({ event, input, result, setResult }: onClaimClickParameters) => {
+    event.preventDefault()
 
-    if (name.length < 3)
-      return setResult({
-        color: 'error',
-        msg: 'Sorry, name has to have at least 3 characters.',
-        claim: false,
-      })
+    const adminPath = '/admin/links'
 
-    try {
-      const { ok, err }: Response<Name> = await names.getName(name)
-
-      if (ok) setResult({ color: 'error', msg: `Sorry, "${name}" already exists.`, claim: false })
-      if (err) setResult({ color: 'success', msg: `Congratulations, "${name}" is available.`, claim: true })
-    } catch (error) {
-      setResult({ color: 'error', msg: 'Sorry, something went wrong.', claim: false })
-    }
-  }
-
-  React.useEffect(() => {
-    if (!debouncedSearchTerm) return setResult(defaultResult)
-    fetchName(debouncedSearchTerm)
-  }, [debouncedSearchTerm])
-
-  const onClaimClick = async (e: React.FormEvent<HTMLDivElement>) => {
-    e.preventDefault()
-
-    if (result.hasName) return navigate('/admin')
+    if (result.hasName) return navigate(adminPath)
     if (!result.claim) return
 
     setLoading(true)
@@ -66,7 +28,7 @@ export const Home = () => {
     if (actualUser) {
       if (!userHasPrimaryName(actualUser)) {
         await dispatch(createName(input))
-        return navigate('/admin')
+        return navigate(adminPath)
       }
 
       setLoading(false)
@@ -80,7 +42,7 @@ export const Home = () => {
       if (!userHasPrimaryName(user)) await dispatch(createName(input))
 
       setLoading(false)
-      return navigate('/admin')
+      return navigate(adminPath)
     }
 
     identity.login(claimName)
@@ -96,27 +58,10 @@ export const Home = () => {
       </Flex>
 
       <Flex gap="6" mt="2">
-        <SubHeading>Created on Web3</SubHeading> <IcBadgeIconFlat width={256} />
+        <SubH1>Created on Web3</SubH1> <IcBadgeIconFlat width={256} />
       </Flex>
 
-      <Flex as="form" gap="4" mt="6" align="center" onSubmit={onClaimClick}>
-        <NameTextInput
-          onChange={(e) => setInput(e.target.value)}
-          value={input}
-          placeholder="yourname"
-          borderColor={result.color}
-        />
-
-        <LoadingButton button="outline" loading={loading} type="submit">
-          {result.hasName ? 'Admin' : 'Claim'}
-        </LoadingButton>
-      </Flex>
-
-      {result.msg && (
-        <Flex mt="3">
-          <Paragraph color={result.color}>{result.msg}</Paragraph>
-        </Flex>
-      )}
+      <ClaimForm onClaimClick={onClaimClick} loading={loading} />
     </>
   )
 }

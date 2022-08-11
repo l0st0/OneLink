@@ -6,6 +6,7 @@ import { Spinner } from './spinner'
 
 interface ButtonProps {
   variant?: 'primary' | 'secondary'
+  fullSize?: boolean
 }
 
 type LoadingButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
@@ -14,26 +15,33 @@ type LoadingButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
     loading: boolean
   }
 
-export const Button = styled.button<ButtonProps>(
+const Button = styled.button<ButtonProps>(
   ({ theme }) => css`
     cursor: pointer;
-    text-transform: uppercase;
-    padding: ${theme.spaces[4]} ${theme.spaces[6]};
     border-radius: ${theme.radius.normal};
-    border: ${theme.spaces['0.5']} solid ${theme.colors.primary};
-    font-size: ${theme.text.fontSize.sm};
-    font-weight: ${theme.text.fontWeight[500]};
-    letter-spacing: ${theme.spaces.px};
 
     :disabled {
-      /* color: ${theme.colors.disable}; */
-      /* border-color: ${theme.colors.disable}; */
       cursor: default;
     }
   `
 )
 
-export const OutlineButton = styled(Button)(
+const TextButton = styled(Button)(
+  ({ theme, fullSize }) => css`
+    text-transform: uppercase;
+    padding: ${theme.spaces[4]} ${theme.spaces[6]};
+    font-size: ${theme.text.fontSize.sm};
+    font-weight: ${theme.text.fontWeight[500]};
+    letter-spacing: ${theme.spaces.px};
+
+    ${fullSize &&
+    css`
+      width: 100%;
+    `}
+  `
+)
+
+export const OutlineButton = styled(TextButton)(
   ({ theme, variant = 'primary' }) => css`
     background: transparent;
     border: 2px solid ${theme.colors.primary};
@@ -50,7 +58,7 @@ export const OutlineButton = styled(Button)(
   `
 )
 
-export const FilledButton = styled(Button)(
+export const FilledButton = styled(TextButton)(
   ({ theme, variant = 'primary' }) => css`
     color: ${theme.colors.white};
 
@@ -70,6 +78,7 @@ export const LoadingButton = ({
   button = 'filled',
   variant = 'primary',
   loading,
+  disabled,
   children,
   ...rest
 }: LoadingButtonProps) => {
@@ -81,7 +90,7 @@ export const LoadingButton = ({
   const ButtonEl = getElement()
 
   return (
-    <ButtonEl variant={variant} disabled={loading} {...rest}>
+    <ButtonEl variant={variant} disabled={disabled || loading} {...rest}>
       {loading ? (
         <Flex gap="2">
           <Spinner /> {children}

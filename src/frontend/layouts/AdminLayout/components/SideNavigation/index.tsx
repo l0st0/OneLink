@@ -1,10 +1,28 @@
+import { IconLink, IconLayersSubtract } from '@tabler/icons'
 import { Flex, OneLinkIcon, SideBar } from '@/components'
+import { IconLinkButton } from './styles'
+import { NavLink, useLocation } from 'react-router-dom'
 
 export const SideNavigation = () => {
+  const { pathname } = useLocation()
+
+  const navLinks = [
+    { to: '/admin/links', icon: <IconLink /> },
+    { to: '/admin/appearance', icon: <IconLayersSubtract /> },
+  ]
+
   return (
     <SideBar>
-      <Flex direction="column" align="center">
-        <OneLinkIcon />
+      <Flex justify="center" mb="8">
+        <OneLinkIcon width={36} />
+      </Flex>
+
+      <Flex direction="column" align="center" gap="1">
+        {navLinks.map(({ to, icon }) => (
+          <NavLink key={to} to={to}>
+            <IconLinkButton active={to === pathname}>{icon}</IconLinkButton>
+          </NavLink>
+        ))}
       </Flex>
     </SideBar>
   )
