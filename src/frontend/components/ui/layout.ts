@@ -10,7 +10,7 @@ export const TopBar = styled.div<TopBarProps>(
     background: ${visual === 'light' ? theme.colors.white : theme.colors.secondary};
     color: ${visual === 'light' ? theme.colors.black : theme.colors.white};
     border-radius: ${theme.radius.normal};
-    padding: ${theme.spaces[2]} ${theme.spaces[4]};
+    padding: ${theme.spaces[2]} ${theme.spaces[6]};
   `
 )
 

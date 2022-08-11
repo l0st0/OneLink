@@ -1,19 +1,13 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
-import React from 'react'
-import { Flex } from './flex'
-import { Spinner } from './spinner'
 
-interface ButtonProps {
-  variant?: 'primary' | 'secondary'
+export * from './LoadingButton'
+
+export interface ButtonProps {
+  color?: 'primary' | 'secondary' | 'white'
   fullSize?: boolean
+  textTransform?: 'uppercase' | 'lowercase' | 'none'
 }
-
-type LoadingButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
-  ButtonProps & {
-    button?: 'outline' | 'filled'
-    loading: boolean
-  }
 
 const Button = styled.button<ButtonProps>(
   ({ theme }) => css`
@@ -26,27 +20,30 @@ const Button = styled.button<ButtonProps>(
   `
 )
 
-const TextButton = styled(Button)(
-  ({ theme, fullSize }) => css`
-    text-transform: uppercase;
+export const TextButton = styled(Button)(
+  ({ theme, fullSize, color = 'white', textTransform = 'uppercase' }) => css`
+    text-transform: ${textTransform};
     padding: ${theme.spaces[4]} ${theme.spaces[6]};
     font-size: ${theme.text.fontSize.sm};
     font-weight: ${theme.text.fontWeight[500]};
     letter-spacing: ${theme.spaces.px};
+    background: transparent;
+    border: 2px solid transparent;
+    color: ${theme.colors[color]};
 
     ${fullSize &&
     css`
       width: 100%;
-    `}
+    `};
   `
 )
 
 export const OutlineButton = styled(TextButton)(
-  ({ theme, variant = 'primary' }) => css`
+  ({ theme, color = 'primary' }) => css`
     background: transparent;
     border: 2px solid ${theme.colors.primary};
 
-    ${variant === 'primary'
+    ${color === 'primary'
       ? css`
           color: ${theme.colors.primary};
           border: 2px solid ${theme.colors.primary};
@@ -59,10 +56,10 @@ export const OutlineButton = styled(TextButton)(
 )
 
 export const FilledButton = styled(TextButton)(
-  ({ theme, variant = 'primary' }) => css`
+  ({ theme, color = 'primary' }) => css`
     color: ${theme.colors.white};
 
-    ${variant === 'primary'
+    ${color === 'primary'
       ? css`
           background: ${theme.colors.primary};
           border: 2px solid ${theme.colors.primary};
@@ -73,31 +70,3 @@ export const FilledButton = styled(TextButton)(
         `}
   `
 )
-
-export const LoadingButton = ({
-  button = 'filled',
-  variant = 'primary',
-  loading,
-  disabled,
-  children,
-  ...rest
-}: LoadingButtonProps) => {
-  const getElement = () => {
-    if (button === 'filled') return FilledButton
-    return OutlineButton
-  }
-
-  const ButtonEl = getElement()
-
-  return (
-    <ButtonEl variant={variant} disabled={disabled || loading} {...rest}>
-      {loading ? (
-        <Flex gap="2">
-          <Spinner /> {children}
-        </Flex>
-      ) : (
-        children
-      )}
-    </ButtonEl>
-  )
-}

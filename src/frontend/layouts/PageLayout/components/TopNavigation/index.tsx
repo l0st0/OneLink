@@ -31,13 +31,13 @@ export const TopNavigation = () => {
         </Flex>
 
         {!isAuth ? (
-          <FilledButton variant="secondary" onClick={onLogin}>
+          <FilledButton color="secondary" onClick={onLogin}>
             Login
           </FilledButton>
         ) : (
           <Flex gap="2">
             <OutlineButton onClick={onAdminClick}>Admin</OutlineButton>
-            <FilledButton variant="secondary" onClick={onLogout}>
+            <FilledButton color="secondary" onClick={onLogout}>
               Logout
             </FilledButton>
           </Flex>
