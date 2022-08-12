@@ -9,14 +9,21 @@ export interface ButtonProps {
   textTransform?: 'uppercase' | 'lowercase' | 'none'
 }
 
-const Button = styled.button<ButtonProps>(
-  ({ theme }) => css`
+export const ClearButton = styled.button(
+  () => css`
     cursor: pointer;
-    border-radius: ${theme.radius.normal};
+    border: none;
+    background: transparent;
 
     :disabled {
       cursor: default;
     }
+  `
+)
+
+export const Button = styled(ClearButton)<ButtonProps>(
+  ({ theme }) => css`
+    border-radius: ${theme.radius.normal};
   `
 )
 

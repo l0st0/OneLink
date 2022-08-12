@@ -33,7 +33,7 @@ export const LoadingButton = ({
     >
       {loading ? (
         <Flex gap="2">
-          <Spinner /> {children}
+          <Spinner />
         </Flex>
       ) : (
         children

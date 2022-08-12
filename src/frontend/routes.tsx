@@ -6,6 +6,8 @@ import { Appearance } from './views/Admin/Appearance'
 export const Pages = () => {
   return (
     <Routes>
+      <Route path="/:name" element={<Home />} />
+
       <Route element={<BasicRoutes />}>
         <Route path="/" element={<Home />} />
       </Route>

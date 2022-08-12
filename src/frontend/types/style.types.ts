@@ -1,6 +1,6 @@
 export type SpacePropTypes = 'gap' | 'mt' | 'mb' | 'ml' | 'mr' | 'm' | 'my' | 'mx'
 export type BreakPointTypes = '_' | 'sm' | 'md' | 'lg' | 'xl'
-export type ColorTypes = 'black' | 'white' | 'primary' | 'secondary' | 'success' | 'error' | 'disable'
+export type ColorTypes = 'black' | 'white' | 'primary' | 'secondary' | 'success' | 'error' | 'gray'
 export type WidthTypes = 'max' | 'full'
 export type SpaceTypes =
   | 'px'

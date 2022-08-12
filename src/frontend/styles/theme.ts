@@ -8,7 +8,7 @@ export const theme: Theme = {
     secondary: '#0E1C40',
     success: '#2c9c3e',
     error: '#e31021',
-    disable: '#8d8f8d',
+    gray: '#8d8f8d',
   },
 
   spaces: {
