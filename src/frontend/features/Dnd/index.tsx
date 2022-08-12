@@ -1,23 +1,25 @@
 import React from 'react'
+
 import {
-  closestCenter,
   DndContext,
   DragEndEvent,
   DragOverlay,
   DragStartEvent,
   KeyboardSensor,
   PointerSensor,
+  closestCenter,
   useSensor,
   useSensors,
 } from '@dnd-kit/core'
+import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
 import {
-  arrayMove,
   SortableContext,
+  arrayMove,
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
+
 import { SortableItem } from './components'
-import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
 
 export type ItemComponentType<T> = React.ForwardRefExoticComponent<
   ItemComponentProps<T> & React.RefAttributes<HTMLDivElement>

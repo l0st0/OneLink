@@ -1,6 +1,8 @@
-import { AuthClient } from '@dfinity/auth-client'
 import { createActor as namesActor, canisterId as namesCanister } from '@/names/main'
+
 import { createActor as analyticsActor, canisterId as analyticsCanister } from '@/analytics/main'
+
+import { AuthClient } from '@dfinity/auth-client'
 
 export const useNameClient = async () => {
   const authClient = await AuthClient.create()

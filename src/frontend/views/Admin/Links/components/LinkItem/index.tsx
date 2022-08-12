@@ -1,9 +1,11 @@
+import React from 'react'
+
 import { ClearButton, Flex } from '@/components'
 import { ItemComponentProps } from '@/features'
 import { useMainStore } from '@/store'
 import { Link } from '@/types'
 import { IconPhoto, IconTrash } from '@tabler/icons'
-import React from 'react'
+
 import { HandleIcon, LinkItemContent, LinkItemHandle, LinkItemStyled } from './styles'
 
 export const LinkItem = React.forwardRef<HTMLDivElement, ItemComponentProps<Link>>(
@@ -25,11 +27,11 @@ export const LinkItem = React.forwardRef<HTMLDivElement, ItemComponentProps<Link
 
         <LinkItemContent>
           <Flex justify="space-between">
-            <input placeholder="Title" value={item.title} />
+            <input placeholder="Title" value={item.title} onChange={() => {}} />
             <button>Switch</button>
           </Flex>
 
-          <input placeholder="Url" value={item.id} />
+          <input placeholder="Url" value={item.id} onChange={() => {}} />
 
           <Flex justify="space-between">
             <ClearButton>

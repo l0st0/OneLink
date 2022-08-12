@@ -1,9 +1,11 @@
 import create from 'zustand'
-import { AuthClient } from '@dfinity/auth-client'
+
 import { Link, Name, User } from '@/types'
+import { LOCAL_II_CANISTER } from '@/utils'
+import { AuthClient } from '@dfinity/auth-client'
+
 import { defaultName } from './defaultValues'
 import service from './services'
-import { LOCAL_II_CANISTER } from '@/utils'
 
 interface MainState {
   user?: User

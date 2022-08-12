@@ -4,5 +4,15 @@
   "singleQuote": true,
   "tabWidth": 2,
   "useTabs": false,
-  "printWidth": 110
+  "printWidth": 110,
+  "importOrder": [
+    "^@/names/(.*)$",
+    "^@/analytics/(.*)$",
+    "^@(.*)$",
+    "^@/data/(.*)$",
+    "^@/assets/(.*)$",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
 }

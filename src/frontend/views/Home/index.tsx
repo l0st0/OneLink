@@ -1,9 +1,10 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+
 import { Flex, H1, IcBadgeIconFlat, SubH1 } from '@/components'
 import { ClaimForm, onClaimClickParameters } from '@/features'
-import { userHasPrimaryName } from '@/utils'
 import { useMainStore } from '@/store'
+import { userHasPrimaryName } from '@/utils'
 
 export const Home = () => {
   const [loading, setLoading] = React.useState(false)
@@ -38,7 +39,7 @@ export const Home = () => {
 
     const claimName = async () => {
       const user = await getUser()
-      if (!userHasPrimaryName(user)) await createName(input)
+      if (user && !userHasPrimaryName(user)) await createName(input)
 
       setLoading(false)
       return navigate(adminPath)

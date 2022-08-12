@@ -1,8 +1,10 @@
-import { IconLink, IconLayersSubtract } from '@tabler/icons'
-import { Flex, OneLinkIcon, SideBar } from '@/components'
-import { IconLinkButton } from './styles'
 import { NavLink, useLocation } from 'react-router-dom'
+
+import { Flex, OneLinkIcon, SideBar } from '@/components'
 import { useMainStore } from '@/store'
+import { IconLayersSubtract, IconLink } from '@tabler/icons'
+
+import { IconLinkButton } from './styles'
 
 export const SideNavigation = () => {
   const isUpdating = useMainStore((state) => state.isUpdating)

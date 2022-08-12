@@ -1,10 +1,10 @@
 import {
-  Name as ICName,
-  User as ICUser,
-  Link as ICLink,
   Controller as ICController,
+  Link as ICLink,
   Look as ICLook,
+  Name as ICName,
   Profile as ICProfile,
+  User as ICUser,
 } from '@/names/main/types'
 
 export * from './styles'

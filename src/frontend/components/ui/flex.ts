@@ -1,7 +1,7 @@
-import styled from '@emotion/styled'
 import { mapMq, spaceProps } from '@/styles'
 import { AlignItems, FlexDirection, JustifyContent, LiteralUnion, SpacePropTypes, SpaceUnits } from '@/types'
 import { css } from '@emotion/react'
+import styled from '@emotion/styled'
 
 type FlexProps = {
   direction?: FlexDirection

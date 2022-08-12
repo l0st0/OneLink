@@ -1,9 +1,11 @@
-import { Flex, TextButton, Paragraph, TopBar } from '@/components'
+import React from 'react'
+
+import { Flex, Paragraph, TextButton, TopBar } from '@/components'
 import { useMainStore } from '@/store'
 import { css } from '@emotion/react'
-import React from 'react'
+
 import { SideNavigation } from './components'
-import { AdminContainer, SideBarContainer, ChildrenContainer, PreviewContainer, PreviewTop } from './styles'
+import { AdminContainer, ChildrenContainer, PreviewContainer, PreviewTop, SideBarContainer } from './styles'
 
 export const AdminLayout = ({ children }: React.PropsWithChildren) => {
   const name = useMainStore((state) => state.name.name)

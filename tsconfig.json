@@ -22,17 +22,19 @@
       "@/names/main/types": [".dfx/local/canisters/names/names.did"],
       "@/analytics/main": [".dfx/local/canisters/analytics"],
       "@/analytics/main/types": [".dfx/local/canisters/analytics/analytics.did"],
+      "@/hooks": ["src/frontend/hooks/index.ts"],
+      "@/store": ["src/frontend/store/index.ts"],
+      "@/utils": ["src/frontend/utils/index.ts"],
+
       "@/views": ["src/frontend/views/index.tsx"],
       "@/features": ["src/frontend/features/index.ts"],
       "@/layouts": ["src/frontend/layouts/index.ts"],
       "@/components": ["src/frontend/components/index.ts"],
-      "@/utils": ["src/frontend/utils/index.ts"],
+
       "@/types": ["src/frontend/types/index.ts"],
       "@/styles": ["src/frontend/styles/index.ts"],
-      "@/hooks": ["src/frontend/hooks/index.ts"],
-      "@/assets/*": ["src/frontend/assets/*"],
-      "@/store": ["src/frontend/store/index.ts"],
-      "@/data/*": ["src/frontend/data/*"]
+      "@/data/*": ["src/frontend/data/*"],
+      "@/assets/*": ["src/frontend/assets/*"]
     },
     "noUnusedLocals": true,
     "noUnusedParameters": true

@@ -1,8 +1,10 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tsconfigPaths from 'vite-tsconfig-paths'
-import dfxJson from './dfx.json'
 import fs from 'fs'
+import { defineConfig } from 'vite'
+import tsconfigPaths from 'vite-tsconfig-paths'
+
+import react from '@vitejs/plugin-react'
+
+import dfxJson from './dfx.json'
 
 const isDev = process.env['DFX_NETWORK'] !== 'ic'
 

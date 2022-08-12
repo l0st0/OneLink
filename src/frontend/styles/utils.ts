@@ -1,6 +1,7 @@
 import _ from 'lodash'
-import { css } from '@emotion/react'
+
 import { BreakPointTypes, MapMqProps, SpacePropTypes } from '@/types'
+import { css } from '@emotion/react'
 
 export const spaceProps: { name: string[]; value: SpacePropTypes }[] = [
   { name: ['gap'], value: 'gap' },
@@ -61,8 +62,6 @@ export const mapMq = <T extends {}>({ name, value, theme = undefined }: MapMqPro
       return name.map((n) => (media[mq(bpName)] = { ...media[mq(bpName)], [n]: `${val}` }))
     }
   })
-
-  console.log('media', media)
 
   return css(media)
 }

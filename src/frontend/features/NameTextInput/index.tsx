@@ -1,4 +1,5 @@
 import { ColorTypes } from '@/types'
+
 import { InputText, NameTextInputContainer, StartText } from './styles'
 
 interface NameTextInputProps {
