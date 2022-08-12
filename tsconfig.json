@@ -31,7 +31,7 @@
       "@/styles": ["src/frontend/styles/index.ts"],
       "@/hooks": ["src/frontend/hooks/index.ts"],
       "@/assets/*": ["src/frontend/assets/*"],
-      "@/store/*": ["src/frontend/store/*"],
+      "@/store": ["src/frontend/store/index.ts"],
       "@/data/*": ["src/frontend/data/*"]
     },
     "noUnusedLocals": true,

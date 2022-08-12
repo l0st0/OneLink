@@ -9,7 +9,7 @@ export const ContentContainer = styled.div(
 )
 
 export const DndContainer = styled.div(
-  ({ theme }) => css`
+  () => css`
     display: flex;
     justify-content: center;
     max-width: 100%;
@@ -21,7 +21,7 @@ export const DndContainer = styled.div(
 )
 
 export const LinksContainer = styled.div(
-  ({ theme }) => css`
+  () => css`
     width: 100%;
     max-width: 600px;
   `

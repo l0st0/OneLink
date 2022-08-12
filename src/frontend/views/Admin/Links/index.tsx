@@ -1,16 +1,16 @@
 import { v4 as uuidv4 } from 'uuid'
 import { Flex, H3, OutlineButton, SubH2 } from '@/components'
-import { useAppDispatch, useAppSelector } from '@/hooks'
 import { Dnd } from '@/features'
 import { ContentContainer, DndContainer, LinksContainer } from './styles'
 import { LinkItem } from './components'
-import { updateLinks } from '@/store/name/nameSlice'
 import { Link } from '@/types'
+import { useMainStore } from '@/store'
 
 export const Links = () => {
-  const { name, links, updating } = useAppSelector((state) => state.name)
-
-  const dispatch = useAppDispatch()
+  const name = useMainStore((state) => state.name.name)
+  const links = useMainStore((state) => state.name.links)
+  const updateLinks = useMainStore((state) => state.updateLinks)
+  const isUpdating = useMainStore((state) => state.isUpdating)
 
   const createNewLink = () => {
     const newLink = {
@@ -22,10 +22,10 @@ export const Links = () => {
     }
 
     const newLinks = [newLink, ...links]
-    dispatch(updateLinks({ name, links: newLinks }))
+    updateLinks(name, newLinks)
   }
 
-  const onDragEnd = (links: Link[]) => dispatch(updateLinks({ name, links }))
+  const onDragEnd = (links: Link[]) => updateLinks(name, links)
 
   return (
     <Flex direction="column" align="center" width="100%">
@@ -35,7 +35,7 @@ export const Links = () => {
       </Flex>
 
       <ContentContainer>
-        <OutlineButton disabled={updating} onClick={createNewLink} fullSize>
+        <OutlineButton disabled={isUpdating} onClick={createNewLink} fullSize>
           Add new link
         </OutlineButton>
 

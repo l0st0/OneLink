@@ -1,23 +1,17 @@
 import { useNavigate } from 'react-router-dom'
 import { FilledButton, Flex, OneLinkIcon, OneLinkTextIcon, OutlineButton, TopBar } from '@/components'
-import { useAppDispatch, useAppSelector, useIdentity } from '@/hooks'
+import { useMainStore } from '@/store'
 
 export const TopNavigation = () => {
-  const { isAuth } = useAppSelector((state) => state.user)
+  const isAuth = useMainStore((state) => state.isAuth)
+  const login = useMainStore((state) => state.login)
+  const logout = useMainStore((state) => state.logout)
 
-  const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
   const onLogin = async () => {
-    const identity = await useIdentity(dispatch)
     const onScc = async () => navigate('/admin/links')
-
-    return await identity.login(onScc)
-  }
-
-  const onLogout = async () => {
-    const identity = await useIdentity(dispatch)
-    return await identity.logout()
+    return await login(onScc)
   }
 
   const onAdminClick = () => navigate('/admin/links')
@@ -37,7 +31,7 @@ export const TopNavigation = () => {
         ) : (
           <Flex gap="2">
             <OutlineButton onClick={onAdminClick}>Admin</OutlineButton>
-            <FilledButton color="secondary" onClick={onLogout}>
+            <FilledButton color="secondary" onClick={logout}>
               Logout
             </FilledButton>
           </Flex>

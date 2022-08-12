@@ -2,15 +2,16 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Flex, H1, IcBadgeIconFlat, SubH1 } from '@/components'
 import { ClaimForm, onClaimClickParameters } from '@/features'
-import { useAppDispatch, useIdentity } from '@/hooks'
-import { createName } from '@/store/name/nameSlice'
-import { getUser } from '@/store/user/userSlice'
 import { userHasPrimaryName } from '@/utils'
+import { useMainStore } from '@/store'
 
 export const Home = () => {
   const [loading, setLoading] = React.useState(false)
 
-  const dispatch = useAppDispatch()
+  const getUser = useMainStore((state) => state.getUser)
+  const createName = useMainStore((state) => state.createName)
+  const login = useMainStore((state) => state.login)
+
   const navigate = useNavigate()
 
   const onClaimClick = async ({ event, input, result, setResult }: onClaimClickParameters) => {
@@ -23,11 +24,11 @@ export const Home = () => {
 
     setLoading(true)
 
-    const { ok: actualUser } = await dispatch(getUser()).unwrap()
+    const user = await getUser()
 
-    if (actualUser) {
-      if (!userHasPrimaryName(actualUser)) {
-        await dispatch(createName(input))
+    if (user) {
+      if (!userHasPrimaryName(user)) {
+        await createName(input)
         return navigate(adminPath)
       }
 
@@ -35,17 +36,15 @@ export const Home = () => {
       return setResult({ color: 'error', msg: 'You already have name.', claim: false, hasName: true })
     }
 
-    const identity = await useIdentity(dispatch)
-
     const claimName = async () => {
-      const { ok: user } = await dispatch(getUser()).unwrap()
-      if (!userHasPrimaryName(user)) await dispatch(createName(input))
+      const user = await getUser()
+      if (!userHasPrimaryName(user)) await createName(input)
 
       setLoading(false)
       return navigate(adminPath)
     }
 
-    identity.login(claimName)
+    login(claimName)
   }
 
   return (

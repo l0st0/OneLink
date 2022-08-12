@@ -1,12 +1,12 @@
 import { Flex, TextButton, Paragraph, TopBar } from '@/components'
-import { useAppSelector } from '@/hooks'
+import { useMainStore } from '@/store'
 import { css } from '@emotion/react'
 import React from 'react'
 import { SideNavigation } from './components'
 import { AdminContainer, SideBarContainer, ChildrenContainer, PreviewContainer, PreviewTop } from './styles'
 
 export const AdminLayout = ({ children }: React.PropsWithChildren) => {
-  const { name } = useAppSelector((state) => state.name)
+  const name = useMainStore((state) => state.name.name)
 
   return (
     <AdminContainer>

@@ -1,7 +1,6 @@
 import { ClearButton, Flex } from '@/components'
 import { ItemComponentProps } from '@/features'
-import { useAppDispatch, useAppSelector } from '@/hooks'
-import { updateLinks } from '@/store/name/nameSlice'
+import { useMainStore } from '@/store'
 import { Link } from '@/types'
 import { IconPhoto, IconTrash } from '@tabler/icons'
 import React from 'react'
@@ -9,13 +8,13 @@ import { HandleIcon, LinkItemContent, LinkItemHandle, LinkItemStyled } from './s
 
 export const LinkItem = React.forwardRef<HTMLDivElement, ItemComponentProps<Link>>(
   ({ item, style, setActivatorNodeRef, listeners, ...rest }, ref) => {
-    const { name, links, updating } = useAppSelector((state) => state.name)
-
-    const dispatch = useAppDispatch()
+    const name = useMainStore((state) => state.name.name)
+    const links = useMainStore((state) => state.name.links)
+    const updateLinks = useMainStore((state) => state.updateLinks)
 
     const removeLink = () => {
-      const filterArr = links.filter(({ id }) => id !== item.id)
-      dispatch(updateLinks({ name, links: filterArr }))
+      const filterLinks = links.filter(({ id }) => id !== item.id)
+      updateLinks(name, filterLinks)
     }
 
     return (
@@ -37,7 +36,7 @@ export const LinkItem = React.forwardRef<HTMLDivElement, ItemComponentProps<Link
               <IconPhoto />
             </ClearButton>
 
-            <ClearButton disabled={updating} onClick={removeLink}>
+            <ClearButton onClick={removeLink}>
               <IconTrash />
             </ClearButton>
           </Flex>

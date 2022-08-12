@@ -1,15 +1,15 @@
-import { Global, ThemeProvider } from '@emotion/react'
-import { useAppDispatch, useScrollToTop } from '@/hooks'
-import Pages from './routes'
-import { theme, globalStyles } from '@/styles'
 import React from 'react'
-import { getIsAuth } from './store/user/userSlice'
+import { Global, ThemeProvider } from '@emotion/react'
+import { useScrollToTop } from '@/hooks'
+import { theme, globalStyles } from '@/styles'
+import { useMainStore } from '@/store'
+import Pages from './routes'
 
 const App = () => {
-  const dispatch = useAppDispatch()
+  const getIsAuth = useMainStore((state) => state.getIsAuth)
 
   React.useEffect(() => {
-    dispatch(getIsAuth())
+    getIsAuth()
   }, [])
 
   useScrollToTop()

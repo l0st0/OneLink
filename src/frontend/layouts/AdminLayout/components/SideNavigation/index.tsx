@@ -2,10 +2,11 @@ import { IconLink, IconLayersSubtract } from '@tabler/icons'
 import { Flex, OneLinkIcon, SideBar } from '@/components'
 import { IconLinkButton } from './styles'
 import { NavLink, useLocation } from 'react-router-dom'
-import { useAppSelector } from '@/hooks'
+import { useMainStore } from '@/store'
 
 export const SideNavigation = () => {
-  const { updating } = useAppSelector((state) => state.name)
+  const isUpdating = useMainStore((state) => state.isUpdating)
+
   const { pathname } = useLocation()
 
   const navLinks = [
@@ -16,7 +17,7 @@ export const SideNavigation = () => {
   return (
     <SideBar>
       <Flex justify="center" mb="8">
-        <OneLinkIcon width={36} spin={updating} />
+        <OneLinkIcon width={36} spin={isUpdating} />
       </Flex>
 
       <Flex direction="column" align="center" gap="1">
