@@ -14,7 +14,7 @@ const App = () => {
     getIsAuth()
   }, [])
 
-  useScrollToTop(
+  useScrollToTop()
 
   return (
     <ThemeProvider theme={theme}>
