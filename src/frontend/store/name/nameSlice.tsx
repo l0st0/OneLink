@@ -11,6 +11,7 @@ interface NameState {
   look: Look
   controllers: Controller[]
   nameError?: string
+  updating: boolean
 }
 
 const defaultProfile = {
@@ -37,6 +38,7 @@ const initialState: NameState = {
   profile: defaultProfile,
   look: defaultLook,
   controllers: [],
+  updating: false,
 }
 
 export const getName = createAsyncThunk<
@@ -67,6 +69,21 @@ export const createName = createAsyncThunk<
     if (response.ok) dispatch(updateUser(response.ok.user))
 
     return response
+  } catch (err) {
+    const message = 'Something happend.'
+    return rejectWithValue(message)
+  }
+})
+
+export const updateLinks = createAsyncThunk<
+  Response<Link[]>,
+  { name: string; links: Link[] },
+  {
+    rejectValue: string
+  }
+>('name/updateLinks', async ({ name, links }, { rejectWithValue }) => {
+  try {
+    return await nameService.fetchUpdateLinks(name, links)
   } catch (err) {
     const message = 'Something happend.'
     return rejectWithValue(message)
@@ -124,6 +141,20 @@ export const nameSlice = createSlice({
         state.look = defaultLook
         state.profile = defaultProfile
         state.controllers = []
+        state.nameError = action.payload
+      })
+      // createLink
+      .addCase(updateLinks.pending, (state) => {
+        state.updating = true
+      })
+      .addCase(updateLinks.fulfilled, (state, action) => {
+        const { ok, err } = action.payload
+        state.links = ok || state.links
+        state.nameError = err
+        state.updating = false
+      })
+      .addCase(updateLinks.rejected, (state, action) => {
+        state.updating = false
         state.nameError = action.payload
       })
   },

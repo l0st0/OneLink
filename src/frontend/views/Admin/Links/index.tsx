@@ -1,13 +1,31 @@
+import { v4 as uuidv4 } from 'uuid'
 import { Flex, H3, OutlineButton, SubH2 } from '@/components'
-import { useAppSelector } from '@/hooks'
+import { useAppDispatch, useAppSelector } from '@/hooks'
 import { Dnd } from '@/features'
 import { LinksContainer } from './styles'
 import { LinkItem } from './components'
+import { updateLinks } from '@/store/name/nameSlice'
+import { Link } from '@/types'
 
 export const Links = () => {
-  const { links } = useAppSelector((state) => state.name)
+  const { name, links, updating } = useAppSelector((state) => state.name)
 
-  const createNewLink = () => {}
+  const dispatch = useAppDispatch()
+
+  const createNewLink = () => {
+    const newLink = {
+      id: uuidv4(),
+      title: '',
+      url: '',
+      show: false,
+      icon: '',
+    }
+
+    const newLinks = [...links, newLink]
+    dispatch(updateLinks({ name, links: newLinks }))
+  }
+
+  const onDragEnd = (links: Link[]) => dispatch(updateLinks({ name, links }))
 
   return (
     <Flex direction="column" align="center" width="100%">
@@ -17,10 +35,11 @@ export const Links = () => {
       </Flex>
 
       <LinksContainer>
-        <OutlineButton onClick={createNewLink} fullSize>
+        <OutlineButton disabled={updating} onClick={createNewLink} fullSize>
           Add new link
         </OutlineButton>
-        <Dnd data={links} ItemComponent={LinkItem} />
+
+        <Dnd data={links} ItemComponent={LinkItem} onDragEnd={onDragEnd} />
       </LinksContainer>
     </Flex>
   )

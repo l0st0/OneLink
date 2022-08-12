@@ -130,7 +130,7 @@ actor {
         };
     };
 
-    public shared({ caller }) func updateLinks(name: Text, links: [Types.Link]): async Result.Result<Types.Name, Text> {
+    public shared({ caller }) func updateLinks(name: Text, links: [Types.Link]): async Result.Result<[Types.Link], Text> {
         if(Option.isNull(users.get(caller))) return #err("Sorry, you need to log in.");
 
         switch(names.get(name)) {
@@ -148,7 +148,7 @@ actor {
                 };
 
                 names.put(name, updatedName);
-                return #ok(updatedName);
+                return #ok(links);
             }
         };
     };

@@ -31,6 +31,7 @@
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.3.0",
     "redux-persist": "^6.0.0",
+    "uuid": "^8.3.2",
     "vite-tsconfig-paths": "^3.5.0"
   },
   "devDependencies": {
@@ -38,6 +39,7 @@
     "@types/node": "^18.6.3",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
+    "@types/uuid": "^8.3.4",
     "buffer": "^6.0.3",
     "prettier": "2.7.1",
     "typescript": "^4.7.4",

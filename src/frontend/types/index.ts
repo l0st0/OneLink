@@ -21,6 +21,7 @@ export interface IconProps {
   width?: number | string
   height?: number | string
   spin?: boolean
+  spinSpeed?: string
 }
 
 export interface Name extends ICName {}

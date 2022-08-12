@@ -25,7 +25,12 @@ export const LoadingButton = ({
   const ButtonEl = getElement()
 
   return (
-    <ButtonEl color={color} disabled={disabled || loading} {...rest}>
+    <ButtonEl
+      color={color}
+      disabled={disabled || loading}
+      {...rest}
+      style={{ display: 'flex', justifyContent: 'center' }}
+    >
       {loading ? (
         <Flex gap="2">
           <Spinner /> {children}

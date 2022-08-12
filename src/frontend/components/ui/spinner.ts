@@ -10,6 +10,7 @@ interface SpinnerProps {
 
 interface SpinnerSvgProps {
   spin?: boolean
+  spinSpeed?: string
 }
 
 const spinAnimation = keyframes`
@@ -36,10 +37,10 @@ export const Spinner = styled.div<SpinnerProps>(
 )
 
 export const SpinnerSvg = styled.svg<SpinnerSvgProps>(
-  ({ spin }) => css`
+  ({ spin, spinSpeed = '1.5s' }) => css`
     ${spin &&
     css`
-      animation: ${spinAnimation} 1s linear infinite;
+      animation: ${spinAnimation} ${spinSpeed} linear infinite;
     `}
   `
 )

@@ -7,7 +7,6 @@ import {
   DragStartEvent,
   KeyboardSensor,
   PointerSensor,
-  UniqueIdentifier,
   useSensor,
   useSensors,
 } from '@dnd-kit/core'
@@ -34,11 +33,16 @@ export interface ItemComponentProps<T> {
 interface DndProps<T> {
   data: T[]
   ItemComponent: ItemComponentType<T>
+  onDragEnd: (data: T[]) => void
 }
 
-export const Dnd = <T extends { id: string }>({ data, ItemComponent }: DndProps<T>) => {
-  const [activeId, setActiveId] = React.useState<UniqueIdentifier | null>(null)
+export const Dnd = <T extends { id: string }>({ data, ItemComponent, onDragEnd }: DndProps<T>) => {
+  const [activeItem, setActiveItem] = React.useState<T | undefined>(undefined)
   const [items, setItems] = React.useState<T[]>(data)
+
+  React.useEffect(() => {
+    if (data.length !== items.length) setItems(data)
+  }, [data])
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -55,11 +59,17 @@ export const Dnd = <T extends { id: string }>({ data, ItemComponent }: DndProps<
       const oldIndex = items.findIndex((item) => item.id === active.id)
       const newIndex = items.findIndex((item) => item.id === over.id)
 
-      return arrayMove(items, oldIndex, newIndex)
+      const newArr = arrayMove(items, oldIndex, newIndex)
+      if (onDragEnd) onDragEnd(newArr)
+
+      return newArr
     })
   }
 
-  const handleDragStart = ({ active }: DragStartEvent) => setActiveId(active.id)
+  const handleDragStart = ({ active }: DragStartEvent) => {
+    const findItem = items.find((item) => item.id === String(active.id))
+    setActiveItem(findItem)
+  }
 
   return (
     <DndContext
@@ -74,7 +84,7 @@ export const Dnd = <T extends { id: string }>({ data, ItemComponent }: DndProps<
         ))}
       </SortableContext>
 
-      <DragOverlay>{activeId ? <ItemComponent item={items[0]} /> : null}</DragOverlay>
+      <DragOverlay>{activeItem ? <ItemComponent item={activeItem} /> : null}</DragOverlay>
     </DndContext>
   )
 }
