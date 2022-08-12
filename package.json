@@ -6,7 +6,8 @@
     "prebuild": "npm rebuild esbuild",
     "build": "tsc && vite build",
     "serve": "vite preview",
-    "check": "npx prettier --write . && npx tsc --noEmit"
+    "check": "npx prettier --write . && npx tsc --noEmit",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@dfinity/agent": "^0.12.2",
@@ -43,8 +44,7 @@
     "@types/react-dom": "^18.0.6",
     "@types/uuid": "^8.3.4",
     "buffer": "^6.0.3",
-    "husky": "^8.0.1",
-    "lint-staged": "^13.0.3",
+    "husky": "^8.0.0",
     "prettier": "2.7.1",
     "typescript": "^4.7.4",
     "vite": "^3.0.4"
