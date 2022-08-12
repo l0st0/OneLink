@@ -1,9 +1,7 @@
 import React from 'react'
-
+import { css } from '@emotion/react'
 import { Flex, Paragraph, TextButton, TopBar } from '@/components'
 import { useMainStore } from '@/store'
-import { css } from '@emotion/react'
-
 import { SideNavigation } from './components'
 import { AdminContainer, ChildrenContainer, PreviewContainer, PreviewTop, SideBarContainer } from './styles'
 

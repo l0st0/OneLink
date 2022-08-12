@@ -1,5 +1,4 @@
 import React from 'react'
-
 import {
   DndContext,
   DragEndEvent,
@@ -12,13 +11,13 @@ import {
   useSensors,
 } from '@dnd-kit/core'
 import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
+import { restrictToVerticalAxis, restrictToWindowEdges } from '@dnd-kit/modifiers'
 import {
   SortableContext,
   arrayMove,
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
-
 import { SortableItem } from './components'
 
 export type ItemComponentType<T> = React.ForwardRefExoticComponent<
@@ -79,6 +78,7 @@ export const Dnd = <T extends { id: string }>({ data, ItemComponent, onDragEnd }
       collisionDetection={closestCenter}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
+      modifiers={[restrictToVerticalAxis]}
     >
       <SortableContext items={items} strategy={verticalListSortingStrategy}>
         {items.map((item) => (
@@ -86,7 +86,9 @@ export const Dnd = <T extends { id: string }>({ data, ItemComponent, onDragEnd }
         ))}
       </SortableContext>
 
-      <DragOverlay>{activeItem ? <ItemComponent item={activeItem} /> : null}</DragOverlay>
+      <DragOverlay modifiers={[restrictToWindowEdges]}>
+        {activeItem ? <ItemComponent item={activeItem} /> : null}
+      </DragOverlay>
     </DndContext>
   )
 }

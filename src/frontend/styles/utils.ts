@@ -1,7 +1,6 @@
-import _ from 'lodash'
-
-import { BreakPointTypes, MapMqProps, SpacePropTypes } from '@/types'
 import { css } from '@emotion/react'
+import _ from 'lodash'
+import { BreakPointTypes, MapMqProps, SpacePropTypes } from '@/types'
 
 export const spaceProps: { name: string[]; value: SpacePropTypes }[] = [
   { name: ['gap'], value: 'gap' },

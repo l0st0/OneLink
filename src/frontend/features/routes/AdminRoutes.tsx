@@ -1,10 +1,8 @@
 import React from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
-
 import { Flex, Paragraph, Spinner, SubH2 } from '@/components'
 import { AdminLayout, BlankLayout } from '@/layouts'
 import { useMainStore } from '@/store'
-
 import { ClaimForm, onClaimClickParameters } from '../ClaimForm'
 
 export const AdminRoutes = () => {

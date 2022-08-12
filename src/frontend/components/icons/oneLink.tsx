@@ -1,5 +1,4 @@
 import { IconProps } from '@/types'
-
 import { SpinnerSvg } from '../ui'
 
 export const OneLinkIcon = ({ width = 32, spin, spinSpeed }: IconProps) => {

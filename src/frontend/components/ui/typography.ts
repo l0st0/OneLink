@@ -1,6 +1,6 @@
-import { ColorTypes, FontSizeTypes, FontWeightTypes } from '@/types'
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
+import { ColorTypes, FontSizeTypes, FontWeightTypes } from '@/types'
 
 interface TextProps {
   color?: ColorTypes

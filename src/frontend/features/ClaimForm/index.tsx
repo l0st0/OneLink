@@ -1,9 +1,7 @@
 import React from 'react'
-
 import { Flex, LoadingButton, Paragraph } from '@/components'
 import { useDebounce, useNameClient } from '@/hooks'
 import { Name, Response } from '@/types'
-
 import { NameTextInput } from '../NameTextInput'
 
 interface ResultInterface {

@@ -1,10 +1,8 @@
 import { v4 as uuidv4 } from 'uuid'
-
 import { Flex, H3, OutlineButton, SubH2 } from '@/components'
 import { Dnd } from '@/features'
 import { useMainStore } from '@/store'
 import { Link } from '@/types'
-
 import { LinkItem } from './components'
 import { ContentContainer, DndContainer, LinksContainer } from './styles'
 

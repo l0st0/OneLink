@@ -1,5 +1,5 @@
-import { Flex } from '@/components'
 import styled from '@emotion/styled'
+import { Flex } from '@/components'
 
 export const BlankLayout = styled(Flex)`
   flex-direction: column;

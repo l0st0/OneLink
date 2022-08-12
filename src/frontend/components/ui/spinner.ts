@@ -1,6 +1,6 @@
-import { ColorTypes, SpaceTypes } from '@/types'
 import { css, keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
+import { ColorTypes, SpaceTypes } from '@/types'
 
 interface SpinnerProps {
   color?: ColorTypes

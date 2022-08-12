@@ -1,11 +1,9 @@
 import React from 'react'
-
+import { IconPhoto, IconTrash } from '@tabler/icons'
 import { ClearButton, Flex } from '@/components'
 import { ItemComponentProps } from '@/features'
 import { useMainStore } from '@/store'
 import { Link } from '@/types'
-import { IconPhoto, IconTrash } from '@tabler/icons'
-
 import { HandleIcon, LinkItemContent, LinkItemHandle, LinkItemStyled } from './styles'
 
 export const LinkItem = React.forwardRef<HTMLDivElement, ItemComponentProps<Link>>(

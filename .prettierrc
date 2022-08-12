@@ -6,13 +6,14 @@
   "useTabs": false,
   "printWidth": 110,
   "importOrder": [
+    "^react",
+    "<THIRD_PARTY_MODULES>",
     "^@/names/(.*)$",
     "^@/analytics/(.*)$",
-    "^@(.*)$",
+    "^@/(.*)$",
     "^@/data/(.*)$",
     "^@/assets/(.*)$",
     "^[./]"
   ],
-  "importOrderSeparation": true,
   "importOrderSortSpecifiers": true
 }

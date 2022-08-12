@@ -1,6 +1,6 @@
-import { FontSizeTypes, FontWeightTypes } from '@/types'
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
+import { FontSizeTypes, FontWeightTypes } from '@/types'
 
 interface TextInputProps {
   fontSize?: FontSizeTypes

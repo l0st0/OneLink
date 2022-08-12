@@ -1,6 +1,5 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-
 import { Flex, H1, IcBadgeIconFlat, SubH1 } from '@/components'
 import { ClaimForm, onClaimClickParameters } from '@/features'
 import { useMainStore } from '@/store'

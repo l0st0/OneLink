@@ -1,6 +1,6 @@
+import { AuthClient } from '@dfinity/auth-client'
 import { useNameClient } from '@/hooks'
 import { Link, Name, Response, User } from '@/types'
-import { AuthClient } from '@dfinity/auth-client'
 
 const err = 'Sorry something happened :('
 

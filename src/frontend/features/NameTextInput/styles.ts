@@ -1,7 +1,7 @@
-import { TextInput } from '@/components'
-import { ColorTypes } from '@/types'
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
+import { TextInput } from '@/components'
+import { ColorTypes } from '@/types'
 
 interface NameTextInputContainerProps {
   borderColor: ColorTypes
