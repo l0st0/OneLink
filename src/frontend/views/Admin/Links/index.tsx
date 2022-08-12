@@ -1,9 +1,13 @@
 import { Flex, H3, OutlineButton, SubH2 } from '@/components'
 import { useAppSelector } from '@/hooks'
+import { Dnd } from '@/features'
 import { LinksContainer } from './styles'
+import { LinkItem } from './components'
 
 export const Links = () => {
   const { links } = useAppSelector((state) => state.name)
+
+  const createNewLink = () => {}
 
   return (
     <Flex direction="column" align="center" width="100%">
@@ -13,10 +17,10 @@ export const Links = () => {
       </Flex>
 
       <LinksContainer>
-        <OutlineButton fullSize>Add new link</OutlineButton>
-        {links.map(({ id }) => (
-          <div key={id}>{id}</div>
-        ))}
+        <OutlineButton onClick={createNewLink} fullSize>
+          Add new link
+        </OutlineButton>
+        <Dnd data={links} ItemComponent={LinkItem} />
       </LinksContainer>
     </Flex>
   )
