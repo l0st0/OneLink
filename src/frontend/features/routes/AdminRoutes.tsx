@@ -33,8 +33,9 @@ export const AdminRoutes = () => {
     initLoad()
   }, [])
 
-  const onClaimClick = async ({ event, input }: onClaimClickParameters) => {
+  const onClaimClick = async ({ event, input, result }: onClaimClickParameters) => {
     event.preventDefault()
+    if (!result.claim) return
     setClaimLoading(true)
 
     await dispatch(createName(input))
