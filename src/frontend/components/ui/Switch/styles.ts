@@ -2,6 +2,11 @@ import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import * as SwitchPrimitive from '@radix-ui/react-switch'
 import { SwitchProps } from '.'
+import { Flex } from '../Flex'
+
+export const SwitchContainer = styled(Flex)`
+  cursor: pointer;
+`
 
 export const StyledSwitch = styled(SwitchPrimitive.Root)<SwitchProps>(
   ({ theme, checkedbg = 'primary', checked, active }) => css`

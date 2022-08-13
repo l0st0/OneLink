@@ -1,6 +1,7 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
-import { IconGrain } from '@tabler/icons'
+import { IconDotsVertical } from '@tabler/icons'
+import { IconButton } from '@/components'
 import { FontWeightTypes } from '@/types'
 
 export const LinkItemStyled = styled.div(
@@ -24,10 +25,10 @@ export const LinkItemHandle = styled.button(
   `
 )
 
-export const HandleIcon = styled(IconGrain)(
+export const HandleIcon = styled(IconDotsVertical)(
   ({ theme }) => css`
     color: ${theme.colors.gray};
-    width: 16px;
+    width: 20px;
   `
 )
 
@@ -47,13 +48,23 @@ export const LinkInput = styled.input<{ fontWeight?: FontWeightTypes }>(
     background: transparent;
     border: none;
     font-weight: ${theme.text.fontWeight[fontWeight]};
+    font-size: ${theme.text.fontSize.sm};
 
     width: 100%;
     max-width: 400px;
-    margin-right: 24px;
+    margin-right: ${theme.spaces[6]};
 
     :focus {
       outline: none;
     }
+  `
+)
+
+export const AnalyticsButton = styled(IconButton)(
+  ({ theme }) => css`
+    cursor: default;
+    margin-left: -3px;
+    font-size: ${theme.text.fontSize.sm};
+    gap: ${theme.spaces[1]};
   `
 )

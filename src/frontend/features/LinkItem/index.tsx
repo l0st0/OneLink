@@ -1,9 +1,16 @@
 import React from 'react'
-import { IconPhoto, IconTrash } from '@tabler/icons'
+import { IconChartLine, IconTrash } from '@tabler/icons'
 import { Flex, IconButton, ItemComponentProps, Switch } from '@/components'
 import { useMainStore } from '@/store'
 import { Link } from '@/types'
-import { HandleIcon, LinkInput, LinkItemContent, LinkItemHandle, LinkItemStyled } from './styles'
+import {
+  AnalyticsButton,
+  HandleIcon,
+  LinkInput,
+  LinkItemContent,
+  LinkItemHandle,
+  LinkItemStyled,
+} from './styles'
 
 export const LinkItem = React.forwardRef<HTMLDivElement, ItemComponentProps<Link>>(
   ({ item, style, setActivatorNodeRef, listeners, ...rest }, ref) => {
@@ -58,7 +65,7 @@ export const LinkItem = React.forwardRef<HTMLDivElement, ItemComponentProps<Link
         <LinkItemContent>
           <Flex direction="column" width="100%" gap="1">
             <Flex justify="space-between" width="100%">
-              <Flex direction="column" gap="1" width="100%" mr="4">
+              <Flex direction="column" gap="2" width="100%" mr="4">
                 <LinkInput
                   placeholder="Title"
                   value={localItem.title}
@@ -85,11 +92,12 @@ export const LinkItem = React.forwardRef<HTMLDivElement, ItemComponentProps<Link
           </Flex>
 
           <Flex justify="space-between">
-            <IconButton>
-              <IconPhoto />
-            </IconButton>
+            <AnalyticsButton color="black">
+              <IconChartLine />
+              <span>0 clicks</span>
+            </AnalyticsButton>
 
-            <IconButton onClick={removeLink} color="error">
+            <IconButton onClick={removeLink} hovercolor="error">
               <IconTrash />
             </IconButton>
           </Flex>

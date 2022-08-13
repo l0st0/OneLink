@@ -1,6 +1,6 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
-import { ColorTypes } from '@/types'
+import { ColorTypes, SpaceTypes } from '@/types'
 
 export * from './LoadingButton'
 
@@ -8,6 +8,11 @@ export interface ButtonProps {
   color?: ColorTypes
   fullSize?: boolean
   textTransform?: 'uppercase' | 'lowercase' | 'none'
+}
+
+interface IconButtonProps extends ButtonProps {
+  hovercolor?: ColorTypes
+  iconsize?: SpaceTypes
 }
 
 export const ClearButton = styled.button<ButtonProps>(
@@ -79,11 +84,23 @@ export const FilledButton = styled(TextButton)(
   `
 )
 
-export const IconButton = styled(ClearButton)(
-  ({ theme, color = 'black' }) => css`
+export const IconButton = styled(ClearButton)<IconButtonProps>(
+  ({ theme, color = 'gray', hovercolor = 'black', iconsize = '5' }) => css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     svg {
       stroke-width: 1;
       color: ${theme.colors[color]};
+      width: ${theme.spaces[iconsize]};
+      height: ${theme.spaces[iconsize]};
+
+      transition: all ease-in-out 0.2s;
+
+      :hover {
+        color: ${theme.colors[hovercolor]};
+      }
     }
   `
 )
