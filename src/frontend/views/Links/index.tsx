@@ -1,6 +1,8 @@
+import React from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { Dnd, Flex, H3, OutlineButton, SubH2 } from '@/components'
 import { LinkItem } from '@/features'
+import { useElementPosition } from '@/hooks'
 import { useMainStore } from '@/store'
 import { Link } from '@/types'
 import { ContentContainer, DndContainer, LinksContainer } from './styles'
@@ -10,6 +12,9 @@ export const Links = () => {
   const links = useMainStore((state) => state.name.links)
   const updateLinks = useMainStore((state) => state.updateLinks)
   const isUpdating = useMainStore((state) => state.isUpdating)
+
+  const ref = React.useRef<HTMLDivElement>(null)
+  const { topOffset } = useElementPosition({ ref })
 
   const createNewLink = () => {
     const newLink = {
@@ -34,11 +39,13 @@ export const Links = () => {
       </Flex>
 
       <ContentContainer>
-        <OutlineButton disabled={isUpdating} onClick={createNewLink} fullSize>
-          Add new link
-        </OutlineButton>
+        <LinksContainer>
+          <OutlineButton disabled={isUpdating} onClick={createNewLink} fullSize>
+            Add new link
+          </OutlineButton>
+        </LinksContainer>
 
-        <DndContainer>
+        <DndContainer ref={ref} topOffset={topOffset}>
           <LinksContainer>
             <Dnd data={links} ItemComponent={LinkItem} onDragEnd={onDragEnd} />
           </LinksContainer>

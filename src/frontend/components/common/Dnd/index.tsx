@@ -1,4 +1,5 @@
 import React from 'react'
+import isEqual from 'lodash/isEqual'
 import {
   DndContext,
   DragEndEvent,
@@ -42,7 +43,7 @@ export const Dnd = <T extends { id: string }>({ data, ItemComponent, onDragEnd }
   const [items, setItems] = React.useState<T[]>(data)
 
   React.useEffect(() => {
-    if (data.length !== items.length) setItems(data)
+    if (!isEqual(data, items)) setItems(data)
   }, [data])
 
   const sensors = useSensors(

@@ -1,6 +1,8 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 
+const marginBottom = 32
+
 export const ContentContainer = styled.div(
   ({ theme }) => css`
     width: 100%;
@@ -8,20 +10,25 @@ export const ContentContainer = styled.div(
   `
 )
 
-export const DndContainer = styled.div(
-  () => css`
+export const DndContainer = styled.div<{ topOffset: number }>(
+  ({ theme, topOffset }) => css`
     display: flex;
     justify-content: center;
-    max-width: 100%;
+    max-width: 600px;
     width: 100%;
 
-    height: calc(100vh - 300px);
+    margin: ${theme.spaces[4]} auto;
+    margin-bottom: ${marginBottom}px;
+    padding-right: 12px;
+
+    height: calc(100vh - ${topOffset + marginBottom}px);
     overflow: auto;
   `
 )
 
 export const LinksContainer = styled.div(
   () => css`
+    margin: 0 auto;
     width: 100%;
     max-width: 600px;
   `

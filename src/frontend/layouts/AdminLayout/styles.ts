@@ -26,6 +26,7 @@ export const ChildrenContainer = styled.div(
     display: flex;
     justify-content: center;
     padding: ${theme.spaces[8]};
+    padding-bottom: 0;
   `
 )
 

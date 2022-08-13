@@ -1,1 +1,1 @@
-export * from './useMainStore'
+export * from './stores'

@@ -1,4 +1,5 @@
 import { css } from '@emotion/react'
+import { theme } from './theme'
 
 export const globalStyles = css`
   * {
@@ -7,6 +8,20 @@ export const globalStyles = css`
     box-sizing: border-box;
 
     font-family: 'Raleway', sans-serif;
+
+    ::-webkit-scrollbar {
+      width: ${theme.spaces[2]};
+    }
+
+    ::-webkit-scrollbar-track {
+      background: ${theme.colors.white};
+      border-radius: ${theme.spaces[1]};
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: ${theme.colors.primary};
+      border-radius: ${theme.spaces[1]};
+    }
   }
 
   html {

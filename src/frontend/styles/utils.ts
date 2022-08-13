@@ -1,5 +1,5 @@
+import isString from 'lodash/isString'
 import { css } from '@emotion/react'
-import _ from 'lodash'
 import { BreakPointTypes, MapMqProps, SpacePropTypes } from '@/types'
 
 export const spaceProps: { name: string[]; value: SpacePropTypes }[] = [
@@ -35,7 +35,7 @@ export const mapMq = <T extends {}>({ name, value, theme = undefined }: MapMqPro
 
   const media: mediaType = {}
 
-  if (_.isString(value)) {
+  if (isString(value)) {
     let getCss: getCssType = {}
     name.map((n) => (getCss[n] = `${value}`))
 
