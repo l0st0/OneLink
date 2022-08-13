@@ -1,7 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
-import { AdminRoutes, BasicRoutes } from '@/features'
-import { Home, Links } from '@/views'
-import { Appearance } from './views/Admin/Appearance'
+import { AdminRoutes, BasicRoutes } from '@/layouts'
+import { Appearance, Home, Links } from '@/views'
 
 export const Pages = () => {
   return (

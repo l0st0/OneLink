@@ -10,7 +10,6 @@ type FlexProps = {
   textAlign?: 'center' | 'left' | 'right'
   height?: string
   width?: string
-  fullWidth?: boolean
 } & {
   [Property in SpacePropTypes]?: LiteralUnion<SpaceUnits>
 }

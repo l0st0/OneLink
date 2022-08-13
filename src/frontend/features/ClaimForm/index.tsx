@@ -2,7 +2,7 @@ import React from 'react'
 import { Flex, LoadingButton, Paragraph } from '@/components'
 import { useDebounce, useNameClient } from '@/hooks'
 import { Name, Response } from '@/types'
-import { NameTextInput } from '../NameTextInput'
+import { NameTextInput } from './components'
 
 interface ResultInterface {
   color: 'success' | 'error' | 'primary'

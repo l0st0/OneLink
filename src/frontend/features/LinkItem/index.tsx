@@ -1,7 +1,6 @@
 import React from 'react'
 import { IconPhoto, IconTrash } from '@tabler/icons'
-import { ClearButton, Flex } from '@/components'
-import { ItemComponentProps } from '@/features'
+import { Flex, IconButton, ItemComponentProps } from '@/components'
 import { useMainStore } from '@/store'
 import { Link } from '@/types'
 import { HandleIcon, LinkItemContent, LinkItemHandle, LinkItemStyled } from './styles'
@@ -24,21 +23,23 @@ export const LinkItem = React.forwardRef<HTMLDivElement, ItemComponentProps<Link
         </LinkItemHandle>
 
         <LinkItemContent>
-          <Flex justify="space-between">
-            <input placeholder="Title" value={item.title} onChange={() => {}} />
-            <button>Switch</button>
+          <Flex direction="column" width="100%" gap="1">
+            <Flex justify="space-between" width="100%">
+              <input placeholder="Title" value={item.title} onChange={() => {}} />
+              <button>Switch</button>
+            </Flex>
+
+            <input placeholder="Url" value={item.id} onChange={() => {}} />
           </Flex>
 
-          <input placeholder="Url" value={item.id} onChange={() => {}} />
-
           <Flex justify="space-between">
-            <ClearButton>
+            <IconButton>
               <IconPhoto />
-            </ClearButton>
+            </IconButton>
 
-            <ClearButton onClick={removeLink}>
+            <IconButton onClick={removeLink} color="error">
               <IconTrash />
-            </ClearButton>
+            </IconButton>
           </Flex>
         </LinkItemContent>
       </LinkItemStyled>

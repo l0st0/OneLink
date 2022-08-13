@@ -18,14 +18,15 @@ export const LinkItemHandle = styled.button(
     cursor: pointer;
     border: none;
     background: transparent;
-    border-right: 1px solid ${theme.colors.gray};
-    padding: ${theme.spaces[8]} ${theme.spaces[4]};
+    padding-left: ${theme.spaces[2.5]};
+    cursor: grab;
   `
 )
 
 export const HandleIcon = styled(IconGrain)(
   ({ theme }) => css`
     color: ${theme.colors.gray};
+    width: 16px;
   `
 )
 
@@ -34,8 +35,8 @@ export const LinkItemContent = styled.div(
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    gap: ${theme.spaces[2]};
-    padding: ${theme.spaces[2]} ${theme.spaces[4]};
+    justify-content: space-between;
+    gap: ${theme.spaces[4]};
+    padding: ${theme.spaces[4]};
   `
 )

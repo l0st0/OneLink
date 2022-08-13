@@ -1,2 +1,3 @@
+export * from './Appearance'
 export * from './Home'
-export * from './Admin'
+export * from './Links'

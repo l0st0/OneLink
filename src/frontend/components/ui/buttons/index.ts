@@ -1,15 +1,16 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
+import { ColorTypes } from '@/types'
 
 export * from './LoadingButton'
 
 export interface ButtonProps {
-  color?: 'primary' | 'secondary' | 'white'
+  color?: ColorTypes
   fullSize?: boolean
   textTransform?: 'uppercase' | 'lowercase' | 'none'
 }
 
-export const ClearButton = styled.button(
+export const ClearButton = styled.button<ButtonProps>(
   () => css`
     cursor: pointer;
     border: none;
@@ -21,7 +22,7 @@ export const ClearButton = styled.button(
   `
 )
 
-export const Button = styled(ClearButton)<ButtonProps>(
+export const Button = styled(ClearButton)(
   ({ theme }) => css`
     border-radius: ${theme.radius.normal};
   `
@@ -75,5 +76,14 @@ export const FilledButton = styled(TextButton)(
           background: ${theme.colors.secondary};
           border: 2px solid ${theme.colors.secondary};
         `}
+  `
+)
+
+export const IconButton = styled(ClearButton)(
+  ({ theme, color = 'black' }) => css`
+    svg {
+      stroke-width: 1;
+      color: ${theme.colors[color]};
+    }
   `
 )
