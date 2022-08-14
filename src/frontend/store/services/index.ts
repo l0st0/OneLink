@@ -14,13 +14,13 @@ const getUser = async (): Promise<Response<User>> => {
   }
 }
 
-const getIsAuth = async (): Promise<Response<boolean>> => {
+const getIsAuth = async (): Promise<boolean> => {
   try {
     const authClient = await AuthClient.create()
-    return { ok: await authClient.isAuthenticated() }
+    return await authClient.isAuthenticated()
   } catch (error) {
     console.log('error', error)
-    return { err }
+    return false
   }
 }
 

@@ -26,6 +26,11 @@ export const useMainStore = create<MainState>((set) => ({
   name: defaultName,
   isUpdating: false,
   err: undefined,
+
+  getIsAuth: async () => {
+    const isAuth = await service.getIsAuth()
+    set({ isAuth })
+  },
   logout: async () => {
     const authClient = await AuthClient.create()
     await authClient.logout()
@@ -54,10 +59,6 @@ export const useMainStore = create<MainState>((set) => ({
     const { ok: user, err } = await service.getUser()
     set({ user, err })
     return user
-  },
-  getIsAuth: async () => {
-    const { ok: isAuth, err } = await service.getIsAuth()
-    set({ isAuth, err })
   },
   getName: async (n) => {
     const { ok: name, err } = await service.getName(n)
