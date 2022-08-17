@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom'
 import { FilledButton, Flex, OneLinkIcon, OneLinkTextIcon, OutlineButton, TopBar } from '@/components'
-import { useMainStore } from '@/store'
+import { useUserStore } from '@/store'
 
 export const TopNavigation = () => {
-  const isAuth = useMainStore((state) => state.isAuth)
-  const login = useMainStore((state) => state.login)
-  const logout = useMainStore((state) => state.logout)
+  const isAuth = useUserStore((state) => state.isAuth)
+  const login = useUserStore((state) => state.login)
+  const logout = useUserStore((state) => state.logout)
 
   const navigate = useNavigate()
 

@@ -3,17 +3,17 @@ import { Navigate, Outlet } from 'react-router-dom'
 import { Flex, Paragraph, Spinner, SubH2 } from '@/components'
 import { ClaimForm, onClaimClickParameters } from '@/features'
 import { AdminLayout, BlankLayout } from '@/layouts'
-import { useMainStore } from '@/store'
+import { useNameStore, useUserStore } from '@/store'
 
 export const AdminRoutes = () => {
   const [loading, setLoading] = React.useState(true)
   const [claimLoading, setClaimLoading] = React.useState(false)
   const [needName, setNeedName] = React.useState(false)
 
-  const isAuth = useMainStore((state) => state.isAuth)
-  const getUser = useMainStore((state) => state.getUser)
-  const getName = useMainStore((state) => state.getName)
-  const createName = useMainStore((state) => state.createName)
+  const isAuth = useUserStore((state) => state.isAuth)
+  const getUser = useUserStore((state) => state.getUser)
+  const getName = useNameStore((state) => state.getName)
+  const createName = useNameStore((state) => state.createName)
 
   const initLoad = async () => {
     const user = await getUser()

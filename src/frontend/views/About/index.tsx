@@ -3,14 +3,14 @@ import { isEqual } from 'lodash'
 import { AvatarImage, AvatarText, Flex, H3, TextAreaInput, TextInput } from '@/components'
 import { useDebounce } from '@/hooks'
 import { AdminContentContainer, AdminHeading } from '@/layouts'
-import { useMainStore } from '@/store'
+import { useNameStore } from '@/store'
 
 export const About = () => {
-  const name = useMainStore((state) => state.name)
-  const profile = useMainStore((state) => state.profile)
-  const localProfile = useMainStore((state) => state.localProfile)
-  const updateLocalProfile = useMainStore((state) => state.updateLocalProfile)
-  const saveProfile = useMainStore((state) => state.saveProfile)
+  const name = useNameStore((state) => state.name)
+  const profile = useNameStore((state) => state.profile)
+  const localProfile = useNameStore((state) => state.localProfile)
+  const updateLocalProfile = useNameStore((state) => state.updateLocalProfile)
+  const saveProfile = useNameStore((state) => state.saveProfile)
 
   if (!localProfile) return <div>No profile found.</div>
 

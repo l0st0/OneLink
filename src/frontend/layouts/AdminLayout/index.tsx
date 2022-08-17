@@ -2,12 +2,12 @@ import React from 'react'
 import { css } from '@emotion/react'
 import { Flex, Paragraph, TextButton, TopBar } from '@/components'
 import { useElementPosition } from '@/hooks'
-import { useMainStore } from '@/store'
+import { useNameStore } from '@/store'
 import { SideNavigation } from './components'
 import { AdminContainer, ChildrenContainer, PreviewContainer, PreviewTop, SideBarContainer } from './styles'
 
 export const AdminLayout = ({ children }: React.PropsWithChildren) => {
-  const name = useMainStore((state) => state.name)
+  const name = useNameStore((state) => state.name)
 
   const ref = React.useRef<HTMLDivElement>(null)
   const { topOffset } = useElementPosition({ ref })

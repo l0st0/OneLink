@@ -1,7 +1,7 @@
 import React from 'react'
 import { IconChartLine, IconTrash } from '@tabler/icons'
 import { Flex, IconButton, ItemComponentProps, Switch } from '@/components'
-import { useMainStore } from '@/store'
+import { useNameStore } from '@/store'
 import { Link } from '@/types'
 import {
   AnalyticsButton,
@@ -16,8 +16,8 @@ export const LinkItem = React.forwardRef<HTMLDivElement, ItemComponentProps<Link
   ({ item, style, setActivatorNodeRef, listeners, ...rest }, ref) => {
     const [localItem, setLocalItem] = React.useState(item)
 
-    const links = useMainStore((state) => state.links)
-    const updateLinks = useMainStore((state) => state.updateLinks)
+    const links = useNameStore((state) => state.links)
+    const updateLinks = useNameStore((state) => state.updateLinks)
 
     const linkIndex = React.useMemo(() => links.findIndex(({ id }) => id === item.id), [links, item])
 

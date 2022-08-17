@@ -1,1 +1,2 @@
-export * from './useMainStore'
+export * from './useUserStore'
+export * from './useNameStore'

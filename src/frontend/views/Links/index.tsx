@@ -2,13 +2,13 @@ import { v4 as uuidv4 } from 'uuid'
 import { Dnd, Flex, H3, OutlineButton, SubH2 } from '@/components'
 import { LinkItem } from '@/features'
 import { AdminContentContainer, AdminHeading } from '@/layouts'
-import { useMainStore } from '@/store'
+import { useNameStore } from '@/store'
 import { Link } from '@/types'
 
 export const Links = () => {
-  const links = useMainStore((state) => state.links)
-  const updateLinks = useMainStore((state) => state.updateLinks)
-  const isUpdating = useMainStore((state) => state.isUpdating)
+  const links = useNameStore((state) => state.links)
+  const updateLinks = useNameStore((state) => state.updateLinks)
+  const isUpdating = useNameStore((state) => state.isUpdating)
 
   const createNewLink = () => {
     const newLink = {

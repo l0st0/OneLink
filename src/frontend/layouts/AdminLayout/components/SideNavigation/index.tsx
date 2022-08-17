@@ -1,11 +1,11 @@
 import { NavLink, useLocation } from 'react-router-dom'
 import { IconLayersSubtract, IconLink, IconUserCircle } from '@tabler/icons'
 import { Flex, OneLinkIcon, SideBar } from '@/components'
-import { useMainStore } from '@/store'
+import { useNameStore } from '@/store'
 import { IconLinkButton } from './styles'
 
 export const SideNavigation = () => {
-  const isUpdating = useMainStore((state) => state.isUpdating)
+  const isUpdating = useNameStore((state) => state.isUpdating)
 
   const { pathname } = useLocation()
 
