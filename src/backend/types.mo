@@ -25,7 +25,8 @@ module BaseTypes {
 
   public type Controller = {
     principal: Text;
-    appearance: Bool;
+    profile: Bool;
+    look: Bool;
     links: Bool;
     settings: Bool;
     owner: Bool;

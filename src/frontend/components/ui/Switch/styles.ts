@@ -4,11 +4,13 @@ import * as SwitchPrimitive from '@radix-ui/react-switch'
 import { SwitchProps } from '.'
 import { Flex } from '../Flex'
 
+interface StyledSwitchProps extends SwitchProps {}
+
 export const SwitchContainer = styled(Flex)`
   cursor: pointer;
 `
 
-export const StyledSwitch = styled(SwitchPrimitive.Root)<SwitchProps>(
+export const StyledSwitch = styled(SwitchPrimitive.Root)<StyledSwitchProps>(
   ({ theme, checkedbg = 'primary', checked, active }) => css`
     position: relative;
     cursor: pointer;

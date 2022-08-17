@@ -1,6 +1,6 @@
 import { AuthClient } from '@dfinity/auth-client'
 import { useNameClient } from '@/hooks'
-import { Link, Name, Response, User } from '@/types'
+import { Link, Name, Profile, Response, User } from '@/types'
 
 const err = 'Sorry something happened :('
 
@@ -54,6 +54,16 @@ const updateLinks = async (name: string, links: Link[]): Promise<Response<Link[]
   }
 }
 
-const service = { getUser, getIsAuth, getName, createName, updateLinks }
+const updateProfile = async (name: string, profile: Profile): Promise<Response<Profile>> => {
+  try {
+    const client = await useNameClient()
+    return await client.updateProfile(name, profile)
+  } catch (error) {
+    console.log('error', error)
+    return { err }
+  }
+}
+
+const service = { getUser, getIsAuth, getName, createName, updateLinks, updateProfile }
 
 export default service

@@ -2,10 +2,24 @@ import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 
 export const AdminContainer = styled.div(
-  () => css`
+  ({ theme }) => css`
     position: relative;
     display: grid;
+    gap: ${theme.spaces[1]};
     grid-template-columns: min-content 1fr max-content;
+  `
+)
+
+export const ChildrenContainer = styled.div<{ topOffset: number }>(
+  ({ theme, topOffset }) => css`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    height: calc(100vh - ${topOffset}px);
+    overflow: auto;
+    padding: ${theme.spaces[8]};
   `
 )
 
@@ -20,20 +34,11 @@ export const SideBarContainer = styled.div(
   `
 )
 
-export const ChildrenContainer = styled.div(
+export const PreviewContainer = styled.div(
   ({ theme }) => css`
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding: ${theme.spaces[8]};
-    padding-bottom: 0;
-  `
-)
-
-export const PreviewContainer = styled(ChildrenContainer)(
-  () => css`
     position: relative;
-    background: white;
+    background: ${theme.colors.white};
+    padding: ${theme.spaces[8]};
   `
 )
 

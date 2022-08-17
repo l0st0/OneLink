@@ -8,8 +8,7 @@ export const LinkItemStyled = styled.div(
   ({ theme }) => css`
     display: flex;
     width: 100%;
-    margin-bottom: ${theme.spaces[4]};
-    background: white;
+    background: ${theme.colors.white};
     color: black;
     border-radius: ${theme.radius.normal};
   `

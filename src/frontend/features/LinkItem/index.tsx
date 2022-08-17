@@ -16,20 +16,19 @@ export const LinkItem = React.forwardRef<HTMLDivElement, ItemComponentProps<Link
   ({ item, style, setActivatorNodeRef, listeners, ...rest }, ref) => {
     const [localItem, setLocalItem] = React.useState(item)
 
-    const name = useMainStore((state) => state.name.name)
-    const links = useMainStore((state) => state.name.links)
+    const links = useMainStore((state) => state.links)
     const updateLinks = useMainStore((state) => state.updateLinks)
 
     const linkIndex = React.useMemo(() => links.findIndex(({ id }) => id === item.id), [links, item])
 
-    const isActiveSwitch = React.useMemo(
-      () => !!localItem.title.length && !!localItem.url.length,
-      [localItem.title, localItem.url]
-    )
+    const isActiveSwitch = React.useMemo(() => {
+      if (!!localItem.title.length && !!localItem.url.length) return 1
+      return 0
+    }, [localItem.title, localItem.url])
 
     const removeLink = () => {
       const filterLinks = links.filter(({ id }) => id !== item.id)
-      updateLinks(name, filterLinks)
+      updateLinks(filterLinks)
     }
 
     const onInputChange =
@@ -44,7 +43,7 @@ export const LinkItem = React.forwardRef<HTMLDivElement, ItemComponentProps<Link
       const updatedLinks = [...links]
 
       updatedLinks[linkIndex] = { ...localItem, show }
-      updateLinks(name, updatedLinks)
+      updateLinks(updatedLinks)
     }
 
     const onCheckedChange = (show: boolean) => {
@@ -53,7 +52,7 @@ export const LinkItem = React.forwardRef<HTMLDivElement, ItemComponentProps<Link
 
       const updatedLinks = [...links]
       updatedLinks[linkIndex] = { ...localItem, show }
-      updateLinks(name, updatedLinks)
+      updateLinks(updatedLinks)
     }
 
     return (

@@ -1,6 +1,5 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
-import { TextInput } from '@/components'
 import { ColorTypes } from '@/types'
 
 interface NameTextInputContainerProps {
@@ -39,11 +38,3 @@ export const StartText = styled.p(
     cursor: default;
   `
 )
-
-export const InputText = styled(TextInput)`
-  border: none;
-
-  :focus {
-    outline: none;
-  }
-`

@@ -6,6 +6,7 @@ export const IconLinkButton = styled.div<{ active: boolean }>(
     color: ${active ? theme.colors.white : theme.colors.black};
     background: ${active ? theme.colors.secondary : 'transparent'};
     padding: ${theme.spaces[2.5]} ${theme.spaces[6]};
+    padding-top: ${theme.spaces[3.5]};
     border-radius: ${theme.radius.normal};
 
     :hover {

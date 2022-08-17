@@ -9,8 +9,8 @@ export const Home = () => {
   const [loading, setLoading] = React.useState(false)
 
   const getUser = useMainStore((state) => state.getUser)
-  const createName = useMainStore((state) => state.createName)
   const login = useMainStore((state) => state.login)
+  const createName = useMainStore((state) => state.createName)
 
   const navigate = useNavigate()
 

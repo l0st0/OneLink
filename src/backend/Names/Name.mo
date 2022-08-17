@@ -27,7 +27,8 @@ module {
         let controllers: [Types.Controller] = [
             {
                 principal = Principal.toText(caller);
-                appearance = true;
+                profile = true;
+                look = true;
                 links = true;
                 settings = true;
                 owner = true;

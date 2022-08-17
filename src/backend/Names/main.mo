@@ -28,7 +28,7 @@ actor {
         user_stable_0 := [];
     };
 
-    private func verifyPermission(controllers: [Types.Controller], caller: Principal, pType: { #links; #settings; #appearance; #analytics }): async Bool {
+    private func verifyPermission(controllers: [Types.Controller], caller: Principal, pType: { #links; #settings; #profile; #look; #analytics }): async Bool {
         let isEqual = func(c: Types.Controller): Bool { Principal.equal(Principal.fromText(c.principal), caller) };
         let controller = Array.find(controllers, isEqual);
 
@@ -41,7 +41,8 @@ actor {
                     case(#analytics) return true;
                     case(#links) return c.links;
                     case(#settings) return c.settings;
-                    case(#appearance) return c.appearance;
+                    case(#profile) return c.profile;
+                    case(#look) return c.look;
                 };
             }
         }
@@ -153,25 +154,48 @@ actor {
         };
     };
 
-    public shared({ caller }) func updateAppearance(name: Text, appearance: { profile: Types.Profile; look: Types.Look }): async Result.Result<Types.Name, Text> {
+    public shared({ caller }) func updateProfile(name: Text, profile: Types.Profile): async Result.Result<Types.Profile, Text> {
         if(Option.isNull(users.get(caller))) return #err("Sorry, you need to log in.");
 
         switch(names.get(name)) {
             case(null) return #err("Name does not exists.");
             case(?n) {
-                let hasPermission = await verifyPermission(n.controllers, caller, #appearance);
+                let hasPermission = await verifyPermission(n.controllers, caller, #profile);
                 if(not hasPermission) return #err("You are not authorized to update appearance.");
                 
                 let updatedName = {
-                    profile = appearance.profile;
-                    look = appearance.look;
+                    profile = profile;
+                    look = n.look;
                     name = n.name;
                     links = n.links;
                     controllers = n.controllers;
                 };
 
                 names.put(name, updatedName);
-                return #ok(updatedName);
+                return #ok(profile);
+            }
+        };
+    };
+
+    public shared({ caller }) func updateLook(name: Text, look: Types.Look): async Result.Result<Types.Look, Text> {
+        if(Option.isNull(users.get(caller))) return #err("Sorry, you need to log in.");
+
+        switch(names.get(name)) {
+            case(null) return #err("Name does not exists.");
+            case(?n) {
+                let hasPermission = await verifyPermission(n.controllers, caller, #look);
+                if(not hasPermission) return #err("You are not authorized to update appearance.");
+                
+                let updatedName = {
+                    look = look;
+                    profile = n.profile;
+                    name = n.name;
+                    links = n.links;
+                    controllers = n.controllers;
+                };
+
+                names.put(name, updatedName);
+                return #ok(look);
             }
         };
     };

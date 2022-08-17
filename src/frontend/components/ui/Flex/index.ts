@@ -10,15 +10,29 @@ type FlexProps = {
   textAlign?: 'center' | 'left' | 'right'
   height?: string
   width?: string
+  maxHeight?: string
+  maxWidth?: string
 } & {
   [Property in SpacePropTypes]?: LiteralUnion<SpaceUnits>
 }
 
 export const Flex = styled.div<FlexProps>(
-  ({ theme, direction = 'row', align = 'flex-start', justify = 'flex-start', height, width, ...rest }) => css`
+  ({
+    theme,
+    direction = 'row',
+    align = 'flex-start',
+    justify = 'flex-start',
+    height,
+    width,
+    maxWidth,
+    maxHeight,
+    ...rest
+  }) => css`
     display: flex;
     height: ${height};
     width: ${width};
+    max-height: ${maxHeight};
+    max-width: ${maxWidth};
 
     ${mapMq({ name: ['flexDirection'], value: direction })}
     ${mapMq({ name: ['alignItems'], value: align })}

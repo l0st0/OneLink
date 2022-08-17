@@ -31,7 +31,7 @@ export const ClaimForm = ({ onClaimClick, loading, maxWidth = '250px' }: ClaimFo
   const [fetchingName, setFetchingName] = React.useState(false)
   const [result, setResult] = React.useState<ResultInterface>(defaultResult)
 
-  const debouncedSearchTerm = useDebounce(input, 500)
+  const debouncedSearchTerm = useDebounce(input)
 
   const fetchName = async (name: string) => {
     if (result.hasName) return

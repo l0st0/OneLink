@@ -16,3 +16,4 @@ dist/
 
 # env secrets
 src/backend/env
+.env

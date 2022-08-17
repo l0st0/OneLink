@@ -1,14 +1,17 @@
+import isEqual from 'lodash/isEqual'
 import { AuthClient } from '@dfinity/auth-client'
 import create from 'zustand'
-import { Link, Name, User } from '@/types'
+import { Link, Profile, User } from '@/types'
 import { LOCAL_II_CANISTER } from '@/utils'
-import { defaultName } from '../defaultValues'
 import service from '../services'
 
 interface MainState {
   user?: User
   isAuth: boolean
-  name: Name
+  name: string
+  links: Link[]
+  profile?: Profile
+  localProfile?: Profile
   isUpdating: boolean
   err?: string
   logout: () => Promise<void>
@@ -17,15 +20,16 @@ interface MainState {
   getIsAuth: () => Promise<void>
   getName: (n: string) => Promise<void>
   createName: (n: string) => Promise<void>
-  updateLinks: (n: string, links: Link[]) => Promise<void>
+  updateLinks: (l: Link[]) => Promise<void>
+  updateLocalProfile: (p: Profile) => void
+  saveProfile: (p: Profile) => Promise<Profile | void>
 }
 
-export const useMainStore = create<MainState>((set) => ({
-  user: undefined,
+export const useMainStore = create<MainState>((set, get) => ({
   isAuth: true,
-  name: defaultName,
+  name: '',
+  links: [],
   isUpdating: false,
-  err: undefined,
 
   getIsAuth: async () => {
     const isAuth = await service.getIsAuth()
@@ -61,19 +65,44 @@ export const useMainStore = create<MainState>((set) => ({
     return user
   },
   getName: async (n) => {
-    const { ok: name, err } = await service.getName(n)
-    set({ name, err })
+    const { ok, err } = await service.getName(n)
+
+    if (!ok) return set({ err })
+    const { links, profile, name } = ok
+
+    set({ name, links, profile, localProfile: profile })
   },
   createName: async (n) => {
     const { ok, err } = await service.createName(n)
+
     if (!ok) return set({ err })
-    const { user, name } = ok
-    set({ name, user })
+    const { user, name: nameObj } = ok
+    const { links, profile, name } = nameObj
+
+    set({ user, name, links, profile, localProfile: profile })
   },
-  updateLinks: async (n, l) => {
+  updateLinks: async (l) => {
+    if (isEqual(get().links, l)) return
     set({ isUpdating: true })
-    const { ok: links, err } = await service.updateLinks(n, l)
-    if (!links) return set({ err, isUpdating: false })
-    set((state) => ({ name: { ...state.name, links }, err, isUpdating: false }))
+    const { ok: links, err } = await service.updateLinks(get().name, l)
+    set({ isUpdating: false })
+
+    if (!links) return set({ err })
+    set({ links, err })
+  },
+  updateLocalProfile: (localProfile) => {
+    set({ localProfile })
+  },
+  saveProfile: async (p) => {
+    if (isEqual(p, get().profile)) return
+
+    set({ isUpdating: true })
+    const { ok: profile, err } = await service.updateProfile(get().name, p)
+    set({ isUpdating: false })
+
+    if (!profile) return set({ err })
+    set({ profile, localProfile: profile, err })
+
+    return profile
   },
 }))

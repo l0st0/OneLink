@@ -6,10 +6,10 @@ export interface SwitchProps extends RadixSwitchProps {
   id: string
   label?: string
   checkedbg?: ColorTypes
-  active?: boolean
+  active?: 0 | 1
 }
 
-export const Switch = ({ id, label, checkedbg, active = true, ...rest }: SwitchProps) => {
+export const Switch = ({ id, label, checkedbg, active = 1, ...rest }: SwitchProps) => {
   return (
     <SwitchContainer>
       {label && <label htmlFor={id}>{label}</label>}

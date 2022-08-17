@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from 'react-router-dom'
-import { IconLayersSubtract, IconLink } from '@tabler/icons'
+import { IconLayersSubtract, IconLink, IconUserCircle } from '@tabler/icons'
 import { Flex, OneLinkIcon, SideBar } from '@/components'
 import { useMainStore } from '@/store'
 import { IconLinkButton } from './styles'
@@ -11,6 +11,7 @@ export const SideNavigation = () => {
 
   const navLinks = [
     { to: '/admin/links', icon: <IconLink /> },
+    { to: '/admin/about', icon: <IconUserCircle /> },
     { to: '/admin/appearance', icon: <IconLayersSubtract /> },
   ]
 

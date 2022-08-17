@@ -1,5 +1,6 @@
+import { DefaultInput } from '@/components'
 import { ColorTypes } from '@/types'
-import { InputText, NameTextInputContainer, StartText } from './styles'
+import { NameTextInputContainer, StartText } from './styles'
 
 interface NameTextInputProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -19,7 +20,7 @@ export const NameTextInput = ({
   return (
     <NameTextInputContainer borderColor={borderColor} maxWidth={maxWidth}>
       <StartText>onelink.ooo/</StartText>
-      <InputText autoFocus type="text" onChange={onChange} value={value} placeholder={placeholder} />
+      <DefaultInput autoFocus type="text" onChange={onChange} value={value} placeholder={placeholder} />
     </NameTextInputContainer>
   )
 }

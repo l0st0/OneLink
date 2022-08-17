@@ -15,12 +15,10 @@ export const globalStyles = css`
 
     ::-webkit-scrollbar-track {
       background: ${theme.colors.white};
-      border-radius: ${theme.spaces[1]};
     }
 
     ::-webkit-scrollbar-thumb {
       background: ${theme.colors.primary};
-      border-radius: ${theme.spaces[1]};
     }
   }
 
