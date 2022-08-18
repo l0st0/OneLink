@@ -1,5 +1,6 @@
 import { H3 } from '@/components'
-import { AdminHeading } from '@/layouts'
+import { Themes } from '@/features'
+import { AdminContentContainer, AdminHeading } from '@/layouts'
 
 export const Appearance = () => {
   return (
@@ -7,6 +8,10 @@ export const Appearance = () => {
       <AdminHeading>
         <H3>Appearance</H3>
       </AdminHeading>
+
+      <AdminContentContainer>
+        <Themes />
+      </AdminContentContainer>
     </>
   )
 }

@@ -46,6 +46,14 @@ export const H3 = styled.h2<TextProps>(
   `
 )
 
+export const H6 = styled.h2<TextProps>(
+  ({ theme, color = 'white', fontSize = '2xl', fontWeight = '600' }) => css`
+    color: ${theme.colors[color]};
+    font-size: ${theme.text.fontSize[fontSize]};
+    font-weight: ${theme.text.fontWeight[fontWeight]};
+  `
+)
+
 export const SubH1 = styled.p<TextProps>(
   ({ theme, color = 'white', fontSize = '3xl', fontWeight = '300' }) => css`
     color: ${theme.colors[color]};

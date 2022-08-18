@@ -14,7 +14,7 @@ export const AdminHeading = styled(Flex)(
 export const AdminContentContainer = styled(Flex)(
   ({ theme, gap }) => css`
     width: 100%;
-    max-width: 600px;
+    max-width: 640px;
     flex-direction: column;
     align-items: center;
     gap: ${gap || theme.spaces[4]};

@@ -27,6 +27,10 @@ export const mq = (bp: BreakPointTypes) => {
   return `@media (min-width: ${breakpointsObj[bp]})`
 }
 
+export const mqCustom = (bp: number) => {
+  return `@media (min-width: ${bp}px)`
+}
+
 type getCssType = { [key: string]: string }
 type mediaType = { [key: string]: {} }
 
