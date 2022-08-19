@@ -19,8 +19,8 @@ module {
         };
     };
 
-    public func createUser(): Types.User {
-        return { names = [] };
+    public func createUser(principal: Text): Types.User {
+        return { names = []; principal };
     };
 
     public func createName(name: Text, caller: Principal): Types.Name {

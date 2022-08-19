@@ -47,6 +47,7 @@ public type Name = {
 
   public type User = {
     names: [UName];
+    principal: Text;
   };
 
   public type Stats = {

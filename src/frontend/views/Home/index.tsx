@@ -2,14 +2,14 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Flex, H1, IcBadgeIconFlat, SubH1 } from '@/components'
 import { ClaimForm, onClaimClickParameters } from '@/features'
-import { useNameStore, useUserStore } from '@/store'
+import { useAuthStore, useNameStore, useUserStore } from '@/store'
 import { userHasPrimaryName } from '@/utils'
 
 export const Home = () => {
   const [loading, setLoading] = React.useState(false)
 
   const getUser = useUserStore((state) => state.getUser)
-  const login = useUserStore((state) => state.login)
+  const login = useAuthStore((state) => state.login)
   const createName = useNameStore((state) => state.createName)
 
   const navigate = useNavigate()

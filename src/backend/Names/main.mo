@@ -60,7 +60,7 @@ actor {
         switch(users.get(caller)) {
             case(?user) return #ok(user);
             case(null) {
-                let userObj = Name.createUser();
+                let userObj = Name.createUser(Principal.toText(caller));
                 users.put(caller, userObj);
                 return #ok(userObj);
             };
@@ -99,7 +99,7 @@ actor {
                 let newName = Name.createName(name, caller);
                 names.put(name, newName);
 
-                let user = { names = [{ primary = true; name }] };
+                let user = { names = [{ primary = true; name }]; principal = Principal.toText(caller) };
                 users.put(caller, user);
                 
                 return #ok({ user; name = newName });

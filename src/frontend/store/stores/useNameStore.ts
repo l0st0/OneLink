@@ -1,6 +1,6 @@
 import isEqual from 'lodash/isEqual'
 import create from 'zustand'
-import { Link, Profile } from '@/types'
+import { Controller, Link, Look, Profile } from '@/types'
 import service from '../services'
 import { useUserStore } from './useUserStore'
 
@@ -9,6 +9,8 @@ interface NameState {
   links: Link[]
   profile?: Profile
   localProfile?: Profile
+  look?: Look
+  controllers: Controller[]
   isUpdating: boolean
   err?: string
   getName: (n: string) => Promise<void>
@@ -21,34 +23,33 @@ interface NameState {
 export const useNameStore = create<NameState>((set, get) => ({
   name: '',
   links: [],
+  controllers: [],
   isUpdating: false,
 
   getName: async (n) => {
     const { ok, err } = await service.getName(n)
 
     if (!ok) return set({ err })
-    const { links, profile, name } = ok
-
-    set({ name, links, profile, localProfile: profile })
+    set({ ...ok, localProfile: ok.profile })
   },
   createName: async (n) => {
     const { ok, err } = await service.createName(n)
 
     if (!ok) return set({ err })
-    const { user, name: nameObj } = ok
-    const { links, profile, name } = nameObj
+    const { user, name } = ok
 
-    useUserStore.setState({ user })
-    set({ name, links, profile, localProfile: profile })
+    useUserStore.setState({ user: { ok: user } })
+    set({ ...name, localProfile: name.profile })
   },
   updateLinks: async (l) => {
     if (isEqual(get().links, l)) return
+
     set({ isUpdating: true })
     const { ok: links, err } = await service.updateLinks(get().name, l)
-    set({ isUpdating: false })
 
+    set({ isUpdating: false })
     if (!links) return set({ err })
-    set({ links, err })
+    set({ links })
   },
   updateLocalProfile: (localProfile) => {
     set({ localProfile })
