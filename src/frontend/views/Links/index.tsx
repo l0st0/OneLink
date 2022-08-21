@@ -2,13 +2,14 @@ import { v4 as uuidv4 } from 'uuid'
 import { Dnd, Flex, H3, OutlineButton, SubH2 } from '@/components'
 import { LinkItem } from '@/features'
 import { AdminContentContainer, AdminHeading } from '@/layouts'
-import { useNameStore } from '@/store'
+import { useLinkQuery, useSaveLinks } from '@/store'
 import { Link } from '@/types'
 
 export const Links = () => {
-  const links = useNameStore((state) => state.links)
-  const updateLinks = useNameStore((state) => state.updateLinks)
-  const isUpdating = useNameStore((state) => state.isUpdating)
+  const { data: linksData } = useLinkQuery()
+  const { mutate: saveLinks } = useSaveLinks()
+
+  const links = linksData ?? []
 
   const createNewLink = () => {
     const newLink = {
@@ -20,10 +21,10 @@ export const Links = () => {
     }
 
     const newLinks = [newLink, ...links]
-    updateLinks(newLinks)
+    saveLinks(newLinks)
   }
 
-  const onDragEnd = (links: Link[]) => updateLinks(links)
+  const onDragEnd = (links: Link[]) => saveLinks(links)
 
   return (
     <>
@@ -33,13 +34,15 @@ export const Links = () => {
       </AdminHeading>
 
       <AdminContentContainer>
-        <OutlineButton disabled={isUpdating} onClick={createNewLink} fullSize>
+        <OutlineButton onClick={createNewLink} fullSize>
           Add new link
         </OutlineButton>
 
-        <Flex direction="column" width="100%" gap="4">
-          <Dnd data={links} ItemComponent={LinkItem} onDragEnd={onDragEnd} />
-        </Flex>
+        {!!links.length && (
+          <Flex direction="column" width="100%" gap="4">
+            <Dnd data={links} ItemComponent={LinkItem} onDragEnd={onDragEnd} />
+          </Flex>
+        )}
       </AdminContentContainer>
     </>
   )

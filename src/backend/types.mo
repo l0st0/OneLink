@@ -1,4 +1,25 @@
 module BaseTypes {
+  public type Stats = {
+    names: Nat;
+  };
+
+  public type Controller = {
+    principal: Text;
+    owner: Bool;
+  };
+
+  public type Name = {
+    name: Text;
+    owner: Text;
+    controllers: [Controller];
+  };
+
+  public type User = {
+    name: Text;
+    principal: Text;
+    assignNames: [Text]
+  };
+
   public type Link = {
     id: Text;
     title: Text;
@@ -7,53 +28,45 @@ module BaseTypes {
     icon: Text;
   };
 
-  public type Profile = {
+  public type LinkStore = {
+    links: [Link];
+    controllers: [Controller]
+  };
+
+  public type About = {
     title: Text;
     bio: Text;
     image: Text;
+  };
+
+  public type AboutStore = {
+    about: About;
+    controllers: [Controller]
   };
 
   public type Look = {
     theme: Text;
     background: { #color: Text };
     gradient: {
-        show: Bool;
-        color: Text;
-        position: { #top: Bool; #bottom: Bool };
-      };
+      show: Bool;
+      color: Text;
+      position: { #top: Bool; #bottom: Bool };
+    };
   };
 
-  public type Controller = {
-    principal: Text;
-    profile: Bool;
-    look: Bool;
-    links: Bool;
-    settings: Bool;
-    owner: Bool;
-  };
-
-  public type UName = {
-    primary: Bool;
-    name: Text;
-  };
-
-public type Name = {
-    name: Text;
-    profile: Profile;
+  public type LookStore = {
     look: Look;
+    controllers: [Controller]
+  };
+
+  public type FullName = {
+    name: Text;
     links: [Link];
-    controllers: [Controller];
+    // about: About;
+    // look: Look;
   };
 
-  public type User = {
-    names: [UName];
-    principal: Text;
-  };
-
-  public type Stats = {
-    names: Nat;
-  };
-
+  // Analytics
   public type View = {
     date: Text;
     address: Text;

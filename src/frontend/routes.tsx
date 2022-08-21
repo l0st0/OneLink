@@ -11,6 +11,7 @@ export const Pages = () => {
         <Route path="/" element={<Home />} />
       </Route>
       <Route element={<AdminRoutes />}>
+        <Route path="/admin" element={<Links />} />
         <Route path="/admin/links" element={<Links />} />
         <Route path="/admin/about" element={<About />} />
         <Route path="/admin/appearance" element={<Appearance />} />

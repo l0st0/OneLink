@@ -1,7 +1,7 @@
 import React from 'react'
 import { IconChartLine, IconTrash } from '@tabler/icons'
 import { Flex, IconButton, ItemComponentProps, Switch } from '@/components'
-import { useNameStore } from '@/store'
+import { useSaveLinks } from '@/store'
 import { Link } from '@/types'
 import {
   AnalyticsButton,
@@ -13,11 +13,10 @@ import {
 } from './styles'
 
 export const LinkItem = React.forwardRef<HTMLDivElement, ItemComponentProps<Link>>(
-  ({ item, style, setActivatorNodeRef, listeners, ...rest }, ref) => {
+  ({ data: links = [], item, style, setActivatorNodeRef, listeners, ...rest }, ref) => {
     const [localItem, setLocalItem] = React.useState(item)
 
-    const links = useNameStore((state) => state.links)
-    const updateLinks = useNameStore((state) => state.updateLinks)
+    const { mutate: saveLinks } = useSaveLinks()
 
     const linkIndex = React.useMemo(() => links.findIndex(({ id }) => id === item.id), [links, item])
 
@@ -28,7 +27,7 @@ export const LinkItem = React.forwardRef<HTMLDivElement, ItemComponentProps<Link
 
     const removeLink = () => {
       const filterLinks = links.filter(({ id }) => id !== item.id)
-      updateLinks(filterLinks)
+      saveLinks(filterLinks)
     }
 
     const onInputChange =
@@ -43,7 +42,7 @@ export const LinkItem = React.forwardRef<HTMLDivElement, ItemComponentProps<Link
       const updatedLinks = [...links]
 
       updatedLinks[linkIndex] = { ...localItem, show }
-      updateLinks(updatedLinks)
+      saveLinks(updatedLinks)
     }
 
     const onCheckedChange = (show: boolean) => {
@@ -52,7 +51,7 @@ export const LinkItem = React.forwardRef<HTMLDivElement, ItemComponentProps<Link
 
       const updatedLinks = [...links]
       updatedLinks[linkIndex] = { ...localItem, show }
-      updateLinks(updatedLinks)
+      saveLinks(updatedLinks)
     }
 
     return (

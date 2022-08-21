@@ -27,7 +27,7 @@ actor {
 
     let nameActor = actor(Env.NAME_CANISTER): actor {
         verifyNameAndCaller: (name: Text, caller: Principal) -> async Bool;
-        getLinks: (name: Text) -> async [Types.Link]
+        getLinksAnalytics: (name: Text) -> async [Types.Link]
     };
 
     public shared({ caller }) func getAnalytics(name: Text): async Result.Result<Types.Analytics, Text> {
@@ -47,11 +47,7 @@ actor {
         switch(analytics.get(name)) {
             case(?a) return #err("Analytics already exists.");
             case(null) {
-                let newAnalytics = {
-                    views = [];
-                    clicks = [];
-                };
-
+                let newAnalytics = { views = []; clicks = [] };
                 analytics.put(name, newAnalytics);
                 return #ok(newAnalytics);
             };
@@ -71,11 +67,7 @@ actor {
 
                 buffer.add(view);
 
-                let updateAnalytics = {
-                    views = buffer.toArray();
-                    clicks = a.clicks;
-                };
-
+                let updateAnalytics = { views = buffer.toArray(); clicks = a.clicks };
                 analytics.put(name, updateAnalytics);
                 return #ok("View was recorded.");
             } 
@@ -88,7 +80,7 @@ actor {
         switch(analytics.get(name)) {
             case(null) return #err("Analytics does not exists.");
             case(?a) {
-                let links = await nameActor.getLinks(name);
+                let links = await nameActor.getLinksAnalytics(name);
                 let noLink = Option.isNull(Array.find(links, func(c: Types.Link): Bool { c.id == click.id }));
 
                 if(noLink) {

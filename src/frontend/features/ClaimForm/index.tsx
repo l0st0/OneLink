@@ -1,69 +1,55 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Flex, LoadingButton, Paragraph } from '@/components'
 import { useDebounce, useNameClient } from '@/hooks'
-import { Name, Response } from '@/types'
+import { useAuthStore, useClaimStore, useCreateName, useIsAuthQuery, useUserQuery } from '@/store'
+import { Response } from '@/types'
 import { NameTextInput } from './components'
 
-interface ResultInterface {
-  color: 'success' | 'error' | 'primary'
-  msg: string
-  claim: boolean
-  hasName?: boolean
-}
-
-export type onClaimClickParameters = {
-  event: React.FormEvent<HTMLDivElement>
-  input: string
-  result: ResultInterface
-  setResult: React.Dispatch<React.SetStateAction<ResultInterface>>
-}
-
 interface ClaimFormProps {
-  loading: boolean
-  onClaimClick: (params: onClaimClickParameters) => void
   maxWidth?: string
 }
 
-const defaultResult: ResultInterface = { color: 'primary', msg: '', claim: false }
+export const ClaimForm = ({ maxWidth = '250px' }: ClaimFormProps) => {
+  const { input, result, setInput, setResult } = useClaimStore((state) => state)
+  const login = useAuthStore((state) => state.login)
 
-export const ClaimForm = ({ onClaimClick, loading, maxWidth = '250px' }: ClaimFormProps) => {
-  const [input, setInput] = React.useState('')
-  const [fetchingName, setFetchingName] = React.useState(false)
-  const [result, setResult] = React.useState<ResultInterface>(defaultResult)
+  const { data: isAuth } = useIsAuthQuery()
+  const { data: user } = useUserQuery()
+  const { mutateAsync: createName, isLoading } = useCreateName()
+
+  const navigate = useNavigate()
 
   const debouncedSearchTerm = useDebounce(input)
 
   const fetchName = async (name: string) => {
-    if (result.hasName) return
-
-    if (name.length < 3)
-      return setResult({
-        color: 'error',
-        msg: 'Sorry, name has to have at least 3 characters.',
-        claim: false,
-      })
-
     try {
-      setFetchingName(true)
       const nameClient = await useNameClient()
-      const { ok, err }: Response<Name> = await nameClient.getName(name)
-
-      if (ok) setResult({ color: 'error', msg: `Sorry, "${name}" already exists.`, claim: false })
-      if (err) setResult({ color: 'success', msg: `Congratulations, "${name}" is available.`, claim: true })
+      const { ok, err }: Response<string> = await nameClient.verifyName(name)
+      if (err) setResult({ color: 'error', msg: err, claim: false })
+      if (ok) setResult({ color: 'success', msg: ok, claim: true })
     } catch (error) {
       setResult({ color: 'error', msg: 'Sorry, something went wrong.', claim: false })
-    } finally {
-      setFetchingName(false)
     }
   }
 
   React.useEffect(() => {
-    if (!debouncedSearchTerm) return setResult(defaultResult)
+    if (!debouncedSearchTerm) {
+      setResult({ color: 'primary', msg: '', claim: false })
+      return
+    }
     fetchName(debouncedSearchTerm)
   }, [debouncedSearchTerm])
 
-  const onSubmit = (event: React.FormEvent<HTMLDivElement>) => {
-    onClaimClick({ event, input, result, setResult })
+  const onSubmit = async (event: React.FormEvent<HTMLDivElement>) => {
+    event.preventDefault()
+    if (!result.claim) return
+    if (!isAuth) return await login(async () => navigate('admin/links'))
+    if (!user) return
+    if (user.hasName) return navigate('admin/links')
+
+    await createName(debouncedSearchTerm)
+    return navigate('admin/links')
   }
 
   return (
@@ -77,8 +63,8 @@ export const ClaimForm = ({ onClaimClick, loading, maxWidth = '250px' }: ClaimFo
           maxWidth={maxWidth}
         />
 
-        <LoadingButton button="outline" loading={loading} disabled={fetchingName} type="submit">
-          {result.hasName ? 'Admin' : 'Claim'}
+        <LoadingButton button="outline" loading={isLoading} type="submit">
+          Claim
         </LoadingButton>
       </Flex>
 

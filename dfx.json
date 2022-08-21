@@ -1,11 +1,11 @@
 {
   "canisters": {
     "names": {
-      "main": "src/backend/Names/main.mo",
+      "main": "src/backend/Names/Main.mo",
       "type": "motoko"
     },
     "analytics": {
-      "main": "src/backend/Analytics/main.mo",
+      "main": "src/backend/Analytics/Main.mo",
       "type": "motoko"
     },
     "frontend": {

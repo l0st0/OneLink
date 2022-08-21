@@ -27,6 +27,7 @@ export type ItemComponentType<T> = React.ForwardRefExoticComponent<
 
 export interface ItemComponentProps<T> {
   item: T
+  data: T[]
   style?: any
   setActivatorNodeRef?: (element: HTMLElement | null) => void
   listeners?: SyntheticListenerMap
@@ -38,7 +39,7 @@ interface DndProps<T> {
   onDragEnd: (data: T[]) => void
 }
 
-export const Dnd = <T extends { id: string }>({ data, ItemComponent, onDragEnd }: DndProps<T>) => {
+export const Dnd = <T extends { id: string }>({ data = [], ItemComponent, onDragEnd }: DndProps<T>) => {
   const [activeItem, setActiveItem] = React.useState<T | undefined>(undefined)
   const [items, setItems] = React.useState<T[]>(data)
 
@@ -83,12 +84,12 @@ export const Dnd = <T extends { id: string }>({ data, ItemComponent, onDragEnd }
     >
       <SortableContext items={items} strategy={verticalListSortingStrategy}>
         {items.map((item) => (
-          <SortableItem key={item.id} item={item} ItemComponent={ItemComponent} />
+          <SortableItem key={item.id} item={item} items={items} ItemComponent={ItemComponent} />
         ))}
       </SortableContext>
 
       <DragOverlay modifiers={[restrictToWindowEdges]}>
-        {activeItem ? <ItemComponent item={activeItem} /> : null}
+        {activeItem ? <ItemComponent data={items} item={activeItem} /> : null}
       </DragOverlay>
     </DndContext>
   )

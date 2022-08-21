@@ -1,2 +1,2 @@
 export * from './stores'
-export * from './defaultValues'
+export * from './queries'

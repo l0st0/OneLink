@@ -1,9 +1,11 @@
 import {
+  About as ICAbout,
   Controller as ICController,
   Link as ICLink,
   Look as ICLook,
   Name as ICName,
-  Profile as ICProfile,
+  FullName as ICNameData,
+  Stats as ICStats,
   User as ICUser,
 } from '@/names/main/types'
 
@@ -24,14 +26,11 @@ export interface IconProps {
   spinSpeed?: string
 }
 
+export interface Stats extends ICStats {}
 export interface Name extends ICName {}
 export interface User extends ICUser {}
 export interface Link extends ICLink {}
-export interface Controller extends ICController {}
+export interface About extends ICAbout {}
 export interface Look extends ICLook {}
-export interface Profile extends ICProfile {}
-
-export interface Appearance {
-  profile: Profile
-  look: Look
-}
+export interface Controller extends ICController {}
+export interface NameData extends ICNameData {}

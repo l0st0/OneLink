@@ -5,9 +5,14 @@ import { ItemComponentType } from '..'
 interface SortableItemProps<T> {
   ItemComponent: ItemComponentType<T>
   item: T
+  items: T[]
 }
 
-export const SortableItem = <T extends { id: string }>({ ItemComponent, item }: SortableItemProps<T>) => {
+export const SortableItem = <T extends { id: string }>({
+  ItemComponent,
+  item,
+  items,
+}: SortableItemProps<T>) => {
   const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition, isDragging } =
     useSortable({
       id: item.id,
@@ -29,6 +34,7 @@ export const SortableItem = <T extends { id: string }>({ ItemComponent, item }: 
       style={style}
       {...attributes}
       item={item}
+      data={items}
       setActivatorNodeRef={setActivatorNodeRef}
       listeners={listeners}
     />

@@ -1,17 +1,25 @@
 import { AuthClient } from '@dfinity/auth-client'
 import { useNameClient } from '@/hooks'
-import { Link, Name, Profile, Response, User } from '@/types'
+import { About, Link, Name, NameData, Response, Stats, User } from '@/types'
+import { LOCAL_II_CANISTER } from '@/utils'
 
-const err = 'Sorry something happened :('
+const serverErr = 'Sorry something happened :('
 
-const getUser = async (): Promise<Response<User>> => {
-  try {
-    const client = await useNameClient()
-    return await client.getUser()
-  } catch (error) {
-    console.log('error', error)
-    return { err }
-  }
+const login = async (onScc?: any) => {
+  const authClient = await AuthClient.create()
+  const identityProvider = import.meta.env.PROD ? 'https://identity.ic0.app/#authorize' : LOCAL_II_CANISTER
+  const maxTimeToLive = BigInt(24 * 60 * 60 * 1000000000)
+
+  await authClient.login({
+    onSuccess: async () => onScc && (await onScc()),
+    identityProvider,
+    maxTimeToLive,
+  })
+}
+
+const logout = async () => {
+  const authClient = await AuthClient.create()
+  await authClient.logout()
 }
 
 const getIsAuth = async (): Promise<boolean> => {
@@ -19,51 +27,127 @@ const getIsAuth = async (): Promise<boolean> => {
     const authClient = await AuthClient.create()
     return await authClient.isAuthenticated()
   } catch (error) {
-    console.log('error', error)
-    return false
+    throw serverErr
   }
 }
 
-const getName = async (name: string): Promise<Response<Name>> => {
+export const getStats = async (): Promise<Stats> => {
   try {
     const client = await useNameClient()
-    return await client.getName(name)
+    return await client.getStats()
   } catch (error) {
-    console.log('error', error)
-    return { err }
+    throw serverErr
   }
 }
 
-const createName = async (name: string): Promise<Response<{ user: User; name: Name }>> => {
+const getUser = async (): Promise<User> => {
   try {
     const client = await useNameClient()
-    return await client.createName(name)
-  } catch (error) {
-    console.log('error', error)
-    return { err }
+    const { ok: user, err }: Response<User> = await client.getUser()
+    if (!user) throw { err }
+    return user
+  } catch ({ err }) {
+    if (err) throw err
+    throw serverErr
   }
 }
 
-const updateLinks = async (name: string, links: Link[]): Promise<Response<Link[]>> => {
+const getName = async (): Promise<Name> => {
   try {
     const client = await useNameClient()
-    return await client.updateLinks(name, links)
-  } catch (error) {
-    console.log('error', error)
-    return { err }
+    const { ok: name, err }: Response<Name> = await client.getName()
+    if (!name) throw { err }
+    return name
+  } catch ({ err }) {
+    if (err) throw err
+    throw serverErr
   }
 }
 
-const updateProfile = async (name: string, profile: Profile): Promise<Response<Profile>> => {
+const getNameData = async (n: string): Promise<NameData> => {
   try {
     const client = await useNameClient()
-    return await client.updateProfile(name, profile)
-  } catch (error) {
-    console.log('error', error)
-    return { err }
+    const { ok: data, err }: Response<NameData> = await client.getNameData(n)
+    if (!data) throw { err }
+    return data
+  } catch ({ err }) {
+    if (err) throw err
+    throw serverErr
   }
 }
 
-const service = { getUser, getIsAuth, getName, createName, updateLinks, updateProfile }
+const createName = async (n: string): Promise<string> => {
+  try {
+    const client = await useNameClient()
+    const { ok, err }: Response<string> = await client.createName(n)
+    if (!ok) throw { err }
+    return ok
+  } catch ({ err }) {
+    if (err) throw err
+    throw serverErr
+  }
+}
+
+const getLinks = async (): Promise<Link[]> => {
+  try {
+    const client = await useNameClient()
+    const { ok: links, err }: Response<Link[]> = await client.getLinks()
+    if (!links) throw { err }
+    return links
+  } catch ({ err }) {
+    if (err) throw err
+    throw serverErr
+  }
+}
+
+const saveLinks = async (links: Link[]): Promise<string> => {
+  try {
+    const client = await useNameClient()
+    const { ok, err }: Response<string> = await client.saveLinks(links)
+    if (!ok) throw { err }
+    return ok
+  } catch ({ err }) {
+    if (err) throw err
+    throw serverErr
+  }
+}
+
+const getAbout = async (): Promise<About> => {
+  try {
+    const client = await useNameClient()
+    const { ok, err }: Response<About> = await client.getAbout()
+    if (!ok) throw { err }
+    return ok
+  } catch ({ err }) {
+    if (err) throw err
+    throw serverErr
+  }
+}
+
+const saveAbout = async (about: About): Promise<string> => {
+  try {
+    const client = await useNameClient()
+    const { ok, err }: Response<string> = await client.saveAbout(about)
+    if (!ok) throw { err }
+    return ok
+  } catch ({ err }) {
+    if (err) throw err
+    throw serverErr
+  }
+}
+
+const service = {
+  login,
+  logout,
+  getUser,
+  getIsAuth,
+  getName,
+  getNameData,
+  createName,
+  getLinks,
+  saveLinks,
+  saveAbout,
+  getAbout,
+}
 
 export default service
