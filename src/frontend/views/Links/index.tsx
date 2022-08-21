@@ -6,12 +6,12 @@ import { useLinkQuery, useSaveLinks } from '@/store'
 import { Link } from '@/types'
 
 export const Links = () => {
-  const { data: linksData } = useLinkQuery()
+  const { data: links } = useLinkQuery()
   const { mutate: saveLinks } = useSaveLinks()
 
-  const links = linksData ?? []
-
   const createNewLink = () => {
+    if (!links) return
+
     const newLink = {
       id: uuidv4(),
       title: '',
@@ -38,7 +38,7 @@ export const Links = () => {
           Add new link
         </OutlineButton>
 
-        {!!links.length && (
+        {links && (
           <Flex direction="column" width="100%" gap="4">
             <Dnd data={links} ItemComponent={LinkItem} onDragEnd={onDragEnd} />
           </Flex>

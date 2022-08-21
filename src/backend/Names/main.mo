@@ -87,9 +87,11 @@ actor {
         }
     };
 
-    public query func getNameData(key: Text): async Result.Result<Types.FullName, Text> {
+    public query func getNameData(key: Text): async Result.Result<Types.NameData, Text> {
         var name = "";
         var linkItems: [Types.Link] = [];
+        var aboutObj: ?Types.About = null;
+        var lookObj: ?Types.Look = null;
 
         switch(names.get(key)) {
             case(null) return #err("Sorry, '" #key# "' does not exists.");
@@ -99,8 +101,16 @@ actor {
             case(null) {};
             case(?l) linkItems := l.links;
         };
+        switch(about.get(key)) {
+            case(null) {};
+            case(?a) aboutObj := ?a.about;
+        };
+        switch(look.get(key)) {
+            case(null) {};
+            case(?l) lookObj := ?l.look;
+        };
 
-        return #ok({ name; links = linkItems });
+        return #ok({ name; links = linkItems; about = aboutObj; look = lookObj });
     };
 
     public shared({ caller }) func createName(name: Text): async Result.Result<Text, Text> {

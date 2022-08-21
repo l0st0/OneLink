@@ -4,10 +4,8 @@ import { useNameDataQuery, useNameQuery } from '@/store'
 import { PreviewContainer, PreviewTop } from './styles'
 
 export const Preview = () => {
-  const { data: name } = useNameQuery<string>({
-    select: (data) => data.name,
-  })
-  const { data: nameData } = useNameDataQuery(name)
+  const { data: name } = useNameQuery()
+  const { data: nameData } = useNameDataQuery(name?.name)
 
   return (
     <PreviewContainer>
@@ -16,7 +14,7 @@ export const Preview = () => {
           <Flex align="center" justify="space-between" gap="20">
             <Flex gap="2" align="center">
               <Paragraph>My OneLink:</Paragraph>
-              <Paragraph fontWeight="100">https://onelink.ooo/{name}</Paragraph>
+              <Paragraph fontWeight="100">https://onelink.ooo/{name?.name}</Paragraph>
             </Flex>
             <TextButton
               textTransform="none"

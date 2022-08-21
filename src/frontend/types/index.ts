@@ -4,7 +4,7 @@ import {
   Link as ICLink,
   Look as ICLook,
   Name as ICName,
-  FullName as ICNameData,
+  NameData as ICNameData,
   Stats as ICStats,
   User as ICUser,
 } from '@/names/main/types'

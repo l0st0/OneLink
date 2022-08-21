@@ -1,6 +1,7 @@
-import { UseQueryOptions, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Link, Name } from '@/types'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { About, Link, NameData } from '@/types'
 import service from '../services'
+import { useAboutStore } from '../stores'
 
 export const useIsAuthQuery = () => {
   return useQuery(['isAuth'], service.getIsAuth, {
@@ -17,8 +18,8 @@ export const useUserQuery = () => {
   })
 }
 
-export const useNameQuery = <T extends {}>(options?: UseQueryOptions<Name, unknown, T, string[]>) => {
-  return useQuery(['name'], () => service.getName(), options)
+export const useNameQuery = () => {
+  return useQuery(['name'], () => service.getName())
 }
 
 export const useNameDataQuery = (name: string = '') => {
@@ -49,16 +50,40 @@ export const useSaveLinks = () => {
   return useMutation((links: Link[]) => service.saveLinks(links), {
     onMutate: async (links) => {
       await queryClient.cancelQueries(['links'])
+      const previousLinks = queryClient.getQueryData(['links'])
       queryClient.setQueryData(['links'], links)
-      return links
+      return { previousLinks }
     },
     // @ts-ignore
     onError: (err, newTodo, context) => {
-      queryClient.setQueryData(['links'], context)
+      queryClient.setQueryData(['links'], context?.previousLinks)
     },
     onSettled: async () => {
       queryClient.invalidateQueries(['links'])
       queryClient.invalidateQueries(['nameData'])
+    },
+  })
+}
+
+export const useAboutQuery = () => {
+  return useQuery(['about'], () => service.getAbout(), {
+    onSuccess: (localAbout) => useAboutStore.setState({ localAbout }),
+  })
+}
+
+export const useSaveAbout = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation(async (about: About) => await service.saveAbout(about), {
+    onError: () => {
+      const localAbout: About | undefined = queryClient.getQueryData(['about'])
+      useAboutStore.setState({ localAbout })
+    },
+    // @ts-ignore
+    onSuccess: async (data, about) => {
+      const nameData: NameData | undefined = queryClient.getQueryData(['nameData'])
+      queryClient.setQueryData(['about'], about)
+      queryClient.setQueryData(['nameData'], { ...nameData, about })
     },
   })
 }

@@ -59,11 +59,11 @@ module BaseTypes {
     controllers: [Controller]
   };
 
-  public type FullName = {
+  public type NameData = {
     name: Text;
     links: [Link];
-    // about: About;
-    // look: Look;
+    about: ?About;
+    look: ?Look;
   };
 
   // Analytics
