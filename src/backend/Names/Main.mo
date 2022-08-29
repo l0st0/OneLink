@@ -16,7 +16,7 @@ actor {
     stable var user_stable_0: [(Principal, Types.User)] = [];
     stable var name_stable_0: [(Text, Types.Name)] = [];
     stable var links_stable_0: [(Text, Types.LinkStore)] = [];
-    stable var about_stable_0: [(Text, Types.AboutStore)] = [];
+    stable var about_stable_0: [(Text, Types.AboutStore)] = []; 
     stable var look_stable_0: [(Text, Types.LookStore)] = [];
 
     var users = Map.fromEntries<Principal, Types.User>(user_stable_0.vals(), Principal.equal, Principal.hash);
@@ -41,6 +41,8 @@ actor {
         look_stable_0 := [];
     };
 
+    var MAX_NAMES = 1_000;
+
     private func getController(controllers: [Types.Controller], caller: Principal): async Bool {
         let controller = Array.find(controllers, func(c: Types.Controller): Bool { Principal.equal(Principal.fromText(c.principal), caller) });
         switch(controller) {
@@ -54,7 +56,7 @@ actor {
     };
 
     public shared({ caller }) func getUser(): async Result.Result<Types.User, Text> {
-        if(Principal.isAnonymous(caller)) return #err("You can't continue as anonymous user.");
+        assert not Principal.isAnonymous(caller);
 
         switch(users.get(caller)) {
             case(?user) return #ok(user);
@@ -67,6 +69,8 @@ actor {
     };
 
     public shared({ caller }) func getName(): async Result.Result<Types.Name, Text> {
+        assert not Principal.isAnonymous(caller);
+
         switch(users.get(caller)) {
             case(null) return #err("You have no account.");
             case(?u) {
@@ -114,10 +118,12 @@ actor {
     };
 
     public shared({ caller }) func createName(name: Text): async Result.Result<Text, Text> {
+        assert not Principal.isAnonymous(caller);
         if(Text.size(name) < 3) return #err("Sorry, name needs to have at least 3 characters.");
+        if(MAX_NAMES < names.size()) return #err("Sorry we have maximum number of names :/");
 
         switch(users.get(caller)) {
-            case(null) return #err("You need to log in.");
+            case(null) return #err("You have no account.");
             case(?u) if(u.name.size() > 0) return #err("You already have one name.");
         };
 
@@ -142,6 +148,8 @@ actor {
     };
 
     public shared({ caller }) func getLinks(): async Result.Result<[Types.Link], Text> {
+        assert not Principal.isAnonymous(caller);
+
         switch(users.get(caller)) {
             case(null) return #err("You have no account.");
             case(?u) {
@@ -158,6 +166,8 @@ actor {
     };
 
     public shared({ caller }) func saveLinks(linkArr: [Types.Link]): async Result.Result<Text, Text> {
+        assert not Principal.isAnonymous(caller);
+
         switch(users.get(caller)) {
             case(null) return #err("You have no account.");
             case(?u) {
@@ -178,6 +188,8 @@ actor {
     };
 
     public shared({ caller }) func getAbout(): async Result.Result<Types.About, Text> {
+        assert not Principal.isAnonymous(caller);
+
         switch(users.get(caller)) {
             case(null) return #err("You have no account.");
             case(?u) {
@@ -194,6 +206,8 @@ actor {
     };
 
     public shared({ caller }) func saveAbout(aboutObj: Types.About): async Result.Result<Text, Text> {
+        assert not Principal.isAnonymous(caller);
+
         switch(users.get(caller)) {
             case(null) return #err("You have no account.");
             case(?u) {
@@ -214,6 +228,8 @@ actor {
     };
 
     public shared({ caller }) func getLook(): async Result.Result<Types.Look, Text> {
+        assert not Principal.isAnonymous(caller);
+
         switch(users.get(caller)) {
             case(null) return #err("You have no account.");
             case(?u) {
@@ -230,6 +246,8 @@ actor {
     };
 
     public shared({ caller }) func saveLook(lookObj: Types.Look): async Result.Result<Text, Text> {
+        assert not Principal.isAnonymous(caller);
+        
         switch(users.get(caller)) {
             case(null) return #err("You have no account.");
             case(?u) {

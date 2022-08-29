@@ -1,6 +1,6 @@
 import { AuthClient } from '@dfinity/auth-client'
 import { useNameClient } from '@/hooks'
-import { About, Link, Name, NameData, Response, Stats, User } from '@/types'
+import { About, Link, Look, Name, NameData, Response, Stats, User } from '@/types'
 import { LOCAL_II_CANISTER } from '@/utils'
 
 const serverErr = 'Sorry something happened :('
@@ -136,6 +136,30 @@ const saveAbout = async (about: About): Promise<string> => {
   }
 }
 
+const getLook = async (): Promise<Look> => {
+  try {
+    const client = await useNameClient()
+    const { ok, err }: Response<Look> = await client.getLook()
+    if (!ok) throw { err }
+    return ok
+  } catch ({ err }) {
+    if (err) throw err
+    throw serverErr
+  }
+}
+
+const saveLook = async (look: Look): Promise<string> => {
+  try {
+    const client = await useNameClient()
+    const { ok, err }: Response<string> = await client.saveLook(look)
+    if (!ok) throw { err }
+    return ok
+  } catch ({ err }) {
+    if (err) throw err
+    throw serverErr
+  }
+}
+
 const service = {
   login,
   logout,
@@ -148,6 +172,8 @@ const service = {
   saveLinks,
   saveAbout,
   getAbout,
+  getLook,
+  saveLook,
 }
 
 export default service

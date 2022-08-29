@@ -70,6 +70,14 @@ export const SubH2 = styled.p<TextProps>(
   `
 )
 
+export const SubH3 = styled.p<TextProps>(
+  ({ theme, color = 'white', fontSize = 'lg', fontWeight = '100' }) => css`
+    color: ${theme.colors[color]};
+    font-size: ${theme.text.fontSize[fontSize]};
+    font-weight: ${theme.text.fontWeight[fontWeight]};
+  `
+)
+
 export const Paragraph = styled.p<TextProps>(
   ({ theme, color = 'white', fontSize = 'base', fontWeight = '400' }) =>
     css`

@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { About, Link, NameData } from '@/types'
+import { About, Link, Look } from '@/types'
 import service from '../services'
 import { useAboutStore } from '../stores'
 
@@ -41,7 +41,7 @@ export const useCreateName = () => {
 }
 
 export const useLinkQuery = () => {
-  return useQuery(['links'], () => service.getLinks())
+  return useQuery(['links'], service.getLinks)
 }
 
 export const useSaveLinks = () => {
@@ -66,7 +66,7 @@ export const useSaveLinks = () => {
 }
 
 export const useAboutQuery = () => {
-  return useQuery(['about'], () => service.getAbout(), {
+  return useQuery(['about'], service.getAbout, {
     onSuccess: (localAbout) => useAboutStore.setState({ localAbout }),
   })
 }
@@ -81,9 +81,34 @@ export const useSaveAbout = () => {
     },
     // @ts-ignore
     onSuccess: async (data, about) => {
-      const nameData: NameData | undefined = queryClient.getQueryData(['nameData'])
       queryClient.setQueryData(['about'], about)
-      queryClient.setQueryData(['nameData'], { ...nameData, about })
+      queryClient.invalidateQueries(['nameData'])
+    },
+  })
+}
+
+export const useLookQuery = () => {
+  return useQuery(['look'], service.getLook)
+}
+
+export const useSaveLook = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation(async (look: Look) => await service.saveLook(look), {
+    onMutate: async (look) => {
+      await queryClient.cancelQueries(['look'])
+      const previousLook = queryClient.getQueryData(['look'])
+      queryClient.setQueryData(['look'], look)
+      return { previousLook }
+    },
+    // @ts-ignore
+    onError: (err, newTodo, context) => {
+      queryClient.setQueryData(['look'], context?.previousLook)
+    },
+    // @ts-ignore
+    onSettled: async (data, err, look) => {
+      queryClient.invalidateQueries(['nameData'])
+      queryClient.invalidateQueries(['look'])
     },
   })
 }

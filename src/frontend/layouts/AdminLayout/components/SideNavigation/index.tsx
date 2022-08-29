@@ -9,7 +9,7 @@ export const SideNavigation = () => {
   const navLinks = [
     { to: '/admin/links', icon: <IconLink /> },
     { to: '/admin/about', icon: <IconUserCircle /> },
-    { to: '/admin/appearance', icon: <IconLayersSubtract /> },
+    { to: '/admin/look', icon: <IconLayersSubtract /> },
   ]
 
   return (

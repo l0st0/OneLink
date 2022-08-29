@@ -54,10 +54,10 @@ module {
     };
 
     let defaultLook = {
-        theme = "0"; background = #color("000000"); 
+        theme = "0"; backgroundColor = "000000"; 
         gradient = {
             show = false;
-            position = #top(true);
+            position = "top";
             color = "FFFFFF";
         };
     };

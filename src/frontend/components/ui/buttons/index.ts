@@ -15,6 +15,11 @@ interface IconButtonProps extends ButtonProps {
   iconsize?: SpaceTypes
 }
 
+interface ColorButtonProps {
+  color: string
+  active?: boolean
+}
+
 export const ClearButton = styled.button<ButtonProps>(
   () => css`
     cursor: pointer;
@@ -102,5 +107,23 @@ export const IconButton = styled(ClearButton)<IconButtonProps>(
         color: ${theme.colors[hovercolor]};
       }
     }
+  `
+)
+
+export const ColorButton = styled.button<ColorButtonProps>(
+  ({ theme, color = 'black', active = false }) => css`
+    cursor: pointer;
+    border: 1px solid ${theme.colors.white};
+    border-radius: ${theme.radius.normal};
+    width: ${theme.spaces[16]};
+    height: ${theme.spaces[16]};
+    background: ${color};
+
+    ${active &&
+    css`
+      border: none;
+      outline: 1.5px solid ${theme.colors.primary};
+      outline-offset: 4px;
+    `}
   `
 )

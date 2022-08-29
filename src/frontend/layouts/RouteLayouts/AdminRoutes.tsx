@@ -1,23 +1,23 @@
 import { Navigate, Outlet } from 'react-router-dom'
-import { Flex, Paragraph, Spinner, SubH2 } from '@/components'
+import { Flex, LoadingData, SubH2 } from '@/components'
 import { ClaimForm } from '@/features'
 import { AdminLayout, BlankLayout } from '@/layouts'
-import { useIsAuthQuery, useNameQuery, useUserQuery } from '@/store'
+import { useIsAuthQuery, useLinkQuery, useNameQuery, useUserQuery } from '@/store'
 
 export const AdminRoutes = () => {
   const { data: isAuth, isLoading: isLoadingAuth } = useIsAuthQuery()
   const { data: user, isFetching: isLoadingUser } = useUserQuery()
-  const { data: name, isFetching: isLoadingName } = useNameQuery()
+  const { isLoading: isLoadingName } = useNameQuery()
+  const { isLoading: isLoadingLinks } = useLinkQuery()
 
-  if (isLoadingAuth || isLoadingUser || isLoadingName)
+  if (isLoadingAuth || isLoadingUser || isLoadingName || isLoadingLinks)
     return (
       <BlankLayout gap="4">
-        <Spinner size="10" />
-        <Paragraph>Loading data...</Paragraph>
+        <LoadingData />
       </BlankLayout>
     )
 
-  if (!isAuth || !user || !name) return <Navigate to="/" />
+  if (!isAuth || !user) return <Navigate to="/" />
 
   if (!user.hasName)
     return (

@@ -9,7 +9,7 @@ export const ThemeCardContainer = styled.div(
     grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
     padding: ${theme.spaces[4]} 0;
     border-radius: ${theme.radius.normal};
-    gap: ${theme.spaces[4]};
+    gap: ${theme.spaces[6]};
 
     ${mqCustom(1040)} {
       grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
@@ -17,8 +17,8 @@ export const ThemeCardContainer = styled.div(
   `
 )
 
-export const ThemeCardButton = styled.button(
-  ({ theme }) => css`
+export const ThemeCardButton = styled.button<{ active: boolean }>(
+  ({ theme, active }) => css`
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -27,8 +27,20 @@ export const ThemeCardButton = styled.button(
     height: 200px;
     background: transparent;
     color: white;
-    border: 1px solid ${theme.colors.white};
+    border: 1px ${active ? 'dashed' : 'solid'} ${active ? theme.colors.secondary : theme.colors.white};
     border-radius: ${theme.radius.normal};
+
+    :hover {
+      border: 1px dashed ${theme.colors.secondary};
+      outline: 2px solid ${theme.colors.primary};
+      outline-offset: ${theme.spaces[1]};
+    }
+
+    ${active &&
+    css`
+      outline: 2px solid ${theme.colors.primary};
+      outline-offset: ${theme.spaces[1]};
+    `}
   `
 )
 

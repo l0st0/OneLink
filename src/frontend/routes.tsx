@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import { AdminRoutes, BasicRoutes } from '@/layouts'
-import { About, Appearance, Home, Links } from '@/views'
+import { About, Home, Links, Look } from '@/views'
 
 export const Pages = () => {
   return (
@@ -14,7 +14,7 @@ export const Pages = () => {
         <Route path="/admin" element={<Links />} />
         <Route path="/admin/links" element={<Links />} />
         <Route path="/admin/about" element={<About />} />
-        <Route path="/admin/appearance" element={<Appearance />} />
+        <Route path="/admin/look" element={<Look />} />
       </Route>
     </Routes>
   )

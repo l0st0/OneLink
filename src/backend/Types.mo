@@ -46,11 +46,11 @@ module BaseTypes {
 
   public type Look = {
     theme: Text;
-    background: { #color: Text };
+    backgroundColor: Text;
     gradient: {
       show: Bool;
       color: Text;
-      position: { #top: Bool; #bottom: Bool };
+      position: Text;
     };
   };
 

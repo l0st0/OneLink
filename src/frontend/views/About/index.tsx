@@ -1,6 +1,6 @@
 import React from 'react'
 import { isEqual } from 'lodash'
-import { AvatarImage, AvatarText, Flex, H3, TextAreaInput, TextInput } from '@/components'
+import { AvatarImage, AvatarText, Flex, H3, LoadingData, TextAreaInput, TextInput } from '@/components'
 import { useDebounce } from '@/hooks'
 import { AdminContentContainer, AdminHeading } from '@/layouts'
 import { useAboutQuery, useAboutStore, useNameQuery, useSaveAbout } from '@/store'
@@ -59,7 +59,7 @@ export const About = () => {
           </Flex>
         </AdminContentContainer>
       ) : (
-        <div>Loading data...</div>
+        <LoadingData />
       )}
     </>
   )
