@@ -6,12 +6,10 @@ import { useLinkQuery, useSaveLinks } from '@/store'
 import { Link } from '@/types'
 
 export const Links = () => {
-  const { data: links } = useLinkQuery()
+  const { links } = useLinkQuery()
   const { mutate: saveLinks } = useSaveLinks()
 
   const createNewLink = () => {
-    if (!links) return
-
     const newLink = {
       id: uuidv4(),
       title: '',

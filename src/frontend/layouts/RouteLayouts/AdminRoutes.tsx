@@ -1,16 +1,17 @@
 import { Navigate, Outlet } from 'react-router-dom'
+import { useAdminPrefetch } from 'src/frontend/store/queries/useAdminPrefetch'
 import { Flex, LoadingData, SubH2 } from '@/components'
 import { ClaimForm } from '@/features'
 import { AdminLayout, BlankLayout } from '@/layouts'
-import { useIsAuthQuery, useLinkQuery, useNameQuery, useUserQuery } from '@/store'
+import { useAboutQuery, useIsAuthQuery, useUserQuery } from '@/store'
 
 export const AdminRoutes = () => {
   const { data: isAuth, isLoading: isLoadingAuth } = useIsAuthQuery()
   const { data: user, isFetching: isLoadingUser } = useUserQuery()
-  const { isLoading: isLoadingName } = useNameQuery()
-  const { isLoading: isLoadingLinks } = useLinkQuery()
+  useAboutQuery()
+  useAdminPrefetch()
 
-  if (isLoadingAuth || isLoadingUser || isLoadingName || isLoadingLinks)
+  if (isLoadingAuth || isLoadingUser)
     return (
       <BlankLayout gap="4">
         <LoadingData />

@@ -1,11 +1,14 @@
 import { css } from '@emotion/react'
+import { useIsMutating } from '@tanstack/react-query'
 import { Flex, Paragraph, TextButton, TopBar } from '@/components'
 import { useNameDataQuery, useNameQuery } from '@/store'
 import { PreviewContainer, PreviewTop } from './styles'
 
 export const Preview = () => {
+  const mutating = useIsMutating()
+
   const { data: name } = useNameQuery()
-  const { data: nameData } = useNameDataQuery(name?.name)
+  const { data: nameData } = useNameDataQuery()
 
   return (
     <PreviewContainer>
@@ -29,6 +32,8 @@ export const Preview = () => {
           </Flex>
         </TopBar>
       </PreviewTop>
+
+      {!!mutating && <div>Mutating</div>}
 
       <Flex width="100px" style={{ color: 'black' }}>
         {JSON.stringify(nameData)}
