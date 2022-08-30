@@ -7,7 +7,7 @@ import { Link } from '@/types'
 
 export const Links = () => {
   const { links } = useLinkQuery()
-  const { mutate: saveLinks } = useSaveLinks()
+  const { saveLinks } = useSaveLinks()
 
   const createNewLink = () => {
     const newLink = {

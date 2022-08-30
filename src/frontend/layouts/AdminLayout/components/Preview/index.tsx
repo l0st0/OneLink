@@ -7,8 +7,8 @@ import { PreviewContainer, PreviewTop } from './styles'
 export const Preview = () => {
   const mutating = useIsMutating()
 
-  const { data: name } = useNameQuery()
-  const { data: nameData } = useNameDataQuery()
+  const { name } = useNameQuery()
+  const { nameData } = useNameDataQuery()
 
   return (
     <PreviewContainer>

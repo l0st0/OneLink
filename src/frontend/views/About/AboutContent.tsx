@@ -6,9 +6,9 @@ import { AdminContentContainer } from '@/layouts'
 import { useAboutQuery, useAboutStore, useNameQuery, useSaveAbout } from '@/store'
 
 export const AboutContent = () => {
-  const { data: name } = useNameQuery()
-  const { data: about } = useAboutQuery()
-  const { mutate: saveAbout } = useSaveAbout()
+  const { name } = useNameQuery()
+  const { about } = useAboutQuery()
+  const { saveAbout } = useSaveAbout()
 
   const { setLocalAbout, localAbout } = useAboutStore((state) => state)
 

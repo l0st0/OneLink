@@ -14,9 +14,9 @@ export const ClaimForm = ({ maxWidth = '250px' }: ClaimFormProps) => {
   const { input, result, setInput, setResult } = useClaimStore((state) => state)
   const login = useAuthStore((state) => state.login)
 
-  const { data: isAuth } = useIsAuthQuery()
-  const { data: user } = useUserQuery()
-  const { mutateAsync: createName, isLoading } = useCreateName()
+  const { isAuth } = useIsAuthQuery()
+  const { user } = useUserQuery()
+  const { createNameAsync, isLoading } = useCreateName()
 
   const navigate = useNavigate()
 
@@ -48,7 +48,7 @@ export const ClaimForm = ({ maxWidth = '250px' }: ClaimFormProps) => {
     if (!user) return
     if (user.hasName) return navigate('admin/links')
 
-    await createName(debouncedSearchTerm)
+    await createNameAsync(debouncedSearchTerm)
     return navigate('admin/links')
   }
 

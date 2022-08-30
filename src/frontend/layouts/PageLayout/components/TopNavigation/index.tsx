@@ -3,8 +3,8 @@ import { FilledButton, Flex, OneLinkIcon, OneLinkTextIcon, OutlineButton, TopBar
 import { useAuthStore, useIsAuthQuery, useLogout } from '@/store'
 
 export const TopNavigation = () => {
-  const { data: isAuth } = useIsAuthQuery()
-  const { mutate: logout } = useLogout()
+  const { isAuth } = useIsAuthQuery()
+  const { logout } = useLogout()
   const login = useAuthStore((state) => state.login)
 
   const navigate = useNavigate()

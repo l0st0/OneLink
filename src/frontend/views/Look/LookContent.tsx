@@ -6,8 +6,8 @@ import { useLookQuery, useSaveLook } from '@/store'
 import { Themes } from './components'
 
 export const LookContent = () => {
-  const { data: look } = useLookQuery()
-  const { mutate: saveLook } = useSaveLook()
+  const { look } = useLookQuery()
+  const { saveLook } = useSaveLook()
 
   if (!look) return <LoadingData />
 

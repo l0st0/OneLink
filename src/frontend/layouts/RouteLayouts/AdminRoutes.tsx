@@ -6,8 +6,8 @@ import { AdminLayout, BlankLayout } from '@/layouts'
 import { useAboutQuery, useIsAuthQuery, useUserQuery } from '@/store'
 
 export const AdminRoutes = () => {
-  const { data: isAuth, isLoading: isLoadingAuth } = useIsAuthQuery()
-  const { data: user, isFetching: isLoadingUser } = useUserQuery()
+  const { isAuth, isLoading: isLoadingAuth } = useIsAuthQuery()
+  const { user, isFetching: isLoadingUser } = useUserQuery()
   useAboutQuery()
   useAdminPrefetch()
 

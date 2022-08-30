@@ -16,7 +16,7 @@ export const LinkItem = React.forwardRef<HTMLDivElement, ItemComponentProps<Link
   ({ data: links = [], item, style, setActivatorNodeRef, listeners, ...rest }, ref) => {
     const [localItem, setLocalItem] = React.useState(item)
 
-    const { mutate: saveLinks } = useSaveLinks()
+    const { saveLinks } = useSaveLinks()
 
     const linkIndex = React.useMemo(() => links.findIndex(({ id }) => id === item.id), [links, item])
 
