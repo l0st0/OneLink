@@ -1,6 +1,7 @@
 import React from 'react'
 import { isEqual } from 'lodash'
-import { AvatarImage, AvatarText, Flex, LoadingData, TextAreaInput, TextInput } from '@/components'
+import { AvatarImage, AvatarText, TextAreaInput, TextInput } from '@/components'
+import { LoadingData } from '@/features'
 import { useDebounce } from '@/hooks'
 import { AdminContentContainer } from '@/layouts'
 import { useAboutQuery, useAboutStore, useNameQuery, useSaveAbout } from '@/store'
@@ -36,7 +37,7 @@ export const AboutContent = () => {
       ) : (
         <AvatarText>{name?.name.charAt(0)}</AvatarText>
       )}
-      <Flex direction="column" gap="4" width="100%">
+      <div className="flex w-full flex-col gap-4">
         <TextInput
           id="title"
           label="Title"
@@ -51,8 +52,9 @@ export const AboutContent = () => {
           onChange={onBioChange}
           maxLength={80}
           placeholder="Enter a bio description"
+          className="row-span-6"
         />
-      </Flex>
+      </div>
     </AdminContentContainer>
   )
 }

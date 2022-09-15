@@ -1,3 +1,93 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    @apply min-h-full font-main text-white;
+  }
+
+  body {
+    background: linear-gradient(
+      135deg,
+      theme('colors.primary') -200%,
+      black 50%,
+      theme('colors.secondary') 200%
+    );
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-medium;
+  }
+
+  h4,
+  h5,
+  h6 {
+    @apply font-light;
+  }
+
+  h1 {
+    @apply text-9xl;
+  }
+  h2 {
+    @apply text-7xl;
+  }
+  h3 {
+    @apply text-6xl;
+  }
+  h4 {
+    @apply text-3xl;
+  }
+  h5 {
+    @apply text-2xl;
+  }
+  h6 {
+    @apply text-xl;
+  }
+
+  ::-webkit-scrollbar {
+    width: theme('spacing.2');
+  }
+
+  ::-webkit-scrollbar-track {
+    background: theme('colors.white');
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: theme('colors.primary');
+  }
+
+  [type='text'],
+  [type='email'],
+  [type='url'],
+  [type='password'],
+  [type='number'],
+  [type='date'],
+  [type='datetime-local'],
+  [type='month'],
+  [type='search'],
+  [type='tel'],
+  [type='time'],
+  [type='week'],
+  [multiple],
+  textarea,
+  select {
+    @apply appearance-none border-none bg-transparent p-0 text-black focus:outline-none focus:ring-0 focus:ring-offset-0;
+  }
+
+  button {
+    @apply cursor-pointer rounded-primary border-2 py-4 px-6 text-sm font-semibold uppercase tracking-wider transition-all ease-linear;
+  }
+}
+
+@layer components {
+  .stroke-text-primary {
+    -webkit-text-stroke: 1px theme('colors.primary');
+  }
+
+  .with-ring {
+    @apply focus:ring-1 focus:ring-primary focus:ring-offset-4 focus:ring-offset-black;
+  }
+}

@@ -1,21 +1,21 @@
-import { Flex, H1, IcBadgeIconFlat, SubH1 } from '@/components'
+import { IcBadgeIconFlat } from '@/components'
 import { ClaimForm } from '@/features'
 
 export const Home = () => {
   return (
-    <>
-      <Flex gap="6" mt="20">
-        <H1>You in one</H1>
-        <H1 color="black" strokeColor="primary">
-          link.
-        </H1>
-      </Flex>
+    <div className="mt-20 flex flex-col gap-6">
+      <div className="flex gap-6">
+        <h1>You in one</h1>
+        <h1 className="stroke-text-primary text-black">link.</h1>
+      </div>
 
-      <Flex gap="6" mt="2">
-        <SubH1>Created on Web3</SubH1> <IcBadgeIconFlat width={256} />
-      </Flex>
+      <div className="flex flex-col gap-6">
+        <div className="mt-2 flex gap-6">
+          <h4>Created on Web3</h4> <IcBadgeIconFlat width={256} />
+        </div>
 
-      <ClaimForm />
-    </>
+        <ClaimForm />
+      </div>
+    </div>
   )
 }

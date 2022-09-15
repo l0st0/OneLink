@@ -9,9 +9,6 @@ import {
   User as ICUser,
 } from '@/names/main/types'
 
-export * from './styles'
-export * from './style.types'
-
 export type LiteralUnion<T extends U, U = {}> = T | (U & {})
 
 export interface Response<T> {

@@ -1,17 +1,26 @@
-import { Global, ThemeProvider } from '@emotion/react'
+import { Route, Routes } from 'react-router-dom'
 import { useScrollToTop } from '@/hooks'
-import { globalStyles, theme } from '@/styles'
-import Pages from './routes'
+import { AdminRoute, BasicRoute } from '@/layouts'
+import { About, Home, Links, Look } from '@/views'
 import './styles/tailwind.css'
 
 const App = () => {
   useScrollToTop()
 
   return (
-    <ThemeProvider theme={theme}>
-      <Global styles={globalStyles} />
-      <Pages />
-    </ThemeProvider>
+    <Routes>
+      <Route path="/:name" element={<Home />} />
+
+      <Route element={<BasicRoute />}>
+        <Route path="/" element={<Home />} />
+      </Route>
+      <Route element={<AdminRoute />}>
+        <Route path="/admin" element={<Links />} />
+        <Route path="/admin/links" element={<Links />} />
+        <Route path="/admin/about" element={<About />} />
+        <Route path="/admin/look" element={<Look />} />
+      </Route>
+    </Routes>
   )
 }
 

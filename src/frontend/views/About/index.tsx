@@ -1,13 +1,12 @@
-import { H3 } from '@/components'
-import { AdminHeading } from '@/layouts'
+import { AdminHeadingContainer } from '@/layouts'
 import { AboutContent } from './AboutContent'
 
 export const About = () => {
   return (
     <>
-      <AdminHeading>
-        <H3>About you</H3>
-      </AdminHeading>
+      <AdminHeadingContainer>
+        <h3>About you</h3>
+      </AdminHeadingContainer>
 
       <AboutContent />
     </>

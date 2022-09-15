@@ -1,16 +1,8 @@
 import { IconProps } from '@/types'
-import { SpinnerSvg } from '../ui'
 
-export const OneLinkIcon = ({ width = 32, spin, spinSpeed }: IconProps) => {
+export const OneLinkIcon = ({ width = 32 }: IconProps) => {
   return (
-    <SpinnerSvg
-      width={width}
-      viewBox="0 0 46 30"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      spin={spin}
-      spinSpeed={spinSpeed}
-    >
+    <svg width={width} viewBox="0 0 46 30" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M27 15C27 21.6274 21.6274 27 15 27C8.37258 27 3 21.6274 3 15C3 8.37258 8.37258 3 15 3"
         stroke="#0E1C40"
@@ -23,7 +15,7 @@ export const OneLinkIcon = ({ width = 32, spin, spinSpeed }: IconProps) => {
         strokeWidth="5"
         strokeLinecap="round"
       />
-    </SpinnerSvg>
+    </svg>
   )
 }
 

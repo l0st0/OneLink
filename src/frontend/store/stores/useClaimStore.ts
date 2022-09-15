@@ -1,7 +1,6 @@
 import create from 'zustand'
 
 interface ResultInterface {
-  color: 'success' | 'error' | 'primary'
   msg: string
   claim: boolean
 }

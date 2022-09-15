@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid'
-import { Dnd, Flex, H3, LoadingData, OutlineButton, SubH2 } from '@/components'
-import { LinkItem } from '@/features'
-import { AdminContentContainer, AdminHeading } from '@/layouts'
+import { OutlineButton } from '@/components'
+import { Dnd, LinkItem, LoadingData } from '@/features'
+import { AdminContentContainer, AdminHeadingContainer } from '@/layouts'
 import { useLinkQuery, useSaveLinks } from '@/store'
 import { Link } from '@/types'
 
@@ -26,24 +26,24 @@ export const Links = () => {
 
   return (
     <>
-      <AdminHeading>
-        <H3>Links</H3>
-        <SubH2>Create or edit your links below</SubH2>
-      </AdminHeading>
+      <AdminHeadingContainer>
+        <h3>Links</h3>
+        <h6>Create or edit your links below</h6>
+      </AdminHeadingContainer>
 
       <AdminContentContainer>
         {isLoading ? (
           <LoadingData />
         ) : (
           <>
-            <OutlineButton onClick={createNewLink} fullSize>
+            <OutlineButton onClick={createNewLink} className="w-full">
               Add new link
             </OutlineButton>
 
             {links && (
-              <Flex direction="column" width="100%" gap="4">
+              <div className="flex w-full flex-col gap-4">
                 <Dnd data={links} ItemComponent={LinkItem} onDragEnd={onDragEnd} />
-              </Flex>
+              </div>
             )}
           </>
         )}

@@ -40,15 +40,7 @@ const DFX_PORT = dfxJson.networks.local.bind.split(':')[1]
 // https://vitejs.dev/config/
 export default defineConfig({
   publicDir: 'src/frontend/assets',
-  plugins: [
-    tsconfigPaths(),
-    react({
-      jsxImportSource: '@emotion/react',
-      babel: {
-        plugins: ['@emotion/babel-plugin'],
-      },
-    }),
-  ],
+  plugins: [tsconfigPaths(), react()],
   esbuild: {
     define: {
       this: 'window',
