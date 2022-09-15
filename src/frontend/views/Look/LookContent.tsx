@@ -16,15 +16,20 @@ export const LookContent = () => {
     saveLook({ ...look, theme })
   }
 
-  const onBackgroundColorChange = debounce((color: string) => {
-    if (isEqual(color, look.backgroundColor)) return
-    saveLook({ ...look, backgroundColor: color })
-  }, 800)
-
-  const onTypeClick = (show: boolean) => {
+  const onBackgroundTypeClick = (show: boolean) => () => {
     if (isEqual(show, look.gradient.show)) return
     saveLook({ ...look, gradient: { ...look.gradient, show } })
   }
+
+  const onBackgroundColorChange = debounce((color: string) => {
+    if (isEqual(color, look.backgroundColor)) return
+    saveLook({ ...look, backgroundColor: color })
+  }, 1000)
+
+  const onGradientColorChange = debounce((color: string) => {
+    if (isEqual(color, look.gradient.color)) return
+    saveLook({ ...look, gradient: { ...look.gradient, color } })
+  }, 1000)
 
   return (
     <AdminContentContainer className="gap-12">
@@ -36,24 +41,21 @@ export const LookContent = () => {
       {look?.theme === '0' && (
         <div className="flex w-full flex-col gap-6">
           <h5>Background</h5>
-
-          <div className="flex flex-col gap-4">
-            <div className="flex w-full gap-4">
-              <ColorButton
-                onClick={() => onTypeClick(false)}
-                active={!look.gradient.show}
-                className="bg-neutral-900"
-              >
-                Solid
-              </ColorButton>
-              <ColorButton
-                onClick={() => onTypeClick(true)}
-                active={look.gradient.show}
-                style={{ background: 'linear-gradient(to top, #171717, #787878)' }}
-              >
-                Gradient
-              </ColorButton>
-            </div>
+          <div className="flex w-full gap-6">
+            <ColorButton
+              onClick={onBackgroundTypeClick(false)}
+              active={!look.gradient.show}
+              className="bg-neutral-900"
+            >
+              Solid
+            </ColorButton>
+            <ColorButton
+              onClick={onBackgroundTypeClick(true)}
+              active={look.gradient.show}
+              style={{ background: 'linear-gradient(to top, #171717, #787878)' }}
+            >
+              Gradient
+            </ColorButton>
           </div>
 
           <ColorButtonWithPallete
@@ -65,7 +67,7 @@ export const LookContent = () => {
           {look.gradient.show && (
             <ColorButtonWithPallete
               color={look.gradient.color}
-              onChange={onBackgroundColorChange}
+              onChange={onGradientColorChange}
               label="Gradient color"
             />
           )}

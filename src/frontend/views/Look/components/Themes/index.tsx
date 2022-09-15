@@ -17,9 +17,8 @@ const ThemeCardButton = ({ children, active, ...rest }: React.PropsWithChildren<
     {...rest}
     className={clsx(
       'flex h-[200px] w-full cursor-pointer flex-col items-center rounded-primary bg-transparent text-white',
-      'border border-dashed border-white',
-      'hover:ring hover:ring-primary hover:ring-offset-4 hover:ring-offset-black',
-      active ? 'ring ring-primary ring-offset-4 ring-offset-black' : 'ring-0'
+      'outline-dashed outline-1 outline-offset-4 hover:outline-primary',
+      active ? 'outline-primary' : 'outline-white'
     )}
   >
     {children}

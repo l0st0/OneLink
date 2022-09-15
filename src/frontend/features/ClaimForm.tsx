@@ -55,7 +55,7 @@ export const ClaimForm = () => {
     <div className="flex flex-col gap-3">
       <form className="flex items-center gap-4" onSubmit={onSubmit}>
         <div
-          className={clsx([
+          className={clsx(
             'flex items-center rounded-primary bg-white p-4 transition-all ease-in',
             'focus-within:ring-2 focus-within:ring-offset-4 focus-within:ring-offset-black',
             {
@@ -63,8 +63,8 @@ export const ClaimForm = () => {
               'ring-2 ring-offset-4 ring-offset-black': borderColor === 'success' || borderColor === 'error',
               'ring-success': borderColor === 'success',
               'ring-error': borderColor === 'error',
-            },
-          ])}
+            }
+          )}
         >
           <p className="cursor-default text-black">onelink.ooo/</p>
           <input

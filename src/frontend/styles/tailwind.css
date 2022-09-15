@@ -78,7 +78,7 @@
   }
 
   button {
-    @apply cursor-pointer rounded-primary border-2 py-4 px-6 text-sm font-semibold uppercase tracking-wider transition-all ease-linear;
+    @apply cursor-pointer rounded-primary py-4 px-6 text-sm font-semibold uppercase tracking-wider transition-all ease-linear;
   }
 }
 

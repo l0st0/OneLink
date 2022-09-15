@@ -16,11 +16,8 @@ export interface Response<T> {
   err?: string
 }
 
-export interface IconProps {
-  width?: number | string
-  height?: number | string
-  spin?: boolean
-  spinSpeed?: string
+export interface IconProps extends React.SVGProps<SVGSVGElement> {
+  animate?: boolean
 }
 
 export interface Stats extends ICStats {}

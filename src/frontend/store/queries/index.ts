@@ -150,7 +150,6 @@ export const useSaveLook = () => {
     // @ts-ignore
     onSettled: async (data, err, look) => {
       queryClient.invalidateQueries([queryKeys.nameData])
-      queryClient.invalidateQueries([queryKeys.look])
     },
   })
 
