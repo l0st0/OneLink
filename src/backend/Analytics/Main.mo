@@ -54,9 +54,7 @@ actor {
         }
     };
 
-    public func onView(name: Text, view: Types.View, callSecret: Text): async Result.Result<Text, Text> {
-        if(callSecret != Env.CALL_SECRET) return #err("You cant call view from here.");
-
+    public func onView(name: Text, view: Types.View): async Result.Result<Text, Text> {
         switch(analytics.get(name)) {
             case(null) return #err("Analytics does not exists.");
             case(?a) {
@@ -74,9 +72,7 @@ actor {
         }
     };
 
-    public func onClick(name: Text, click: Types.Click, callSecret: Text): async Result.Result<Text, Text> {
-        if(callSecret != Env.CALL_SECRET) return #err("You cant call click from here.");
-
+    public func onClick(name: Text, click: Types.Click): async Result.Result<Text, Text> {
         switch(analytics.get(name)) {
             case(null) return #err("Analytics does not exists.");
             case(?a) {

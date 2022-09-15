@@ -2,10 +2,9 @@ import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 
 export const AdminContainer = styled.div(
-  ({ theme }) => css`
+  () => css`
     position: relative;
     display: grid;
-    gap: ${theme.spaces[1]};
     grid-template-columns: min-content 1fr max-content;
   `
 )

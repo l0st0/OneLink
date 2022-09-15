@@ -1,7 +1,13 @@
 import { AuthClient } from '@dfinity/auth-client'
+import axios from 'axios'
 import { useNameClient } from '@/hooks'
 import { About, Link, Look, Name, NameData, Response, Stats, User } from '@/types'
 import { LOCAL_II_CANISTER } from '@/utils'
+
+export interface VerifyUserI {
+  principal: string
+  token: string
+}
 
 const serverErr = 'Sorry something happened :('
 
@@ -46,6 +52,27 @@ const getUser = async (): Promise<User> => {
     const { ok: user, err }: Response<User> = await client.getUser()
     if (!user) throw { err }
     return user
+  } catch ({ err }) {
+    if (err) throw err
+    throw serverErr
+  }
+}
+
+const verifyUser = async ({ principal, token }: VerifyUserI): Promise<string> => {
+  try {
+    const client = await useNameClient()
+
+    if (import.meta.env.DEV) {
+      const { ok, err }: Response<string> = await client.verifyUser(
+        import.meta.env.VITE_CALL_SECRET,
+        principal
+      )
+      if (!ok) throw { err }
+      return ok
+    }
+
+    await axios.post('https://www.todayweb.net/api/onelink', { id: principal, token })
+    return 'Verified'
   } catch ({ err }) {
     if (err) throw err
     throw serverErr
@@ -174,6 +201,7 @@ const service = {
   getAbout,
   getLook,
   saveLook,
+  verifyUser,
 }
 
 export default service

@@ -1,6 +1,5 @@
 import Array "mo:base/Array";
 import Buffer "mo:base/Buffer";
-import Debug "mo:base/Debug";
 import Iter "mo:base/Iter";
 import Map "mo:base/TrieMap";
 import Option "mo:base/Option";
@@ -43,14 +42,6 @@ actor {
 
     var MAX_NAMES = 1_000;
 
-    private func getController(controllers: [Types.Controller], caller: Principal): async Bool {
-        let controller = Array.find(controllers, func(c: Types.Controller): Bool { Principal.equal(Principal.fromText(c.principal), caller) });
-        switch(controller) {
-            case(null) return false;
-            case(?c) return true;
-        }
-    };
-
     public query func getStats(): async Types.Stats {
         { names = names.size() };
     };
@@ -91,6 +82,20 @@ actor {
         }
     };
 
+    public shared({ caller }) func verifyUser(callSecret: Text, principalId: Text): async Result.Result<Text, Text> {
+        if(callSecret != Env.CALL_SECRET) return #err("Sorry, something went wrong.");
+        let principal = Principal.fromText(principalId);
+
+        switch(users.get(principal)) {
+            case(null) return #err("Sorry, user was not found.");
+            case(?u) {
+                let updateUser = Utils.updateUser(u.name, u.principal, u.assignNames, true);
+                users.put(principal, updateUser);
+                return #ok("Congratulations, you are verified."); 
+            }
+        }
+    };
+
     public query func getNameData(key: Text): async Result.Result<Types.NameData, Text> {
         var name = "";
         var linkItems: [Types.Link] = [];
@@ -124,27 +129,30 @@ actor {
 
         switch(users.get(caller)) {
             case(null) return #err("You have no account.");
-            case(?u) if(u.name.size() > 0) return #err("You already have one name.");
+            case(?u) {
+                if(u.name.size() > 0) return #err("You already have one name.");
+                if(not u.isVerified) return #err("You are not verified.");
+
+                switch(names.get(name)) {
+                    case(?n) return #err("Sorry, '" #name# "' already exists.");
+                    case(null) {
+                        let updateUser = Utils.updateUser(name, Principal.toText(caller), u.assignNames, u.isVerified);
+                        let createName = Utils.createName(name, caller);
+                        let createLink = Utils.createLink(caller);
+                        let createAbout = Utils.createAbout(caller);
+                        let createLook = Utils.createLook(caller);
+
+                        users.put(caller, updateUser);
+                        names.put(name, createName);
+                        links.put(name, createLink);
+                        about.put(name, createAbout);
+                        look.put(name, createLook);
+                        
+                        return #ok("Name was created.");
+                    };
+                }
+            }
         };
-
-        switch(names.get(name)) {
-            case(?n) return #err("Sorry, '" #name# "' already exists.");
-            case(null) {
-                let updateUser = Utils.updateUser(name, caller);
-                let createName = Utils.createName(name, caller);
-                let createLink = Utils.createLink(caller);
-                let createAbout = Utils.createAbout(caller);
-                let createLook = Utils.createLook(caller);
-
-                users.put(caller, updateUser);
-                names.put(name, createName);
-                links.put(name, createLink);
-                about.put(name, createAbout);
-                look.put(name, createLook);
-                
-                return #ok("Name was created.");
-            };
-        }
     };
 
     public shared({ caller }) func getLinks(): async Result.Result<[Types.Link], Text> {
@@ -156,7 +164,7 @@ actor {
                 switch(links.get(u.name)) {
                     case(null) return #err("Links does not exists for this name.");
                     case(?l) {
-                        let controller = await getController(l.controllers, caller);
+                        let controller = await Utils.getController(l.controllers, caller);
                         if(not controller) return #err("You have no permissions.");
                         return #ok(l.links);
                     };
@@ -174,7 +182,7 @@ actor {
                 switch(links.get(u.name)) {
                     case(null) return #err("Links does not exists for this name.");
                     case(?l) {
-                        let controller = await getController(l.controllers, caller);
+                        let controller = await Utils.getController(l.controllers, caller);
                         if(not controller) return #err("You have no permissions.");
 
                         let updatedLinks = Utils.updateLinks(linkArr, l.controllers);
@@ -196,7 +204,7 @@ actor {
                 switch(about.get(u.name)) {
                     case(null) return #err("About does not exists for this name.");
                     case(?a) {
-                        let controller = await getController(a.controllers, caller);
+                        let controller = await Utils.getController(a.controllers, caller);
                         if(not controller) return #err("You have no permissions.");
                         return #ok(a.about);
                     };
@@ -214,7 +222,7 @@ actor {
                 switch(about.get(u.name)) {
                     case(null) return #err("About does not exists for this name.");
                     case(?a) {
-                        let controller = await getController(a.controllers, caller);
+                        let controller = await Utils.getController(a.controllers, caller);
                         if(not controller) return #err("You have no permissions.");
 
                         let updatedAbout = Utils.updateAbout(aboutObj, a.controllers);
@@ -236,7 +244,7 @@ actor {
                 switch(look.get(u.name)) {
                     case(null) return #err("Look does not exists for this name.");
                     case(?l) {
-                        let controller = await getController(l.controllers, caller);
+                        let controller = await Utils.getController(l.controllers, caller);
                         if(not controller) return #err("You have no permissions.");
                         return #ok(l.look);
                     };
@@ -254,7 +262,7 @@ actor {
                 switch(look.get(u.name)) {
                     case(null) return #err("Look does not exists for this name.");
                     case(?l) {
-                        let controller = await getController(l.controllers, caller);
+                        let controller = await Utils.getController(l.controllers, caller);
                         if(not controller) return #err("You have no permissions.");
 
                         let updatedLook = Utils.updateLook(lookObj, l.controllers);
@@ -272,7 +280,7 @@ actor {
         switch(names.get(name)) {
             case(null) return false;
             case(?n) {
-                let controller = await getController(n.controllers, caller);
+                let controller = await Utils.getController(n.controllers, caller);
                 if(not controller) return false;
                 return true;
             }

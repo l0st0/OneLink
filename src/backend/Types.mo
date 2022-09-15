@@ -17,7 +17,8 @@ module BaseTypes {
   public type User = {
     name: Text;
     principal: Text;
-    assignNames: [Text]
+    assignNames: [Text];
+    isVerified: Bool;
   };
 
   public type Link = {

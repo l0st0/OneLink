@@ -1,12 +1,12 @@
 import { v4 as uuidv4 } from 'uuid'
-import { Dnd, Flex, H3, OutlineButton, SubH2 } from '@/components'
+import { Dnd, Flex, H3, LoadingData, OutlineButton, SubH2 } from '@/components'
 import { LinkItem } from '@/features'
 import { AdminContentContainer, AdminHeading } from '@/layouts'
 import { useLinkQuery, useSaveLinks } from '@/store'
 import { Link } from '@/types'
 
 export const Links = () => {
-  const { links } = useLinkQuery()
+  const { links, isLoading } = useLinkQuery()
   const { saveLinks } = useSaveLinks()
 
   const createNewLink = () => {
@@ -32,14 +32,20 @@ export const Links = () => {
       </AdminHeading>
 
       <AdminContentContainer>
-        <OutlineButton onClick={createNewLink} fullSize>
-          Add new link
-        </OutlineButton>
+        {isLoading ? (
+          <LoadingData />
+        ) : (
+          <>
+            <OutlineButton onClick={createNewLink} fullSize>
+              Add new link
+            </OutlineButton>
 
-        {links && (
-          <Flex direction="column" width="100%" gap="4">
-            <Dnd data={links} ItemComponent={LinkItem} onDragEnd={onDragEnd} />
-          </Flex>
+            {links && (
+              <Flex direction="column" width="100%" gap="4">
+                <Dnd data={links} ItemComponent={LinkItem} onDragEnd={onDragEnd} />
+              </Flex>
+            )}
+          </>
         )}
       </AdminContentContainer>
     </>

@@ -1,14 +1,23 @@
+import Array "mo:base/Array";
 import Principal "mo:base/Principal";
 
 import Types "./Types";
 
 module {
-    public func createUser(caller: Principal): Types.User {
-        { name = ""; principal = Principal.toText(caller); assignNames = [] };
+    public func getController(controllers: [Types.Controller], caller: Principal): async Bool {
+        let controller = Array.find(controllers, func(c: Types.Controller): Bool { Principal.equal(Principal.fromText(c.principal), caller) });
+        switch(controller) {
+            case(null) return false;
+            case(?c) return true;
+        }
     };
 
-    public func updateUser(name: Text ,caller: Principal): Types.User {
-        { name; principal = Principal.toText(caller); assignNames = [] };
+    public func createUser(caller: Principal): Types.User {
+        { name = ""; principal = Principal.toText(caller); assignNames = []; isVerified = false };
+    };
+
+    public func updateUser(name: Text, principal: Text, assignNames: [Text], isVerified: Bool): Types.User {
+        { name; principal; assignNames; isVerified };
     };
 
     public func createName(name: Text, caller: Principal): Types.Name {

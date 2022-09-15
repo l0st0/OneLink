@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { About, Link, Look } from '@/types'
-import service from '../services'
+import service, { VerifyUserI } from '../services'
 import { useAboutStore } from '../stores'
 
 export const queryKeys = {
@@ -17,7 +17,6 @@ export const useIsAuthQuery = () => {
   const { data: isAuth, ...rest } = useQuery([queryKeys.isAuth], service.getIsAuth, {
     refetchOnMount: true,
   })
-
   return { isAuth, ...rest }
 }
 
@@ -28,13 +27,11 @@ export const useUserQuery = () => {
       hasName: !!user?.name,
     }),
   })
-
   return { user, ...rest }
 }
 
 export const useNameQuery = () => {
   const { data: name, ...rest } = useQuery([queryKeys.name], service.getName)
-
   return { name, ...rest }
 }
 
@@ -44,7 +41,6 @@ export const useNameDataQuery = () => {
   const { data: nameData, ...rest } = useQuery([queryKeys.nameData], () => service.getNameData(n), {
     enabled: !!n.length,
   })
-
   return { nameData, ...rest }
 }
 
@@ -65,6 +61,21 @@ export const useLookQuery = () => {
   const { data: look, ...rest } = useQuery([queryKeys.look], service.getLook)
 
   return { look, ...rest }
+}
+
+export const useVerifyUser = () => {
+  const queryClient = useQueryClient()
+  const {
+    mutate: verifyUser,
+    mutateAsync: verifyUserAsync,
+    ...rest
+  } = useMutation(({ principal, token }: VerifyUserI) => service.verifyUser({ principal, token }), {
+    onSuccess: () => {
+      queryClient.invalidateQueries([queryKeys.user])
+    },
+  })
+
+  return { verifyUser, verifyUserAsync, ...rest }
 }
 
 export const useCreateName = () => {
@@ -150,7 +161,7 @@ export const useLogout = () => {
   const queryClient = useQueryClient()
   const { mutate: logout, ...rest } = useMutation(service.logout, {
     onSuccess: () => {
-      queryClient.setQueryData(['isAuth'], false)
+      queryClient.setQueryData([queryKeys.isAuth], false)
       queryClient.setQueryData([queryKeys.user], undefined)
       queryClient.setQueryData([queryKeys.name], undefined)
     },

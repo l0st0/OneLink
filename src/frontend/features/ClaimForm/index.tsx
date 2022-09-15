@@ -46,7 +46,7 @@ export const ClaimForm = ({ maxWidth = '250px' }: ClaimFormProps) => {
     if (!result.claim) return
     if (!isAuth) return await login(async () => navigate('admin/links'))
     if (!user) return
-    if (user.hasName) return navigate('admin/links')
+    if (!user.isVerified || user.hasName) return navigate('admin/links')
 
     await createNameAsync(debouncedSearchTerm)
     return navigate('admin/links')
