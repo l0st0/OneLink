@@ -15,7 +15,7 @@ export const Preview = () => {
         <TopBar theme="dark">
           <div className="flex items-center justify-between gap-20">
             <div className="flex items-center gap-2">
-              <p>My OneLink:</p>
+              <p className="whitespace-nowrap">My OneLink:</p>
               <p className="font-extralight">https://onelink.ooo/{name?.name}</p>
             </div>
             <TextButton className="pr-0">Share</TextButton>
