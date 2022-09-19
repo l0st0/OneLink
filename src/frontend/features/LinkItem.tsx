@@ -49,7 +49,7 @@ export const LinkItem = React.forwardRef<HTMLDivElement, ItemComponentProps<Link
 
     return (
       <div className="flex w-full rounded-primary bg-white text-black" ref={ref} {...rest} style={style}>
-        <button className="cursor-grab bg-transparent p-2" ref={setActivatorNodeRef} {...listeners}>
+        <button {...listeners} ref={setActivatorNodeRef} className="cursor-grab border-0 bg-transparent px-2">
           <IconDotsVertical className="text-gray" width={20} />
         </button>
 

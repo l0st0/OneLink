@@ -11,7 +11,7 @@
     background: linear-gradient(
       135deg,
       theme('colors.primary') -200%,
-      black 50%,
+      theme('colors.black') 50%,
       theme('colors.secondary') 200%
     );
   }
@@ -78,7 +78,7 @@
   }
 
   button {
-    @apply cursor-pointer rounded-primary py-4 px-6 text-sm font-semibold uppercase tracking-wider transition-all ease-linear;
+    @apply cursor-pointer rounded-primary border-2 border-transparent py-4 px-6 text-sm font-semibold uppercase tracking-wider text-white transition-all ease-linear;
   }
 }
 

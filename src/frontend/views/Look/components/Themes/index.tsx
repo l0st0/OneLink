@@ -1,22 +1,18 @@
-import React from 'react'
 import clsx from 'clsx'
+import { ColorButtonProps } from '@/components'
 
 interface ThemesProps {
   theme: string
   onThemeClick: (theme: string) => void
 }
 
-interface ThemeCardButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  active: boolean
-}
-
 const themes = [{ id: 'black' }, { id: 'white' }, { id: 'orange' }]
 
-const ThemeCardButton = ({ children, active, ...rest }: React.PropsWithChildren<ThemeCardButtonProps>) => (
+const ThemeCardButton = ({ children, active, ...rest }: ColorButtonProps) => (
   <button
     {...rest}
     className={clsx(
-      'flex h-[200px] w-full cursor-pointer flex-col items-center rounded-primary bg-transparent text-white',
+      'flex h-[200px] w-full cursor-pointer flex-col items-center rounded-primary bg-transparent py-0 text-white',
       'outline-dashed outline-1 outline-offset-4 hover:outline-primary',
       active ? 'outline-primary' : 'outline-white'
     )}

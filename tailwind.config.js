@@ -4,15 +4,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        black: '#000000',
+        white: '#ebebeb',
         primary: '#64A0FA',
         secondary: '#0E1C40',
         success: '#2c9c3e',
         error: '#e31021',
         gray: '#8d8f8d',
-        black: '#000000',
-        white: '#ebebeb',
       },
-
       borderRadius: {
         primary: '12px',
       },

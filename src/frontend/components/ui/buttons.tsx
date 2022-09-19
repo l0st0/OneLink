@@ -12,19 +12,29 @@ interface LoadingButtonProps extends ButtonProps {
   loading: boolean
 }
 
-interface ColorButtonProps extends ButtonProps {
+export interface ColorButtonProps extends ButtonProps {
   active?: boolean
 }
 
-export const FilledButton = ({ children, className, color, ...rest }: ButtonProps) => (
+export const FilledButton = ({ children, className, color = 'primary', ...rest }: ButtonProps) => (
+  <button
+    {...rest}
+    className={twMerge(
+      clsx({ 'bg-primary': color === 'primary', 'bg-secondary': color === 'secondary' }, className)
+    )}
+  >
+    {children}
+  </button>
+)
+
+export const OutlineButton = ({ children, className, color = 'primary', ...rest }: ButtonProps) => (
   <button
     {...rest}
     className={twMerge(
       clsx(
-        [
-          'border-2 border-transparent text-white',
-          { 'bg-primary': color === 'primary', 'bg-secondary': color === 'secondary' },
-        ],
+        'bg-transparent text-primary',
+        { 'border-primary': color === 'primary', 'border-secondary': color === 'secondary' },
+
         className
       )
     )}
@@ -33,34 +43,14 @@ export const FilledButton = ({ children, className, color, ...rest }: ButtonProp
   </button>
 )
 
-export const OutlineButton = ({ children, className, color, ...rest }: ButtonProps) => (
-  <button
-    {...rest}
-    className={twMerge(
-      clsx(
-        [
-          'border-2 bg-transparent text-primary',
-          { 'border-primary': color === 'primary', 'border-secondary': color === 'secondary' },
-        ],
-        className
-      )
-    )}
-  >
+export const TextButton = ({ children, className, ...rest }: ButtonProps) => (
+  <button {...rest} className={twMerge(clsx(className))}>
     {children}
   </button>
 )
 
-export const TextButton = ({ children, className, color, ...rest }: ButtonProps) => (
-  <button
-    {...rest}
-    className={twMerge(clsx('normal-case text-white', 'border-2 border-transparent', className))}
-  >
-    {children}
-  </button>
-)
-
-export const IconButton = ({ children, className, color, ...rest }: ButtonProps) => (
-  <button {...rest} className={twMerge(clsx('p-0 text-white', 'border-2 border-transparent', className))}>
+export const IconButton = ({ children, className, ...rest }: ButtonProps) => (
+  <button {...rest} className={twMerge(clsx('p-0', className))}>
     {children}
   </button>
 )
@@ -70,7 +60,7 @@ export const ColorButton = ({ children, className, active, ...rest }: ColorButto
     {...rest}
     className={twMerge(
       clsx(
-        'w-full p-3 text-white',
+        'w-full border-0 p-3 text-white',
         'outline-dashed outline-1 outline-offset-4 hover:outline-primary',
         active ? 'outline-primary' : 'outline-white',
         className

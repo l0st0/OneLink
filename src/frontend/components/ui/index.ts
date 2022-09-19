@@ -1,6 +1,5 @@
 export * from './buttons'
-export * from './TextAreaInput'
-export * from './TextInput'
+export * from './inputs'
 export * from './Spinner'
 export * from './Switch'
 export * from './Avatar'
