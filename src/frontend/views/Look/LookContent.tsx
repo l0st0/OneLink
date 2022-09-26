@@ -16,7 +16,7 @@ export const LookContent = () => {
     saveLook({ ...look, theme })
   }
 
-  const onBackgroundTypeClick = (show: boolean) => () => {
+  const onBackgroundTypeChange = (show: boolean) => () => {
     if (isEqual(show, look.gradient.show)) return
     saveLook({ ...look, gradient: { ...look.gradient, show } })
   }
@@ -31,6 +31,11 @@ export const LookContent = () => {
     saveLook({ ...look, gradient: { ...look.gradient, color } })
   }, 1000)
 
+  const onGradientPositionChange = (position: string) => () => {
+    if (isEqual(position, look.gradient.position)) return
+    saveLook({ ...look, gradient: { ...look.gradient, position } })
+  }
+
   return (
     <AdminContentContainer className="gap-12">
       <div className="flex w-full flex-col">
@@ -43,14 +48,14 @@ export const LookContent = () => {
           <h5>Background</h5>
           <div className="flex w-full gap-6">
             <ColorButton
-              onClick={onBackgroundTypeClick(false)}
+              onClick={onBackgroundTypeChange(false)}
               active={!look.gradient.show}
               className="bg-neutral-900"
             >
               Solid
             </ColorButton>
             <ColorButton
-              onClick={onBackgroundTypeClick(true)}
+              onClick={onBackgroundTypeChange(true)}
               active={look.gradient.show}
               style={{ background: 'linear-gradient(to top, #171717, #787878)' }}
             >
@@ -65,11 +70,38 @@ export const LookContent = () => {
           />
 
           {look.gradient.show && (
-            <ColorButtonWithPallete
-              color={look.gradient.color}
-              onChange={onGradientColorChange}
-              label="Gradient color"
-            />
+            <>
+              <ColorButtonWithPallete
+                color={look.gradient.color}
+                onChange={onGradientColorChange}
+                label="Gradient color"
+              />
+
+              <div className="flex w-full gap-6">
+                <ColorButton
+                  onClick={onGradientPositionChange('top')}
+                  active={look.gradient.position === 'top'}
+                  gradient={{
+                    position: 'top',
+                    bgColor: look.backgroundColor,
+                    gradientColor: look.gradient.color,
+                  }}
+                >
+                  Gradient top
+                </ColorButton>
+                <ColorButton
+                  onClick={onGradientPositionChange('bottom')}
+                  active={look.gradient.position === 'bottom'}
+                  gradient={{
+                    position: 'bottom',
+                    bgColor: look.backgroundColor,
+                    gradientColor: look.gradient.color,
+                  }}
+                >
+                  Gradient bottom
+                </ColorButton>
+              </div>
+            </>
           )}
         </div>
       )}

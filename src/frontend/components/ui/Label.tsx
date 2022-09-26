@@ -7,7 +7,7 @@ export const Label = ({
   className,
   ...rest
 }: React.PropsWithChildren<React.LabelHTMLAttributes<HTMLLabelElement>>) => (
-  <label {...rest} className={twMerge(clsx('py-2 px-1 font-medium tracking-wide', className))}>
+  <label {...rest} className={twMerge(clsx('font-medium tracking-wide', className))}>
     {children}
   </label>
 )

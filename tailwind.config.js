@@ -3,6 +3,9 @@ module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      fontFamily: {
+        main: ['"Raleway"', 'sans-serif'],
+      },
       colors: {
         black: '#000000',
         white: '#ebebeb',
@@ -14,9 +17,6 @@ module.exports = {
       },
       borderRadius: {
         primary: '12px',
-      },
-      fontFamily: {
-        main: ['"Raleway"', 'sans-serif'],
       },
     },
   },

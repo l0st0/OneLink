@@ -16,35 +16,23 @@
     );
   }
 
-  h1,
-  h2,
-  h3 {
-    @apply font-medium;
-  }
-
-  h4,
-  h5,
-  h6 {
-    @apply font-light;
-  }
-
   h1 {
-    @apply text-9xl;
+    @apply text-9xl font-medium;
   }
   h2 {
-    @apply text-7xl;
+    @apply text-7xl font-medium;
   }
   h3 {
-    @apply text-6xl;
+    @apply text-6xl font-medium;
   }
   h4 {
-    @apply text-3xl;
+    @apply text-3xl font-light;
   }
   h5 {
-    @apply text-2xl;
+    @apply text-2xl font-light;
   }
   h6 {
-    @apply text-xl;
+    @apply text-xl font-light;
   }
 
   ::-webkit-scrollbar {
@@ -74,7 +62,7 @@
   [multiple],
   textarea,
   select {
-    @apply appearance-none border-none bg-transparent p-0 text-black focus:outline-none focus:ring-0 focus:ring-offset-0;
+    @apply no-ring appearance-none border-none bg-transparent p-0 text-black;
   }
 
   button {
@@ -89,5 +77,13 @@
 
   .with-ring {
     @apply focus:ring-1 focus:ring-primary focus:ring-offset-4 focus:ring-offset-black;
+  }
+
+  .no-ring {
+    @apply focus:outline-none focus:ring-0 focus:ring-offset-0;
+  }
+
+  .input-default {
+    @apply with-ring w-full rounded-primary bg-white px-4 py-2.5;
   }
 }

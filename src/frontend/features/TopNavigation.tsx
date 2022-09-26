@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { FilledButton, OneLinkIcon, OneLinkTextIcon, OutlineButton } from '@/components'
+import { OneLinkIcon, OneLinkTextIcon, OutlineButton, SolidButton } from '@/components'
 import { TopBar } from '@/layouts'
 import { useAuthStore, useIsAuthQuery, useLogout } from '@/store'
 
@@ -21,15 +21,15 @@ export const TopNavigation = () => {
         </div>
 
         {!isAuth ? (
-          <FilledButton color="secondary" onClick={() => login(async () => navigate('admin/links'))}>
+          <SolidButton color="secondary" onClick={() => login(async () => navigate('admin/links'))}>
             Login
-          </FilledButton>
+          </SolidButton>
         ) : (
           <div className="flex gap-2">
             <OutlineButton onClick={onAdminClick}>Admin</OutlineButton>
-            <FilledButton color="secondary" onClick={() => logout()}>
+            <SolidButton color="secondary" onClick={() => logout()}>
               Logout
-            </FilledButton>
+            </SolidButton>
           </div>
         )}
       </div>
