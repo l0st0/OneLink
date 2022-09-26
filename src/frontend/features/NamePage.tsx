@@ -1,7 +1,7 @@
 import React from 'react'
 import clsx from 'clsx'
 import { AvatarImage, AvatarText, Spinner } from '@/components'
-import { getBrightness, rgbFromString } from '@/utils'
+import { isLightBrightness } from '@/utils'
 import { useNameDataQuery } from '../store/queries'
 
 interface NamePageProps {
@@ -11,7 +11,7 @@ interface NamePageProps {
 }
 
 export const NamePage = ({ paramName = '', preview, mutating }: NamePageProps) => {
-  const { namePageData } = useNameDataQuery(paramName)
+  const { namePageData, isLoading } = useNameDataQuery(paramName)
 
   const name = namePageData?.name
   const about = namePageData?.about[0]
@@ -24,11 +24,11 @@ export const NamePage = ({ paramName = '', preview, mutating }: NamePageProps) =
     : look?.backgroundColor
 
   const bgLightBrightness = React.useMemo(() => {
-    if (hasGradient && look.gradient.position === 'top')
-      return getBrightness(rgbFromString(look.gradient.color)) > 128
-
-    return getBrightness(rgbFromString(look?.backgroundColor)) > 128
+    if (hasGradient && look.gradient.position === 'top') return isLightBrightness(look.gradient.color)
+    return isLightBrightness(look?.backgroundColor)
   }, [look])
+
+  console.log('bgLightBrightness', bgLightBrightness)
 
   const textColor = bgLightBrightness ? 'text-black' : 'text-white'
 
@@ -40,42 +40,50 @@ export const NamePage = ({ paramName = '', preview, mutating }: NamePageProps) =
         preview && 'rounded-[28px]'
       )}
     >
-      {!mutating && (
+      {(mutating || isLoading) && (
         <div className={clsx('absolute top-4 left-4')}>
-          <Spinner className={clsx('w-4', textColor, bgLightBrightness ? 'fill-white' : 'fill-black')} />
+          <Spinner
+            className={clsx('w-4', bgLightBrightness ? 'fill-black text-white' : 'fill-white text-black')}
+          />
         </div>
       )}
 
-      <div className="mt-4 flex flex-col items-center">
-        <span className="mb-4">
-          {about?.image ? (
-            <AvatarImage src={about.image} />
-          ) : (
-            <AvatarText className={clsx(bgLightBrightness && 'bg-black text-white')}>
-              {name?.charAt(0)}
-            </AvatarText>
-          )}
-        </span>
-        <span className={clsx('text-xl font-semibold', textColor)}>
-          {about?.title ? about.title : `@${name}`}
-        </span>
-        <span className={clsx(textColor)}>{about?.bio ? about.bio : ''}</span>
-      </div>
+      {namePageData && (
+        <>
+          <div className="mt-4 flex flex-col items-center">
+            <span className="mb-4">
+              {about?.image ? (
+                <AvatarImage src={about.image} />
+              ) : (
+                <AvatarText
+                  className={clsx(bgLightBrightness ? 'bg-black text-white' : 'bg-white text-black')}
+                >
+                  {name?.charAt(0)}
+                </AvatarText>
+              )}
+            </span>
+            <span className={clsx('text-xl font-semibold', textColor)}>
+              {about?.title ? about.title : `@${name}`}
+            </span>
+            <span className={clsx(textColor)}>{about?.bio ? about.bio : ''}</span>
+          </div>
 
-      <div className="flex w-full flex-col items-center gap-2">
-        {links?.map(({ id, show, title, url }) => {
-          return (
-            <a
-              key={id}
-              href={url}
-              target="_blank"
-              className={clsx('w-full max-w-xl border border-black py-2 text-center', !show && 'hidden')}
-            >
-              {title}
-            </a>
-          )
-        })}
-      </div>
+          <div className="flex w-full flex-col items-center gap-2">
+            {links?.map(({ id, show, title, url }) => {
+              return (
+                <a
+                  key={id}
+                  href={url}
+                  target="_blank"
+                  className={clsx('w-full max-w-xl border border-black py-2 text-center', !show && 'hidden')}
+                >
+                  {title}
+                </a>
+              )
+            })}
+          </div>
+        </>
+      )}
     </div>
   )
 }

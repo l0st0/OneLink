@@ -3,11 +3,12 @@ import { RgbColor } from 'react-colorful'
 export const LOCAL_II_CANISTER = 'http://qhbym-qaaaa-aaaaa-aaafq-cai.localhost:8000/#authorize'
 
 export const getBrightness = ({ r, g, b }: RgbColor) => (r * 299 + g * 587 + b * 114) / 1000
+export const isLightBrightness = (color: string = '') => getBrightness(rgbFromString(color)) > 128
 
 export const rgbToString = ({ r, g, b }: RgbColor) => `rgb(${r}, ${g}, ${b})`
 
 export const rgbFromString = (rgb?: string) => {
-  if (!rgb) return { r: 0, g: 0, b: 0 }
+  if (!rgb || !rgb.length) return { r: 0, g: 0, b: 0 }
 
   const [r, g, b] = rgb
     .replace(/[^\d,]/g, '')

@@ -1,7 +1,7 @@
 import React from 'react'
 import clsx from 'clsx'
 import { twMerge } from 'tailwind-merge'
-import { getBrightness, rgbFromString } from '@/utils'
+import { isLightBrightness } from '@/utils'
 import { Spinner } from '.'
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -91,7 +91,7 @@ export const IconButton = ({ children, className, ...rest }: ButtonProps) => (
 )
 
 export const ColorButton = ({ children, className, active, gradient, style, ...rest }: ColorButtonProps) => {
-  const bgBrightness = gradient?.bgColor ? getBrightness(rgbFromString(gradient.bgColor)) > 128 : false
+  const bgBrightness = gradient?.bgColor ? isLightBrightness(gradient.bgColor) : false
 
   const buttonStyles = React.useMemo(() => {
     let toReturn = { ...style }

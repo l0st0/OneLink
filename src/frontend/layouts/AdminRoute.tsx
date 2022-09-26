@@ -88,7 +88,7 @@ export const AdminRoute = () => {
   if (!user.hasName)
     return (
       <BlankLayout>
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-2">
           <h5>Pick the name to continue</h5>
           <ClaimForm />
         </div>

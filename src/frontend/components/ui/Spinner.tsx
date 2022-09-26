@@ -9,7 +9,7 @@ export const Spinner = ({ className }: SpinnerProps) => (
   <div role="status">
     <svg
       aria-hidden="true"
-      className={twMerge(clsx('text-gray-600 w-5 animate-spin fill-primary', className))}
+      className={twMerge(clsx('w-5 animate-spin fill-primary text-white', className))}
       viewBox="0 0 100 101"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

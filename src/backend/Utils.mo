@@ -63,11 +63,11 @@ module {
     };
 
     let defaultLook = {
-        theme = "0"; backgroundColor = "000000"; 
+        theme = "0"; backgroundColor = "rgb(0,0,0)"; 
         gradient = {
             show = false;
             position = "top";
-            color = "FFFFFF";
+            color = "rgb(255,255,255)";
         };
     };
 }
