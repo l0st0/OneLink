@@ -52,7 +52,6 @@ export const AboutContent = () => {
           onChange={onBioChange}
           maxLength={80}
           placeholder="Enter a bio description"
-          className="row-span-6"
         />
       </div>
     </AdminContentContainer>

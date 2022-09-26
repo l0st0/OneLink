@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import { useScrollToTop } from '@/hooks'
 import { AdminRoute, BasicRoute } from '@/layouts'
-import { About, Home, Links, Look } from '@/views'
+import { About, Home, Links, Look, Name } from '@/views'
 import './styles/tailwind.css'
 
 const App = () => {
@@ -9,10 +9,9 @@ const App = () => {
 
   return (
     <Routes>
-      <Route path="/:name" element={<Home />} />
-
-      <Route element={<BasicRoute />}>
-        <Route path="/" element={<Home />} />
+      <Route path="/" element={<BasicRoute />}>
+        <Route index element={<Home />} />
+        <Route path=":name" element={<Name />} />
       </Route>
       <Route element={<AdminRoute />}>
         <Route path="/admin" element={<Links />} />

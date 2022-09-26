@@ -35,15 +35,6 @@ export const useNameQuery = () => {
   return { name, ...rest }
 }
 
-export const useNameDataQuery = () => {
-  const { name } = useNameQuery()
-  const n = name?.name || ''
-  const { data: nameData, ...rest } = useQuery([queryKeys.nameData], () => service.getNameData(n), {
-    enabled: !!n.length,
-  })
-  return { nameData, ...rest }
-}
-
 export const useLinkQuery = () => {
   const { data: links = [], ...rest } = useQuery([queryKeys.links], service.getLinks)
   return { links, ...rest }
@@ -167,4 +158,11 @@ export const useLogout = () => {
   })
 
   return { logout, ...rest }
+}
+
+export const useNameDataQuery = (name: string = '') => {
+  const { data: namePageData, ...rest } = useQuery([queryKeys.nameData], () => service.getNameData(name), {
+    enabled: !!name.length,
+  })
+  return { namePageData, ...rest }
 }

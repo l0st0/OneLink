@@ -1,13 +1,13 @@
 import { useIsMutating } from '@tanstack/react-query'
 import { TextButton } from '@/components'
 import { TopBar } from '@/layouts'
-import { useNameDataQuery, useNameQuery } from '@/store'
+import { useNameQuery } from '@/store'
+import { NamePage } from '.'
 
 export const Preview = () => {
   const mutating = useIsMutating()
 
   const { name } = useNameQuery()
-  const { nameData } = useNameDataQuery()
 
   return (
     <div className="relative bg-white p-8">
@@ -23,9 +23,11 @@ export const Preview = () => {
         </TopBar>
       </div>
 
-      {!!mutating && <div>Mutating</div>}
-
-      <div className="flex w-full text-black">{JSON.stringify(nameData)}</div>
+      <div className="mt-10 flex items-center justify-center">
+        <div className="flex h-[600px] w-[300px] rounded-[32px] border-4 border-black text-black">
+          <NamePage paramName={name?.name} preview mutating={!!mutating} />
+        </div>
+      </div>
     </div>
   )
 }

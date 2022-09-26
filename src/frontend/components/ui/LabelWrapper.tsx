@@ -15,7 +15,11 @@ export const LabelWrapper = ({
   className,
 }: React.PropsWithChildren<InputWrapperProps>) => (
   <div className={twMerge(clsx('flex w-full flex-col gap-1', className))}>
-    {label && <Label htmlFor={id}>{label}</Label>}
+    {label && (
+      <Label id={`label-${id}`} htmlFor={id}>
+        {label}
+      </Label>
+    )}
     {children}
   </div>
 )

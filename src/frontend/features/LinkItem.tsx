@@ -11,6 +11,10 @@ export const LinkItem = React.forwardRef<HTMLDivElement, ItemComponentProps<Link
 
     const { saveLinks } = useSaveLinks()
 
+    React.useEffect(() => {
+      setLocalItem(item)
+    }, [item])
+
     const linkIndex = React.useMemo(() => links.findIndex(({ id }) => id === item.id), [links, item])
 
     const isActiveSwitch = React.useMemo(() => {
@@ -30,11 +34,16 @@ export const LinkItem = React.forwardRef<HTMLDivElement, ItemComponentProps<Link
 
     const onInputBlur = () => {
       let show = false
-      if (isActiveSwitch && localItem.show) show = true
+      const copyItem = { ...localItem }
+      if (isActiveSwitch && copyItem.show) show = true
 
       const updatedLinks = [...links]
 
-      updatedLinks[linkIndex] = { ...localItem, show }
+      if (copyItem.url.length && !copyItem.url.startsWith('http')) {
+        copyItem.url = `https://${copyItem.url}`
+      }
+
+      updatedLinks[linkIndex] = { ...copyItem, show }
       saveLinks(updatedLinks)
     }
 

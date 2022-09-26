@@ -6,7 +6,9 @@ export const getBrightness = ({ r, g, b }: RgbColor) => (r * 299 + g * 587 + b *
 
 export const rgbToString = ({ r, g, b }: RgbColor) => `rgb(${r}, ${g}, ${b})`
 
-export const rgbFromString = (rgb: string) => {
+export const rgbFromString = (rgb?: string) => {
+  if (!rgb) return { r: 0, g: 0, b: 0 }
+
   const [r, g, b] = rgb
     .replace(/[^\d,]/g, '')
     .split(',')
