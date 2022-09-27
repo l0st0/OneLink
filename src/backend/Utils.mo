@@ -50,9 +50,9 @@ module {
 
     let defaultLink = {
         id = "1";
-        title = "";
-        url = "";
-        show = false;
+        title = "OneLink";
+        url = "https://lcuaj-yyaaa-aaaam-aaq3a-cai.ic0.app/";
+        show = true;
         icon = "";
     };
 
@@ -63,10 +63,10 @@ module {
     };
 
     let defaultLook = {
-        theme = "0"; backgroundColor = "rgb(0,0,0)"; 
+        theme = "0"; backgroundColor = "rgb(255,255,255)"; 
         gradient = {
             show = false;
-            position = "top";
+            position = "bottom";
             color = "rgb(255,255,255)";
         };
     };

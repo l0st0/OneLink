@@ -28,8 +28,6 @@ export const NamePage = ({ paramName = '', preview, mutating }: NamePageProps) =
     return isLightBrightness(look?.backgroundColor)
   }, [look])
 
-  console.log('bgLightBrightness', bgLightBrightness)
-
   const textColor = bgLightBrightness ? 'text-black' : 'text-white'
 
   return (
@@ -75,7 +73,11 @@ export const NamePage = ({ paramName = '', preview, mutating }: NamePageProps) =
                   key={id}
                   href={url}
                   target="_blank"
-                  className={clsx('w-full max-w-xl border border-black py-2 text-center', !show && 'hidden')}
+                  className={clsx(
+                    'w-full max-w-xl border py-2 text-center',
+                    bgLightBrightness ? 'border-black text-black' : 'border-white text-white',
+                    !show && 'hidden'
+                  )}
                 >
                   {title}
                 </a>

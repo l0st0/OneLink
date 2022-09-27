@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom'
 import { useIsMutating } from '@tanstack/react-query'
 import { TextButton } from '@/components'
 import { TopBar } from '@/layouts'
@@ -16,7 +17,9 @@ export const Preview = () => {
           <div className="flex items-center justify-between gap-20">
             <div className="flex items-center gap-2">
               <p className="whitespace-nowrap">My OneLink:</p>
-              <p className="font-extralight">https://onelink.ooo/{name?.name}</p>
+              <NavLink to={`/${name?.name}`} className="font-extralight">
+                https://onelink.ooo/{name?.name}
+              </NavLink>
             </div>
             <TextButton className="pr-0">Share</TextButton>
           </div>
