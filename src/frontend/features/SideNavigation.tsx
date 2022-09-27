@@ -14,9 +14,9 @@ export const SideNavigation = () => {
 
   return (
     <div className="h-full w-full bg-white py-8 px-2 text-black">
-      <div className="mb-8 flex justify-center">
+      <NavLink to="/" className="mb-8 flex justify-center">
         <OneLinkIcon width={36} />
-      </div>
+      </NavLink>
 
       <div className="flex flex-col items-center gap-1">
         {navLinks.map(({ to, icon }) => {
